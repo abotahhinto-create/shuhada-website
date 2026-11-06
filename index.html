@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>شهداءنا العظماء | الجمهورية اليمنية</title>
+  
+  <!-- إعدادات تطبيق الويب (PWA) -->
+  <link rel="manifest" href='data:application/manifest+json,{"name":"شهداءنا العظماء","short_name":"شهداءنا","start_url":"./","display":"standalone","background_color":"#ffffff","theme_color":"#1b5e20","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/933/933310.png","sizes":"512x512","type":"image/png"}]}'>
+  <meta name="theme-color" content="#1b5e20">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,33 +15,57 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* ===================== الثيمات المتغيرة ===================== */
+    /* ===================== الثيمات (الافتراضي هو الفاتح كما في الصورة) ===================== */
     :root {
-      --green-dark: #0d2818; --green-deep: #1a4a2e; --green-mid: #2e7d32; --green-light: #4caf50;
-      --green-pale: #a5d6a7; --gold: #c9a227; --gold-light: #e6c85a;
-      --bg-body: linear-gradient(135deg, #0a1f12 0%, #1a4a2e 50%, #0d2818 100%);
-      --card-bg: linear-gradient(160deg, rgba(26, 74, 46, 0.85), rgba(13, 40, 24, 0.95));
-      --text-main: #f4f9f0; --text-muted: rgba(244, 249, 240, 0.7);
-      --navbar-bg: rgba(10, 31, 18, 0.95); --border-color: rgba(165, 214, 167, 0.3);
+      /* الثيم الأساسي الفاتح */
+      --bg-body: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 50%, #c5e1a5 100%);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-main: #1b5e20; 
+      --text-muted: #4caf50;
+      --navbar-bg: rgba(255, 255, 255, 0.98); 
+      --border-color: rgba(27, 94, 32, 0.2);
+      --gold: #c9a227; 
+      --gold-light: #b8860b;
+      --green-dark: #1b5e20; 
+      --green-mid: #4caf50;
+      --designer-color: #000000; /* لون المصمم في الثيم الفاتح */
     }
-    body.theme-light {
-      --bg-body: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
-      --card-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(232, 245, 233, 0.98));
-      --text-main: #1b5e20; --text-muted: rgba(27, 94, 32, 0.7); --navbar-bg: rgba(255, 255, 255, 0.95);
-      --border-color: rgba(46, 125, 50, 0.4); --green-dark: #1b5e20; --gold: #b8860b; --gold-light: #daa520;
-    }
+
+    /* ثيم أبيض نقي */
     body.theme-white {
-      --bg-body: linear-gradient(135deg, #ffffff 0%, #f1f8e9 50%, #dcedc8 100%);
-      --card-bg: linear-gradient(160deg, rgba(255, 255, 255, 1), rgba(241, 248, 233, 0.98));
-      --text-main: #1a4a2e; --text-muted: rgba(26, 74, 46, 0.6); --navbar-bg: rgba(255, 255, 255, 0.95);
-      --border-color: rgba(46, 125, 50, 0.2); --green-dark: #1a4a2e; --gold: #b8860b; --gold-light: #c9a227;
+      --bg-body: linear-gradient(135deg, #ffffff 0%, #f1f8e9 100%);
+      --card-bg: rgba(255, 255, 255, 1);
+      --text-main: #2e7d32; 
+      --text-muted: #66bb6a;
+      --navbar-bg: rgba(255, 255, 255, 1); 
+      --gold: #b8860b; 
+      --gold-light: #c9a227;
+      --designer-color: #000000;
     }
+
+    /* ثيم أخضر زمردي هادئ */
     body.theme-emerald {
-      --bg-body: linear-gradient(135deg, #002b1a 0%, #004d2e 50%, #006644 100%);
-      --card-bg: linear-gradient(160deg, rgba(0, 77, 46, 0.85), rgba(0, 43, 26, 0.95));
-      --text-main: #e0f2e9; --text-muted: rgba(224, 242, 233, 0.7); --navbar-bg: rgba(0, 43, 26, 0.95);
-      --border-color: rgba(0, 200, 120, 0.4); --green-dark: #002b1a; --green-mid: #008866;
-      --green-light: #00b377; --green-pale: #66d9a8; --gold: #d4af37; --gold-light: #f0d060;
+      --bg-body: linear-gradient(135deg, #e8f5e9 0%, #b9f6ca 100%);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --text-main: #004d40; 
+      --text-muted: #00796b;
+      --navbar-bg: rgba(255, 255, 255, 0.95); 
+      --gold: #ffb300; 
+      --gold-light: #ffca28;
+      --designer-color: #000000;
+    }
+
+    /* ثيم غابة (داكن للراحة الليلية) */
+    body.theme-dark {
+      --bg-body: linear-gradient(135deg, #0a1f12 0%, #1a4a2e 100%);
+      --card-bg: rgba(13, 40, 24, 0.95);
+      --text-main: #f4f9f0; 
+      --text-muted: rgba(244, 249, 240, 0.7);
+      --navbar-bg: rgba(10, 31, 18, 0.98); 
+      --border-color: rgba(165, 214, 167, 0.3);
+      --gold: #e6c85a; 
+      --gold-light: #c9a227;
+      --designer-color: #e6c85a; /* لون المصمم في الثيم الداكن */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -49,105 +77,103 @@
     }
     @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-    /* أشجار متحركة في الخلفية */
-    .tree-layer { position: fixed; bottom: 0; left: 0; width: 100%; height: 60vh; z-index: -1; pointer-events: none; opacity: 0.2; }
+    .tree-layer { position: fixed; bottom: 0; left: 0; width: 100%; height: 60vh; z-index: -1; pointer-events: none; opacity: 0.3; }
     .tree-layer svg { width: 100%; height: 100%; }
     .tree-layer g { animation: sway 8s ease-in-out infinite; transform-origin: bottom center; }
-    .tree-layer g:nth-child(even) { animation-delay: 2s; }
-    .tree-layer g:nth-child(odd) { animation-delay: 4s; }
     @keyframes sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
 
     /* شريط التنقل */
     .navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center;
       justify-content: space-between; padding: 0 1.5rem; height: 65px; background: var(--navbar-bg);
-      backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(15px); border-bottom: 2px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
-    .navbar .logo { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 900; color: var(--gold-light); }
-    .navbar .logo i { font-size: 1.7rem; color: var(--green-pale); animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-    .menu-toggle { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+    .navbar .logo { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 900; color: var(--gold); }
+    .navbar .logo i { font-size: 1.7rem; color: var(--green-mid); }
+    .menu-toggle { background: none; border: none; color: var(--green-dark); font-size: 1.5rem; cursor: pointer; }
     
     /* القائمة الجانبية */
     .sidebar {
-      position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--navbar-bg);
-      z-index: 2000; transition: right 0.4s ease; border-left: 1px solid var(--border-color);
-      display: flex; flex-direction: column; padding-top: 20px; overflow-y: auto;
+      position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--navbar-bg);
+      z-index: 2000; transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); border-left: 2px solid var(--border-color);
+      display: flex; flex-direction: column; padding-top: 20px; overflow-y: auto; box-shadow: -5px 0 25px rgba(0,0,0,0.1);
     }
     .sidebar.open { right: 0; }
     .sidebar-close { align-self: flex-end; margin: 0 20px 10px; background: none; border: none; color: #e74c3c; font-size: 1.5rem; cursor: pointer; }
-    .sidebar a { padding: 15px 25px; color: var(--text-main); text-decoration: none; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; display: flex; align-items: center; gap: 10px; cursor: pointer; }
-    .sidebar a:hover, .sidebar a.active { background: rgba(165, 214, 167, 0.1); color: var(--gold-light); border-right: 4px solid var(--gold); }
+    .sidebar a { padding: 15px 25px; color: var(--text-main); text-decoration: none; font-weight: 700; border-bottom: 1px solid var(--border-color); transition: 0.3s; display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .sidebar a:hover, .sidebar a.active { background: rgba(76, 175, 80, 0.1); color: var(--gold); border-right: 5px solid var(--gold); }
     
-    .sidebar-footer { margin-top: auto; padding: 15px; text-align: center; border-top: 1px solid var(--border-color); background: rgba(0,0,0,0.2); }
-    .sidebar-footer p { font-size: 0.8rem; font-weight: 700; color: var(--gold-light); }
-    .sidebar-footer .phone { font-size: 0.9rem; color: var(--green-pale); direction: ltr; }
+    .sidebar-footer { margin-top: auto; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); background: var(--card-bg); }
+    .sidebar-footer p { font-size: 1rem; font-weight: 900; color: var(--designer-color); letter-spacing: 0.5px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
+    .sidebar-footer .phone { font-size: 1.1rem; color: var(--green-dark); direction: ltr; font-weight: bold; margin-top: 5px; }
     
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1999; display: none; backdrop-filter: blur(3px); }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; display: none; backdrop-filter: blur(3px); }
     .overlay.open { display: block; }
 
     .btn { padding: 8px 18px; border-radius: 10px; border: none; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
-    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--green-dark); }
-    .btn-green { background: linear-gradient(135deg, var(--green-mid), var(--green-light)); color: #fff; }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+    .btn-green { background: var(--green-mid); color: #fff; }
     .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
 
     main { padding-top: 80px; min-height: 100vh; }
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+    
     .hero { text-align: center; padding: 20px 1rem; }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; background: linear-gradient(135deg, var(--green-pale), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-    .hero p { font-size: 1rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; }
-    .hero-stats { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 15px; }
-    .stat-item .num { font-size: 2rem; font-weight: 900; color: var(--gold-light); }
-    .stat-item .label { font-size: 0.85rem; color: var(--text-muted); }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; color: var(--gold); margin-bottom: 10px; }
+    .hero p { font-size: 1.05rem; color: var(--text-main); font-weight: 500; max-width: 800px; margin: 0 auto; }
+    
+    .hero-stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 20px; }
+    .stat-item .num { font-size: 2.2rem; font-weight: 900; color: var(--gold-light); }
+    .stat-item .label { font-size: 0.9rem; font-weight: bold; color: var(--text-main); }
 
     .section-title { text-align: center; margin: 40px 0 25px; }
-    .section-title h2 { font-size: 1.8rem; font-weight: 900; color: var(--gold-light); display: inline-block; position: relative; padding-bottom: 10px; }
+    .section-title h2 { font-size: 1.8rem; font-weight: 900; color: var(--gold-light); display: inline-block; position: relative; padding-bottom: 10px; text-shadow: 1px 1px 2px rgba(255,255,255,0.3); }
     .section-title h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 3px; background: var(--gold); border-radius: 3px; }
 
     /* شريط المحافظات */
     .governorates-bar { display: flex; gap: 10px; overflow-x: auto; padding: 15px 0; scrollbar-width: none; }
     .governorates-bar::-webkit-scrollbar { display: none; }
-    .gov-chip { flex-shrink: 0; padding: 8px 20px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.9rem; cursor: pointer; transition: all 0.3s; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-    .gov-chip i { font-size: 0.8rem; opacity: 0.7; }
-    .gov-chip:hover, .gov-chip.active { background: linear-gradient(135deg, var(--green-mid), var(--green-light)); border-color: var(--green-pale); color: #fff; transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .gov-chip { flex-shrink: 0; padding: 8px 20px; border-radius: 50px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.9rem; cursor: pointer; transition: all 0.3s; font-weight: 700; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .gov-chip i { color: var(--green-mid); }
+    .gov-chip:hover, .gov-chip.active { background: var(--green-mid); border-color: var(--green-mid); color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); }
+    .gov-chip.active i, .gov-chip:hover i { color: #fff; }
 
     /* العرض الأفقي */
     .horizontal-wrapper { position: relative; width: 100%; padding: 10px 0 30px; }
-    .horizontal-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+    .horizontal-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
     .horizontal-scroll::-webkit-scrollbar { height: 6px; }
     .horizontal-scroll::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 10px; }
     
-    /* تصميم البطاقات الموحد المزين بالأشجار */
+    /* البطاقات المزينة */
     .beautiful-card {
       flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); 
       border: 2px solid var(--border-color); border-radius: 24px; overflow: hidden; 
       position: relative; cursor: pointer; transition: all 0.4s ease; 
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     }
     .beautiful-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--gold); box-shadow: 0 15px 35px rgba(201, 162, 39, 0.2); }
-    
-    /* زخرفة الأشجار على البطاقة */
-    .beautiful-card::before { content: '🌿'; position: absolute; top: 10px; right: 15px; font-size: 1.4rem; z-index: 5; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-    .beautiful-card::after { content: '🌳'; position: absolute; bottom: 10px; left: 15px; font-size: 1.4rem; z-index: 5; opacity: 0.8; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    .beautiful-card::before { content: '🌿'; position: absolute; top: 10px; right: 15px; font-size: 1.4rem; z-index: 5; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .beautiful-card::after { content: '🌳'; position: absolute; bottom: 10px; left: 15px; font-size: 1.4rem; z-index: 5; opacity: 0.8; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
-    /* بطاقة الشهيد */
     .card-image-wrapper { position: relative; overflow: hidden; height: 220px; border-bottom: 3px solid var(--green-mid); }
     .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
     .beautiful-card:hover .card-image { transform: scale(1.08); }
-    .card-badge { position: absolute; top: 15px; left: 15px; background: rgba(10, 31, 18, 0.85); backdrop-filter: blur(5px); padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; color: var(--gold-light); border: 1px solid var(--gold); z-index: 4; }
+    .card-badge { position: absolute; top: 15px; left: 15px; background: var(--green-dark); padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; color: #fff; border: 1px solid var(--gold); z-index: 4; }
+    
     .card-body { padding: 20px; position: relative; z-index: 2; }
     .card-body h3 { font-size: 1.2rem; font-weight: 800; color: var(--gold-light); margin-bottom: 8px; }
     .card-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 5px;}
-    .card-bio { font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 15px; line-height: 1.6; }
+    .card-bio { font-size: 0.9rem; color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 15px; line-height: 1.6; font-weight: 500; }
+    
     .card-actions { display: flex; gap: 10px; align-items: center; }
-    .btn-delete-card { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+    .btn-delete-card { background: rgba(231, 76, 60, 0.1); color: #e74c3c; border: 1px solid #e74c3c; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
     .btn-delete-card:hover { background: #e74c3c; color: #fff; }
 
-    /* بطاقات المقولات والوصايا والمنشورات والدروس */
+    /* بطاقات النصوص */
     .text-card { padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; }
     .text-card h3 { font-size: 1.15rem; color: var(--gold-light); margin-bottom: 10px; }
-    .text-card p { font-size: 0.95rem; line-height: 1.8; color: var(--text-main); }
-    .text-card .quote-text { font-style: italic; border-right: 3px solid var(--green-light); padding-right: 15px; }
+    .text-card p { font-size: 0.95rem; line-height: 1.8; color: var(--text-main); font-weight: 500; }
+    .text-card .quote-text { font-style: italic; border-right: 3px solid var(--green-mid); padding-right: 15px; }
     
     /* الدروس */
     .lesson-card { padding: 20px; text-align: center; }
@@ -158,76 +184,84 @@
     /* لوحة التحكم */
     .dashboard { display: none; }
     .dashboard.active { display: block; }
-    .login-box { max-width: 350px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid var(--gold); }
+    .login-box { max-width: 350px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .form-group { margin-bottom: 15px; text-align: right; }
-    .form-group label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 0.85rem; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.2); color: var(--text-main); font-family: inherit; }
+    .form-group label { display: block; margin-bottom: 5px; color: var(--text-main); font-weight: bold; font-size: 0.9rem; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: #fff; color: #333; font-family: inherit; }
     .form-group input[type="file"] { padding: 5px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .dash-panel { display: none; }
     .dash-panel.active { display: block; }
     .dash-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    .dash-tab { padding: 10px 20px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); cursor: pointer; transition: 0.3s; }
-    .dash-tab.active { background: var(--green-mid); border-color: var(--gold); }
-    .dash-content { background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); }
+    .dash-tab { padding: 10px 20px; border-radius: 8px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .dash-tab.active { background: var(--green-mid); color: #fff; border-color: var(--gold); }
+    .dash-content { background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
     /* المسبحة والقرآن */
-    .tasbih-card { background: var(--card-bg); border: 1px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; }
-    .tasbih-count { font-size: 4rem; font-weight: 900; color: var(--green-pale); margin: 10px 0; }
-    .tasbih-btn { background: var(--green-mid); color: #fff; border: none; width: 120px; height: 120px; border-radius: 50%; font-size: 1.5rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.4); transition: 0.1s; }
-    .tasbih-btn:active { transform: scale(0.9); box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
-    .quran-card { background: var(--card-bg); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
-    .quran-surah-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin-top: 15px; max-height: 300px; overflow-y: auto; padding-right: 5px; }
-    .quran-surah-list button { padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; cursor: pointer; font-family: inherit; }
-    .quran-surah-list button:hover { background: var(--green-mid); }
+    .tasbih-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .tasbih-count { font-size: 4rem; font-weight: 900; color: var(--green-dark); margin: 10px 0; }
+    .tasbih-btn { background: var(--green-mid); color: #fff; border: none; width: 120px; height: 120px; border-radius: 50%; font-size: 1.5rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4); transition: 0.1s; }
+    .tasbih-btn:active { transform: scale(0.9); box-shadow: 0 2px 10px rgba(76, 175, 80, 0.4); }
+    
+    .quran-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .quran-surah-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 15px; }
+    .surah-item { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .surah-title { background: var(--green-mid); color: #fff; padding: 8px; text-align: center; font-weight: bold; font-size: 0.95rem; }
+    .surah-actions { display: flex; }
+    .surah-actions button, .surah-actions a { flex: 1; padding: 8px 0; text-align: center; border: none; background: none; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: var(--text-main); transition: 0.3s; text-decoration: none; }
+    .surah-actions button:hover { background: rgba(76, 175, 80, 0.1); color: var(--green-dark); }
+    .surah-actions a:hover { background: rgba(201, 162, 39, 0.1); color: var(--gold-light); }
+    .surah-actions i { margin-left: 3px; }
 
     /* برنامج رجال الله */
     .program-horizontal { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; }
-    .program-card { flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 25px; position: relative; }
-    .program-card h4 { color: var(--gold-light); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px solid var(--green-light); padding-bottom: 10px; display: inline-block; }
+    .program-card { flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 25px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .program-card h4 { color: var(--gold-light); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px solid var(--green-mid); padding-bottom: 10px; display: inline-block; }
     .program-card ul { list-style: none; }
-    .program-card li { padding: 12px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); font-size: 0.95rem; line-height: 1.6; }
-    .program-card li b { color: var(--green-pale); }
+    .program-card li { padding: 12px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.95rem; line-height: 1.6; color: var(--text-main); }
+    .program-card li b { color: var(--green-dark); }
 
     /* نافذة الشهيد */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-    .modal-content { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 24px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
-    .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.6); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 1.2rem; }
+    .modal-content { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 24px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 15px 50px rgba(0,0,0,0.3); }
+    .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 1.2rem; }
     .modal-hero { width: 100%; height: 300px; object-fit: cover; border-radius: 22px 22px 0 0; }
     .modal-body { padding: 25px; }
-    .modal-bio { font-size: 1.05rem; margin-bottom: 20px; line-height: 1.8; }
+    .modal-bio { font-size: 1.05rem; margin-bottom: 20px; line-height: 1.8; color: var(--text-main); }
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
     .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
     /* مبدل الثيمات */
-    .theme-switcher { position: fixed; bottom: 20px; left: 20px; z-index: 1500; display: flex; gap: 10px; background: var(--navbar-bg); padding: 10px 15px; border-radius: 50px; border: 1px solid var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+    .theme-switcher { position: fixed; bottom: 20px; left: 20px; z-index: 1500; display: flex; gap: 10px; background: var(--navbar-bg); padding: 10px 15px; border-radius: 50px; border: 1px solid var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
     .theme-dot { width: 25px; height: 25px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
-    .theme-dot.active { border-color: #fff; transform: scale(1.2); }
-    .t1 { background: linear-gradient(135deg, #0d2818, #2e7d32); }
-    .t2 { background: linear-gradient(135deg, #e8f5e9, #a5d6a7); }
-    .t3 { background: linear-gradient(135deg, #ffffff, #dcedc8); }
-    .t4 { background: linear-gradient(135deg, #002b1a, #00b377); }
+    .theme-dot.active { border-color: #333; transform: scale(1.2); }
+    .t1 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); } /* الفاتح */
+    .t2 { background: linear-gradient(135deg, #ffffff, #f1f8e9); } /* الأبيض */
+    .t3 { background: linear-gradient(135deg, #b9f6ca, #69f0ae); } /* الزمردي */
+    .t4 { background: linear-gradient(135deg, #0d2818, #1a4a2e); } /* الداكن */
 
     /* رسائل الأدعية */
     .dua-toast {
       position: fixed; bottom: -150px; left: 50%; transform: translateX(-50%);
       background: var(--card-bg); border: 2px solid var(--gold); border-radius: 15px;
       padding: 15px 20px; width: 90%; max-width: 600px; text-align: center;
-      z-index: 4000; transition: bottom 0.8s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      z-index: 4000; transition: bottom 0.8s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
     .dua-toast.show { bottom: 30px; }
-    .dua-toast p { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--gold-light); margin-top: 5px; line-height: 1.8; }
+    .dua-toast p { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--green-dark); margin-top: 5px; line-height: 1.8; font-weight: bold; }
 
-    footer { background: rgba(0,0,0,0.5); padding: 20px 0; text-align: center; border-top: 1px solid var(--border-color); margin-top: 40px; }
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--green-mid); color: #fff; padding: 12px 25px; border-radius: 8px; z-index: 3000; transition: 0.3s; font-weight: bold; }
+    footer { background: var(--navbar-bg); padding: 20px 0; text-align: center; border-top: 1px solid var(--border-color); margin-top: 40px; }
+    footer p { color: var(--designer-color); font-weight: bold; font-size: 1.1rem; }
+    
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--green-mid); color: #fff; padding: 12px 25px; border-radius: 8px; z-index: 3000; transition: 0.3s; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
     .toast.show { transform: translateX(-50%) translateY(0); }
     .hidden { display: none !important; }
 
     @media (max-width: 900px) { .form-row { grid-template-columns: 1fr; } }
   </style>
 </head>
-<body>
+<body class="theme-light"> <!-- الثيم الفاتح كافتراضي -->
 
   <!-- خلفية الأشجار -->
   <div class="tree-layer">
@@ -240,10 +274,10 @@
   </div>
 
   <div class="theme-switcher">
-    <div class="theme-dot t1 active" onclick="setTheme('', this)"></div>
-    <div class="theme-dot t2" onclick="setTheme('theme-light', this)"></div>
-    <div class="theme-dot t3" onclick="setTheme('theme-white', this)"></div>
-    <div class="theme-dot t4" onclick="setTheme('theme-emerald', this)"></div>
+    <div class="theme-dot t1 active" onclick="setTheme('theme-light', this)" title="فاتح"></div>
+    <div class="theme-dot t2" onclick="setTheme('theme-white', this)" title="أبيض"></div>
+    <div class="theme-dot t3" onclick="setTheme('theme-emerald', this)" title="زمردي"></div>
+    <div class="theme-dot t4" onclick="setTheme('theme-dark', this)" title="داكن"></div>
   </div>
 
   <!-- القائمة الجانبية -->
@@ -259,9 +293,8 @@
     <a onclick="showSection('tasbih')"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</a>
     <a onclick="showSection('quran')"><i class="fas fa-book-quran"></i> القرآن الكريم</a>
     
-    <a onclick="showSection('dashboard')" style="margin-top:20px; color:var(--gold-light); border-top: 1px solid var(--border-color);"><i class="fas fa-lock"></i> لوحة التحكم</a>
+    <a onclick="showSection('dashboard')" style="margin-top:20px; color:var(--gold-light); border-top: 2px solid var(--border-color);"><i class="fas fa-lock"></i> لوحة التحكم</a>
     
-    <!-- اسم المصمم هنا -->
     <div class="sidebar-footer">
       <p><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري</p>
       <p class="phone">771713275</p>
@@ -275,7 +308,7 @@
       <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا العظماء</span></div>
     </div>
     <div id="authBtns">
-      <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+      <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()" style="border-color:#e74c3c; color:#e74c3c;"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
   </nav>
 
@@ -293,12 +326,9 @@
           </div>
         </div>
 
-        <!-- مقولات السيد القائد -->
         <div class="section-title"><h2>من كلام السيد القائد عبدالملك الحوثي</h2></div>
         <div class="horizontal-wrapper">
-          <div class="horizontal-scroll" id="quotesGrid">
-             <!-- سيتم تعبئتها من قاعدة البيانات أو البيانات الافتراضية -->
-          </div>
+          <div class="horizontal-scroll" id="quotesGrid"></div>
         </div>
 
         <div class="section-title"><h2>سجل الشهداء</h2></div>
@@ -520,7 +550,7 @@
       <img class="modal-hero" id="modalImage" src="" />
       <div class="modal-body">
         <h2 id="modalName" style="color:var(--gold-light); margin-bottom:5px;"></h2>
-        <div class="modal-meta" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px; display:flex; gap:15px;">
+        <div class="modal-meta" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px; display:flex; gap:15px; font-weight:bold;">
           <span><i class="fas fa-calendar-alt"></i> <span id="modalDate"></span></span>
           <span><i class="fas fa-map-marker-alt"></i> <span id="modalGov"></span></span>
           <span><i class="fas fa-home"></i> <span id="modalAddress"></span></span>
@@ -533,7 +563,7 @@
 
   <footer>
     <div class="container">
-      <p style="color:var(--gold-light); font-size:1.1rem;"><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري - 771713275</p>
+      <p><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري - 771713275</p>
     </div>
   </footer>
 
@@ -561,7 +591,6 @@
     let allMartyrs = []; let allWills = []; let allPosts = []; let allQuotes = []; let allLessons = [];
     let currentGov = 'الكل'; let currentUser = null;
 
-    // بيانات افتراضية للمقولات (تظهر إذا كانت قاعدة البيانات فارغة)
     const defaultQuotes = [
       { id: 'q1', title: 'تحية أسر الشهداء', text: 'تحية الإعزاز والتبجيل والتقدير لكل أسر الشهداء الصابرة المحتسبة.', isMock: true },
       { id: 'q2', title: 'مكانة الشهادة والشهداء', text: 'إن الذكرى السنوية للشهيد "تكتسب قدسيتها وعظمتها وأهميتها من القدسية التي جعلها الله سبحانه وتعالى للشهادة في سبيله، وللشهداء في سبيله".', isMock: true },
@@ -569,7 +598,6 @@
       { id: 'q4', title: 'النماذج الملهمة', text: 'الشهداء في سبيل الله هم نماذج ملهمة في عطائهم، في أخلاقهم، في قيمهم، في ثباتهم، وكذلك تستلهم الأمة منهم عظيم الصبر والعطاء والثبات.', isMock: true }
     ];
 
-    // ====== المسبحة ======
     let tasbihCount = parseInt(localStorage.getItem('tasbihCount')) || 0;
     document.getElementById('tasbihCount').innerText = tasbihCount;
     window.incrementTasbih = () => {
@@ -584,58 +612,65 @@
       localStorage.setItem('tasbihCount', 0);
     };
 
-    // ====== القرآن ======
+    // إضافة القرآن (استماع وقراءة)
     const surahs = [
-      { name: "النبأ", url: "https://server10.mp3quran.net/minsh/078.mp3" },
-      { name: "النازعات", url: "https://server10.mp3quran.net/minsh/079.mp3" },
-      { name: "عبس", url: "https://server10.mp3quran.net/minsh/080.mp3" },
-      { name: "التكوير", url: "https://server10.mp3quran.net/minsh/081.mp3" },
-      { name: "الانفطار", url: "https://server10.mp3quran.net/minsh/082.mp3" },
-      { name: "المطففين", url: "https://server10.mp3quran.net/minsh/083.mp3" },
-      { name: "الانشقاق", url: "https://server10.mp3quran.net/minsh/084.mp3" },
-      { name: "البروج", url: "https://server10.mp3quran.net/minsh/085.mp3" },
-      { name: "الطارق", url: "https://server10.mp3quran.net/minsh/086.mp3" },
-      { name: "الأعلى", url: "https://server10.mp3quran.net/minsh/087.mp3" },
-      { name: "الغاشية", url: "https://server10.mp3quran.net/minsh/088.mp3" },
-      { name: "الفجر", url: "https://server10.mp3quran.net/minsh/089.mp3" },
-      { name: "البلد", url: "https://server10.mp3quran.net/minsh/090.mp3" },
-      { name: "الشمس", url: "https://server10.mp3quran.net/minsh/091.mp3" },
-      { name: "الليل", url: "https://server10.mp3quran.net/minsh/092.mp3" },
-      { name: "الضحى", url: "https://server10.mp3quran.net/minsh/093.mp3" },
-      { name: "الشرح", url: "https://server10.mp3quran.net/minsh/094.mp3" },
-      { name: "التين", url: "https://server10.mp3quran.net/minsh/095.mp3" },
-      { name: "العلق", url: "https://server10.mp3quran.net/minsh/096.mp3" },
-      { name: "القدر", url: "https://server10.mp3quran.net/minsh/097.mp3" },
-      { name: "البينة", url: "https://server10.mp3quran.net/minsh/098.mp3" },
-      { name: "الزلزلة", url: "https://server10.mp3quran.net/minsh/099.mp3" },
-      { name: "العاديات", url: "https://server10.mp3quran.net/minsh/100.mp3" },
-      { name: "القارعة", url: "https://server10.mp3quran.net/minsh/101.mp3" },
-      { name: "التكاثر", url: "https://server10.mp3quran.net/minsh/102.mp3" },
-      { name: "العصر", url: "https://server10.mp3quran.net/minsh/103.mp3" },
-      { name: "الهمزة", url: "https://server10.mp3quran.net/minsh/104.mp3" },
-      { name: "الفيل", url: "https://server10.mp3quran.net/minsh/105.mp3" },
-      { name: "قريش", url: "https://server10.mp3quran.net/minsh/106.mp3" },
-      { name: "الماعون", url: "https://server10.mp3quran.net/minsh/107.mp3" },
-      { name: "الكوثر", url: "https://server10.mp3quran.net/minsh/108.mp3" },
-      { name: "الكافرون", url: "https://server10.mp3quran.net/minsh/109.mp3" },
-      { name: "النصر", url: "https://server10.mp3quran.net/minsh/110.mp3" },
-      { name: "المسد", url: "https://server10.mp3quran.net/minsh/111.mp3" },
-      { name: "الإخلاص", url: "https://server10.mp3quran.net/minsh/112.mp3" },
-      { name: "الفلق", url: "https://server10.mp3quran.net/minsh/113.mp3" },
-      { name: "الناس", url: "https://server10.mp3quran.net/minsh/114.mp3" }
+      { name: "النبأ", url: "https://server10.mp3quran.net/minsh/078.mp3", read: "https://quran.com/78" },
+      { name: "النازعات", url: "https://server10.mp3quran.net/minsh/079.mp3", read: "https://quran.com/79" },
+      { name: "عبس", url: "https://server10.mp3quran.net/minsh/080.mp3", read: "https://quran.com/80" },
+      { name: "التكوير", url: "https://server10.mp3quran.net/minsh/081.mp3", read: "https://quran.com/81" },
+      { name: "الانفطار", url: "https://server10.mp3quran.net/minsh/082.mp3", read: "https://quran.com/82" },
+      { name: "المطففين", url: "https://server10.mp3quran.net/minsh/083.mp3", read: "https://quran.com/83" },
+      { name: "الانشقاق", url: "https://server10.mp3quran.net/minsh/084.mp3", read: "https://quran.com/84" },
+      { name: "البروج", url: "https://server10.mp3quran.net/minsh/085.mp3", read: "https://quran.com/85" },
+      { name: "الطارق", url: "https://server10.mp3quran.net/minsh/086.mp3", read: "https://quran.com/86" },
+      { name: "الأعلى", url: "https://server10.mp3quran.net/minsh/087.mp3", read: "https://quran.com/87" },
+      { name: "الغاشية", url: "https://server10.mp3quran.net/minsh/088.mp3", read: "https://quran.com/88" },
+      { name: "الفجر", url: "https://server10.mp3quran.net/minsh/089.mp3", read: "https://quran.com/89" },
+      { name: "البلد", url: "https://server10.mp3quran.net/minsh/090.mp3", read: "https://quran.com/90" },
+      { name: "الشمس", url: "https://server10.mp3quran.net/minsh/091.mp3", read: "https://quran.com/91" },
+      { name: "الليل", url: "https://server10.mp3quran.net/minsh/092.mp3", read: "https://quran.com/92" },
+      { name: "الضحى", url: "https://server10.mp3quran.net/minsh/093.mp3", read: "https://quran.com/93" },
+      { name: "الشرح", url: "https://server10.mp3quran.net/minsh/094.mp3", read: "https://quran.com/94" },
+      { name: "التين", url: "https://server10.mp3quran.net/minsh/095.mp3", read: "https://quran.com/95" },
+      { name: "العلق", url: "https://server10.mp3quran.net/minsh/096.mp3", read: "https://quran.com/96" },
+      { name: "القدر", url: "https://server10.mp3quran.net/minsh/097.mp3", read: "https://quran.com/97" },
+      { name: "البينة", url: "https://server10.mp3quran.net/minsh/098.mp3", read: "https://quran.com/98" },
+      { name: "الزلزلة", url: "https://server10.mp3quran.net/minsh/099.mp3", read: "https://quran.com/99" },
+      { name: "العاديات", url: "https://server10.mp3quran.net/minsh/100.mp3", read: "https://quran.com/100" },
+      { name: "القارعة", url: "https://server10.mp3quran.net/minsh/101.mp3", read: "https://quran.com/101" },
+      { name: "التكاثر", url: "https://server10.mp3quran.net/minsh/102.mp3", read: "https://quran.com/102" },
+      { name: "العصر", url: "https://server10.mp3quran.net/minsh/103.mp3", read: "https://quran.com/103" },
+      { name: "الهمزة", url: "https://server10.mp3quran.net/minsh/104.mp3", read: "https://quran.com/104" },
+      { name: "الفيل", url: "https://server10.mp3quran.net/minsh/105.mp3", read: "https://quran.com/105" },
+      { name: "قريش", url: "https://server10.mp3quran.net/minsh/106.mp3", read: "https://quran.com/106" },
+      { name: "الماعون", url: "https://server10.mp3quran.net/minsh/107.mp3", read: "https://quran.com/107" },
+      { name: "الكوثر", url: "https://server10.mp3quran.net/minsh/108.mp3", read: "https://quran.com/108" },
+      { name: "الكافرون", url: "https://server10.mp3quran.net/minsh/109.mp3", read: "https://quran.com/109" },
+      { name: "النصر", url: "https://server10.mp3quran.net/minsh/110.mp3", read: "https://quran.com/110" },
+      { name: "المسد", url: "https://server10.mp3quran.net/minsh/111.mp3", read: "https://quran.com/111" },
+      { name: "الإخلاص", url: "https://server10.mp3quran.net/minsh/112.mp3", read: "https://quran.com/112" },
+      { name: "الفلق", url: "https://server10.mp3quran.net/minsh/113.mp3", read: "https://quran.com/113" },
+      { name: "الناس", url: "https://server10.mp3quran.net/minsh/114.mp3", read: "https://quran.com/114" }
     ];
     const surahListDiv = document.getElementById('quranSurahList');
     surahs.forEach(s => {
-      const btn = document.createElement('button');
-      btn.innerText = `سورة ${s.name}`;
-      btn.onclick = () => {
-        const audio = document.getElementById('quranAudio');
-        audio.src = s.url; audio.play();
-      };
-      surahListDiv.appendChild(btn);
+      const div = document.createElement('div');
+      div.className = 'surah-item';
+      div.innerHTML = `
+        <div class="surah-title">${s.name}</div>
+        <div class="surah-actions">
+          <button onclick="playAudio('${s.url}')"><i class="fas fa-headphones"></i> استماع</button>
+          <a href="${s.read}" target="_blank"><i class="fas fa-book-open"></i> قراءة</a>
+        </div>
+      `;
+      surahListDiv.appendChild(div);
     });
+    
+    window.playAudio = (url) => {
+        const audio = document.getElementById('quranAudio');
+        audio.src = url; audio.play();
+    }
 
-    // ====== التنقل ======
     window.toggleSidebar = () => {
       document.getElementById('sidebar').classList.toggle('open');
       document.getElementById('sidebarOverlay').classList.toggle('open');
@@ -647,9 +682,11 @@
       if(id === 'dashboard') document.getElementById('dashboard').classList.add('dashboard'); 
       window.scrollTo(0,0);
       if(document.getElementById('sidebar').classList.contains('open')) toggleSidebar();
+      // تحديث الزر النشط في القائمة
+      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+      event.currentTarget.classList.add('active');
     };
 
-    // ====== Firebase ======
     function getBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader(); reader.readAsDataURL(file);
@@ -674,12 +711,10 @@
         }
       });
 
-      // بيانات الشهداء الوهمية
       allMartyrs = generateMockMartyrs();
-      allQuotes = [...defaultQuotes]; // تحميل المقولات الافتراضية
+      allQuotes = [...defaultQuotes];
       renderAll();
 
-      // Firebase Listeners
       onSnapshot(query(collection(db, "martyrs"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
         allMartyrs = [...fbData, ...generateMockMartyrs()]; renderMartyrs(); updateStats();
@@ -694,8 +729,7 @@
       });
       onSnapshot(query(collection(db, "quotes"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allQuotes = [...fbData, ...defaultQuotes]; // دمج الحقيقي مع الافتراضي
-        renderQuotes();
+        allQuotes = [...fbData, ...defaultQuotes]; renderQuotes();
       });
       onSnapshot(query(collection(db, "lessons"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
@@ -721,7 +755,6 @@
       return data;
     }
 
-    // ====== دوال العرض ======
     function renderMartyrs() {
       const gridHome = document.getElementById('martyrsGridHome');
       const gridAll = document.getElementById('martyrsGridAll');
@@ -814,7 +847,6 @@
       document.getElementById('statGovs').textContent = new Set(allMartyrs.map(m => m.gov)).size || 22;
     }
 
-    // ====== النوافذ ======
     window.openModal = (id) => {
       const m = allMartyrs.find(x => x.id === id); if (!m) return;
       document.getElementById('modalImage').src = m.image || 'https://picsum.photos/800/400';
@@ -833,7 +865,6 @@
     };
     window.closeModal = (e) => { if (e && e.target !== document.getElementById('martyrModal')) return; document.getElementById('martyrModal').classList.remove('open'); };
 
-    // ====== إضافة البيانات ======
     window.addMartyr = async () => {
       const btn = document.getElementById('btnAddMartyr'); const originalText = btn.innerHTML;
       const name = document.getElementById('mName').value.trim();
@@ -912,40 +943,24 @@
       const btn = document.getElementById('btnAddLesson');
       const day = document.getElementById('lDay').value;
       const name = document.getElementById('lName').value.trim();
-      const file = document.getElementById('lFile').files[0];
       
       if(!name) return showToast('أدخل اسم الدرس', true);
       
       try {
-        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الرفع...`; btn.disabled = true;
-        
-        // ملاحظة: لرفع ملفات PDF يفضل استخدام مساحة تخزين خارجية أو Firebase Storage
-        // هنا سنستخدم رابط وهمي للتوضيح، أو يمكنك وضع رابط مباشر في الكود
-        let fileUrl = "";
-        if (file) {
-           // يمكنك هنا رفع الملف باستخدام Cloudinary أو Supabase لو أردت،
-           // أو تجاهل الرفع واستخدام روابط جاهزة.
-           showToast('رفع الملفات (PDF) يحتاج إعداد خدمة تخزين. تم حفظ الدرس بدون ملف.', true);
-        }
-
-        await addDoc(collection(db, "lessons"), { 
-          day, name, fileUrl, 
-          createdAt: serverTimestamp() 
-        });
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...`; btn.disabled = true;
+        let fileUrl = ""; // يمكن ربطه بـ Supabase لاحقاً لرفع ملفات PDF
+        await addDoc(collection(db, "lessons"), { day, name, fileUrl, createdAt: serverTimestamp() });
         showToast('تمت إضافة الدرس');
         ['lName'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('lFile').value = '';
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ الدرس`; btn.disabled = false; }
     };
 
-    // ====== الحذف ======
     window.deleteM = async (id) => { if(confirm('حذف الشهيد؟')) { await deleteDoc(doc(db, "martyrs", id)); showToast('تم الحذف'); } };
     window.deleteW = async (id) => { if(confirm('حذف الوصية؟')) { await deleteDoc(doc(db, "wills", id)); showToast('تم الحذف'); } };
     window.deleteP = async (id) => { if(confirm('حذف المنشور؟')) { await deleteDoc(doc(db, "posts", id)); showToast('تم الحذف'); } };
     window.deleteQ = async (id) => { if(confirm('حذف المقولة؟')) { await deleteDoc(doc(db, "quotes", id)); showToast('تم الحذف'); } };
     window.deleteL = async (id) => { if(confirm('حذف الدرس؟')) { await deleteDoc(doc(db, "lessons", id)); showToast('تم الحذف'); } };
 
-    // ====== الدخول ======
     window.login = async () => {
       try { await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPassword').value); showToast('تم الدخول'); document.getElementById('loginError').textContent = ''; }
       catch(e) { document.getElementById('loginError').textContent = 'بيانات الدخول خاطئة'; }
@@ -963,7 +978,7 @@
         document.getElementById('logoutBtn').classList.add('hidden');
         document.getElementById('userEmail').textContent = '';
       }
-      renderAll(); // تحديث البطاقات لإظهار/إخفاء أزرار الحذف
+      renderAll(); 
     });
 
     function renderAll() { renderMartyrs(); renderQuotes(); renderWills(); renderPosts(); renderLessons(); updateStats(); }
@@ -972,7 +987,12 @@
       document.querySelectorAll('.dash-content').forEach(el => el.classList.add('hidden')); document.getElementById('tab-' + tabId).classList.remove('hidden');
       document.querySelectorAll('.dash-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active');
     };
-    window.setTheme = (theme, el) => { document.body.className = theme; document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active')); el.classList.add('active'); };
+    
+    window.setTheme = (theme, el) => { 
+        document.body.className = theme; 
+        document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active')); 
+        el.classList.add('active'); 
+    };
     
     function showToast(msg, isErr) {
       const t = document.createElement('div'); t.className = 'toast' + (isErr ? ' error' : ''); t.style.background = isErr ? '#e74c3c' : '';
