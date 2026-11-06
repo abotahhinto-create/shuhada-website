@@ -13,228 +13,105 @@
   <style>
     /* ===================== الثيمات المتغيرة ===================== */
     :root {
-      --green-dark: #0d2818;
-      --green-deep: #1a4a2e;
-      --green-mid: #2e7d32;
-      --green-light: #4caf50;
-      --green-pale: #a5d6a7;
-      --gold: #c9a227;
-      --gold-light: #e6c85a;
+      --green-dark: #0d2818; --green-deep: #1a4a2e; --green-mid: #2e7d32; --green-light: #4caf50;
+      --green-pale: #a5d6a7; --gold: #c9a227; --gold-light: #e6c85a;
       --bg-body: linear-gradient(135deg, #0a1f12 0%, #1a4a2e 50%, #0d2818 100%);
       --card-bg: linear-gradient(160deg, rgba(26, 74, 46, 0.8), rgba(13, 40, 24, 0.95));
-      --text-main: #f4f9f0;
-      --text-muted: rgba(244, 249, 240, 0.7);
-      --navbar-bg: rgba(10, 31, 18, 0.75);
-      --border-color: rgba(165, 214, 167, 0.3);
+      --text-main: #f4f9f0; --text-muted: rgba(244, 249, 240, 0.7);
+      --navbar-bg: rgba(10, 31, 18, 0.75); --border-color: rgba(165, 214, 167, 0.3);
     }
-
-    /* ثيم 2: أخضر فاتح */
     body.theme-light {
       --bg-body: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
       --card-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(232, 245, 233, 0.98));
-      --text-main: #1b5e20;
-      --text-muted: rgba(27, 94, 32, 0.7);
-      --navbar-bg: rgba(255, 255, 255, 0.85);
-      --border-color: rgba(46, 125, 50, 0.4);
-      --green-dark: #1b5e20;
-      --gold: #b8860b;
-      --gold-light: #daa520;
+      --text-main: #1b5e20; --text-muted: rgba(27, 94, 32, 0.7); --navbar-bg: rgba(255, 255, 255, 0.85);
+      --border-color: rgba(46, 125, 50, 0.4); --green-dark: #1b5e20; --gold: #b8860b; --gold-light: #daa520;
     }
-
-    /* ثيم 3: أبيض وأخضر */
     body.theme-white {
       --bg-body: linear-gradient(135deg, #ffffff 0%, #f1f8e9 50%, #dcedc8 100%);
       --card-bg: linear-gradient(160deg, rgba(255, 255, 255, 1), rgba(241, 248, 233, 0.98));
-      --text-main: #1a4a2e;
-      --text-muted: rgba(26, 74, 46, 0.6);
-      --navbar-bg: rgba(255, 255, 255, 0.9);
-      --border-color: rgba(46, 125, 50, 0.2);
-      --green-dark: #1a4a2e;
-      --gold: #b8860b;
-      --gold-light: #c9a227;
+      --text-main: #1a4a2e; --text-muted: rgba(26, 74, 46, 0.6); --navbar-bg: rgba(255, 255, 255, 0.9);
+      --border-color: rgba(46, 125, 50, 0.2); --green-dark: #1a4a2e; --gold: #b8860b; --gold-light: #c9a227;
     }
-
-    /* ثيم 4: زمردي */
     body.theme-emerald {
       --bg-body: linear-gradient(135deg, #002b1a 0%, #004d2e 50%, #006644 100%);
       --card-bg: linear-gradient(160deg, rgba(0, 77, 46, 0.85), rgba(0, 43, 26, 0.95));
-      --text-main: #e0f2e9;
-      --text-muted: rgba(224, 242, 233, 0.7);
-      --navbar-bg: rgba(0, 43, 26, 0.8);
-      --border-color: rgba(0, 200, 120, 0.4);
-      --green-dark: #002b1a;
-      --green-mid: #008866;
-      --green-light: #00b377;
-      --green-pale: #66d9a8;
-      --gold: #d4af37;
-      --gold-light: #f0d060;
+      --text-main: #e0f2e9; --text-muted: rgba(224, 242, 233, 0.7); --navbar-bg: rgba(0, 43, 26, 0.8);
+      --border-color: rgba(0, 200, 120, 0.4); --green-dark: #002b1a; --green-mid: #008866;
+      --green-light: #00b377; --green-pale: #66d9a8; --gold: #d4af37; --gold-light: #f0d060;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Tajawal', sans-serif;
-      background: var(--bg-body);
-      background-size: 200% 200%;
-      animation: gradientBG 15s ease infinite;
-      color: var(--text-main);
-      overflow-x: hidden;
-      line-height: 1.7;
-      transition: background 0.6s ease, color 0.4s ease;
-      min-height: 100vh;
+      font-family: 'Tajawal', sans-serif; background: var(--bg-body); background-size: 200% 200%;
+      animation: gradientBG 15s ease infinite; color: var(--text-main); overflow-x: hidden; line-height: 1.7;
+      transition: background 0.6s ease, color 0.4s ease; min-height: 100vh;
     }
+    @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* أشجار متحركة في الخلفية */
-    .tree-layer {
-      position: fixed; bottom: 0; left: 0; width: 100%; height: 60vh;
-      z-index: -1; pointer-events: none; opacity: 0.15;
-    }
+    .tree-layer { position: fixed; bottom: 0; left: 0; width: 100%; height: 60vh; z-index: -1; pointer-events: none; opacity: 0.15; }
     .tree-layer svg { width: 100%; height: 100%; }
     .tree-layer g { animation: sway 8s ease-in-out infinite; transform-origin: bottom center; }
     .tree-layer g:nth-child(even) { animation-delay: 2s; }
     .tree-layer g:nth-child(odd) { animation-delay: 4s; }
+    @keyframes sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
 
-    @keyframes sway {
-      0%, 100% { transform: rotate(-2deg); }
-      50% { transform: rotate(2deg); }
-    }
-
-    /* ===================== شريط التنقل ===================== */
     .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 72px;
-      background: var(--navbar-bg);
-      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-      border-bottom: 1px solid var(--border-color);
-      transition: all 0.4s ease;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 2rem; height: 72px; background: var(--navbar-bg);
+      backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
     }
     .navbar .logo { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: 900; color: var(--gold-light); }
     .navbar .logo i { font-size: 1.8rem; color: var(--green-pale); animation: pulse 2s infinite; }
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-    
     .nav-links { display: flex; gap: 8px; list-style: none; }
-    .nav-links a {
-      color: var(--text-main); text-decoration: none; padding: 10px 18px;
-      border-radius: 12px; font-weight: 600; transition: all 0.3s;
-    }
+    .nav-links a { color: var(--text-main); text-decoration: none; padding: 10px 18px; border-radius: 12px; font-weight: 600; transition: all 0.3s; }
     .nav-links a:hover, .nav-links a.active { background: rgba(165, 214, 167, 0.15); color: var(--green-pale); }
-    
     .nav-actions { display: flex; gap: 10px; align-items: center; }
-    .btn {
-      padding: 10px 22px; border-radius: 12px; border: none; cursor: pointer;
-      font-family: inherit; font-weight: 700; font-size: 0.9rem; transition: all 0.3s;
-      display: inline-flex; align-items: center; gap: 8px;
-    }
+    .btn { padding: 10px 22px; border-radius: 12px; border: none; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.9rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
     .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--green-dark); }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(201, 162, 39, 0.4); }
     .btn-green { background: linear-gradient(135deg, var(--green-mid), var(--green-light)); color: #fff; }
-    .btn-green:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(46, 125, 50, 0.4); }
     .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
-    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: var(--green-pale); }
-    .btn-danger { background: #c0392b; color: #fff; padding: 8px 12px; }
-    .btn-danger:hover { background: #e74c3c; transform: scale(1.05); }
     .menu-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
 
-    /* ===================== المحتوى ===================== */
     main { padding-top: 90px; min-height: 100vh; }
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
     .hero { text-align: center; padding: 40px 1rem 20px; }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
-      background: linear-gradient(135deg, var(--green-pale), var(--gold-light));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 16px;
-    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; background: linear-gradient(135deg, var(--green-pale), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px; }
     .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 20px; }
     .hero-stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 20px; }
     .stat-item .num { font-size: 2.5rem; font-weight: 900; color: var(--gold-light); }
     .stat-item .label { font-size: 0.9rem; color: var(--text-muted); }
 
-    /* شريط المحافظات */
-    .governorates-bar {
-      display: flex; gap: 10px; overflow-x: auto; padding: 15px 0;
-      scrollbar-width: thin;
-    }
-    .gov-chip {
-      flex-shrink: 0; padding: 8px 20px; border-radius: 50px;
-      background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
-      color: var(--text-main); font-size: 0.9rem; cursor: pointer; transition: all 0.3s; font-weight: 600;
-    }
+    .governorates-bar { display: flex; gap: 10px; overflow-x: auto; padding: 15px 0; scrollbar-width: thin; }
+    .gov-chip { flex-shrink: 0; padding: 8px 20px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.9rem; cursor: pointer; transition: all 0.3s; font-weight: 600; }
     .gov-chip:hover, .gov-chip.active { background: var(--green-mid); border-color: var(--green-pale); color: #fff; transform: translateY(-2px); }
 
-    /* ===================== العرض الأفقي للشهداء ===================== */
-    .martyrs-horizontal-wrapper {
-      position: relative; width: 100%; padding: 20px 0 40px;
-    }
-    .martyrs-grid {
-      display: flex; gap: 25px; overflow-x: auto; padding-bottom: 20px;
-      scroll-snap-type: x mandatory; scrollbar-width: thin;
-    }
+    .martyrs-horizontal-wrapper { position: relative; width: 100%; padding: 20px 0 40px; }
+    .martyrs-grid { display: flex; gap: 25px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
     .martyrs-grid::-webkit-scrollbar { height: 8px; }
     .martyrs-grid::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 10px; }
 
-    /* البطاقة وتزيينها بالأشجار */
-    .martyr-card {
-      flex: 0 0 320px; scroll-snap-align: start;
-      background: var(--card-bg); border: 2px solid var(--border-color);
-      border-radius: 24px; overflow: hidden; position: relative;
-      cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      transition: all 0.4s ease;
-    }
-    .martyr-card:hover {
-      transform: translateY(-10px); border-color: var(--gold);
-      box-shadow: 0 15px 40px rgba(201, 162, 39, 0.2);
-    }
-
-    /* الأشجار حول الصورة */
-    .card-image-wrapper {
-      position: relative; overflow: hidden; height: 220px; border-bottom: 4px solid var(--green-mid);
-    }
+    .martyr-card { flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 24px; overflow: hidden; position: relative; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.4s ease; }
+    .martyr-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 15px 40px rgba(201, 162, 39, 0.2); }
+    .card-image-wrapper { position: relative; overflow: hidden; height: 220px; border-bottom: 4px solid var(--green-mid); }
     .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
     .martyr-card:hover .card-image { transform: scale(1.1); }
-    
-    /* أيقونات الأشجار الزخرفية */
-    .tree-deco {
-      position: absolute; font-size: 1.8rem; z-index: 3; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-      transition: transform 0.3s;
-    }
+    .tree-deco { position: absolute; font-size: 1.8rem; z-index: 3; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: transform 0.3s; }
     .tree-deco.top-right { top: 10px; right: 10px; animation: float 3s ease-in-out infinite; }
     .tree-deco.bottom-left { bottom: 10px; left: 10px; animation: float 4s ease-in-out infinite reverse; }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(5deg); } }
+    .card-badge { position: absolute; top: 15px; left: 15px; background: rgba(10, 31, 18, 0.85); backdrop-filter: blur(5px); padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; color: var(--gold-light); border: 1px solid var(--gold); z-index: 4; font-weight: bold; }
     
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-5px) rotate(5deg); }
-    }
-
-    .card-badge {
-      position: absolute; top: 15px; left: 15px;
-      background: rgba(10, 31, 18, 0.85); backdrop-filter: blur(5px);
-      padding: 5px 15px; border-radius: 50px; font-size: 0.8rem;
-      color: var(--gold-light); border: 1px solid var(--gold);
-      z-index: 4; font-weight: bold;
-    }
     .card-body { padding: 20px; position: relative; z-index: 2; }
     .card-body h3 { font-size: 1.3rem; font-weight: 800; color: var(--gold-light); margin-bottom: 8px; }
     .card-meta { display: flex; gap: 10px; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; flex-wrap: wrap; }
     .card-bio { font-size: 0.95rem; color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 15px; }
-    
     .card-actions { display: flex; gap: 10px; align-items: center; }
     .card-actions .btn-view { flex: 1; justify-content: center; }
-    .btn-delete-card {
-      background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c;
-      width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: all 0.3s;
-    }
+    .btn-delete-card { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
     .btn-delete-card:hover { background: #e74c3c; color: #fff; }
 
-    /* ===================== نافذة الشهيد ===================== */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
     .modal-content { background: var(--card-bg); border: 1px solid var(--gold); border-radius: 24px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
@@ -244,13 +121,11 @@
     .modal-body h2 { font-size: 2rem; color: var(--gold-light); margin-bottom: 10px; }
     .modal-meta { display: flex; gap: 20px; flex-wrap: wrap; color: var(--text-muted); margin-bottom: 20px; }
     .modal-bio { font-size: 1.05rem; line-height: 1.9; margin-bottom: 20px; }
-    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 16px; overflow: hidden; }
-    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 16px; overflow: hidden; margin-top:15px; }
+    .video-wrapper iframe, .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-    /* ===================== باقي الأقسام ===================== */
     .section-title { text-align: center; margin: 50px 0 30px; }
     .section-title h2 { font-size: 2.2rem; font-weight: 900; color: var(--gold-light); }
-    
     .quotes-section { display: flex; gap: 30px; flex-wrap: wrap; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; padding: 30px; margin: 40px 0; align-items: center; }
     .quotes-img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid var(--gold); box-shadow: 0 0 20px rgba(201,162,39,0.3); }
     .quotes-content { flex: 1; min-width: 250px; }
@@ -262,14 +137,10 @@
     .will-name, .post-card h3 { color: var(--gold-light); font-size: 1.2rem; margin-bottom: 10px; }
     .will-text { font-style: italic; color: var(--text-main); line-height: 1.8; border-right: 3px solid var(--green-light); padding-right: 10px; }
     
-    /* أزرار الحذف في المنشورات والوصايا */
-    .delete-btn-small {
-      position: absolute; top: 15px; left: 15px; background: transparent; border: none;
-      color: #e74c3c; font-size: 1.2rem; cursor: pointer; opacity: 0.5; transition: 0.3s;
-    }
+    .post-media { width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin-top: 10px; }
+    .delete-btn-small { position: absolute; top: 15px; left: 15px; background: transparent; border: none; color: #e74c3c; font-size: 1.2rem; cursor: pointer; opacity: 0.5; transition: 0.3s; }
     .delete-btn-small:hover { opacity: 1; transform: scale(1.2); }
 
-    /* ===================== لوحة التحكم ===================== */
     .dashboard { display: none; }
     .dashboard.active { display: block; }
     .login-box { max-width: 400px; margin: 60px auto; background: var(--card-bg); padding: 40px; border-radius: 24px; border: 1px solid var(--border-color); text-align: center; }
@@ -277,15 +148,16 @@
     .form-group label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 0.9rem; }
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.2); color: var(--text-main); font-family: inherit; }
     .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); }
+    .form-group input[type="file"] { padding: 8px; background: rgba(255,255,255,0.05); cursor: pointer; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    
     .dash-panel { display: none; }
     .dash-panel.active { display: block; }
-    .dash-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+    .dash-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
     .dash-tab { padding: 10px 20px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); cursor: pointer; }
     .dash-tab.active { background: var(--green-mid); }
     .dash-content { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid var(--border-color); }
 
-    /* مبدل الثيمات */
     .theme-switcher { position: fixed; bottom: 20px; left: 20px; z-index: 1500; display: flex; gap: 10px; background: var(--navbar-bg); backdrop-filter: blur(10px); padding: 10px; border-radius: 50px; border: 1px solid var(--border-color); }
     .theme-dot { width: 25px; height: 25px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
     .theme-dot:hover, .theme-dot.active { border-color: var(--gold); transform: scale(1.2); }
@@ -310,29 +182,15 @@
 </head>
 <body>
 
-  <!-- خلفية الأشجار المتحركة -->
   <div class="tree-layer">
     <svg viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax meet">
-      <g transform="translate(150,300)">
-        <rect x="-5" y="-50" width="10" height="50" fill="#2e7d32" opacity="0.6"/>
-        <circle cx="0" cy="-70" r="40" fill="#4caf50" opacity="0.4"/>
-      </g>
-      <g transform="translate(450,300)">
-        <rect x="-8" y="-80" width="16" height="80" fill="#2e7d32" opacity="0.5"/>
-        <circle cx="0" cy="-100" r="55" fill="#66bb6a" opacity="0.3"/>
-      </g>
-      <g transform="translate(800,300)">
-        <rect x="-6" y="-60" width="12" height="60" fill="#2e7d32" opacity="0.6"/>
-        <circle cx="0" cy="-85" r="45" fill="#81c784" opacity="0.3"/>
-      </g>
-      <g transform="translate(1150,300)">
-        <rect x="-7" y="-70" width="14" height="70" fill="#2e7d32" opacity="0.5"/>
-        <circle cx="0" cy="-90" r="50" fill="#4caf50" opacity="0.4"/>
-      </g>
+      <g transform="translate(150,300)"><rect x="-5" y="-50" width="10" height="50" fill="#2e7d32" opacity="0.6"/><circle cx="0" cy="-70" r="40" fill="#4caf50" opacity="0.4"/></g>
+      <g transform="translate(450,300)"><rect x="-8" y="-80" width="16" height="80" fill="#2e7d32" opacity="0.5"/><circle cx="0" cy="-100" r="55" fill="#66bb6a" opacity="0.3"/></g>
+      <g transform="translate(800,300)"><rect x="-6" y="-60" width="12" height="60" fill="#2e7d32" opacity="0.6"/><circle cx="0" cy="-85" r="45" fill="#81c784" opacity="0.3"/></g>
+      <g transform="translate(1150,300)"><rect x="-7" y="-70" width="14" height="70" fill="#2e7d32" opacity="0.5"/><circle cx="0" cy="-90" r="50" fill="#4caf50" opacity="0.4"/></g>
     </svg>
   </div>
 
-  <!-- مبدل الثيمات -->
   <div class="theme-switcher">
     <div class="theme-dot t1 active" onclick="setTheme('', this)" title="غابة داكنة"></div>
     <div class="theme-dot t2" onclick="setTheme('theme-light', this)" title="أخضر فاتح"></div>
@@ -340,7 +198,6 @@
     <div class="theme-dot t4" onclick="setTheme('theme-emerald', this)" title="زمردي"></div>
   </div>
 
-  <!-- شريط التنقل -->
   <nav class="navbar">
     <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا العظماء</span></div>
     <ul class="nav-links" id="navLinks">
@@ -357,7 +214,6 @@
   </nav>
 
   <main>
-    <!-- الرئيسية -->
     <section id="home" class="section active">
       <div class="container">
         <div class="hero">
@@ -370,7 +226,6 @@
           </div>
         </div>
 
-        <!-- مقولات السيد عبدالملك -->
         <div class="quotes-section">
           <img class="quotes-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Abdul-Malik_al-Houthi_in_2015.jpg/800px-Abdul-Malik_al-Houthi_in_2015.jpg" alt="السيد عبدالملك الحوثي" />
           <div class="quotes-content">
@@ -383,21 +238,16 @@
 
         <div class="section-title"><h2>سجل الشهداء</h2><p>اسحب لليسار واليمين لتصفح الشهداء</p></div>
         
-        <!-- شريط المحافظات -->
         <div class="governorates-bar" id="govBar">
           <button class="gov-chip active" data-gov="الكل">الكل</button>
         </div>
 
-        <!-- العرض الأفقي للشهداء -->
         <div class="martyrs-horizontal-wrapper">
-          <div class="martyrs-grid" id="martyrsGrid">
-            <p style="color:var(--text-muted);">جارٍ التحميل…</p>
-          </div>
+          <div class="martyrs-grid" id="martyrsGrid"></div>
         </div>
       </div>
     </section>
 
-    <!-- الوصايا -->
     <section id="wills" class="section">
       <div class="container">
         <div class="section-title"><h2>وصايا الشهداء</h2></div>
@@ -405,7 +255,6 @@
       </div>
     </section>
 
-    <!-- المنشورات -->
     <section id="posts" class="section">
       <div class="container">
         <div class="section-title"><h2>كلمات في الشهداء</h2></div>
@@ -413,16 +262,14 @@
       </div>
     </section>
 
-    <!-- لوحة التحكم -->
     <section id="dashboard" class="section dashboard">
       <div class="container">
         <div id="loginSection">
           <div class="login-box">
-            <h2><i class="fas fa-lock"></i> دخول الإدارة</h2>
-            <br>
-            <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" placeholder="admin@example.com" /></div>
-            <div class="form-group"><label>كلمة المرور</label><input type="password" id="loginPassword" placeholder="••••••••" /></div>
-            <button class="btn btn-gold" style="width:100%; justify-content:center;" onclick="login()"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button>
+            <h2><i class="fas fa-lock"></i> دخول الإدارة</h2><br>
+            <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" /></div>
+            <div class="form-group"><label>كلمة المرور</label><input type="password" id="loginPassword" /></div>
+            <button class="btn btn-gold" style="width:100%; justify-content:center;" onclick="login()">تسجيل الدخول</button>
             <p id="loginError" style="color:#e74c3c; font-size:0.9rem; margin-top:15px;"></p>
           </div>
         </div>
@@ -448,10 +295,11 @@
               <div class="form-group"><label>المحافظة *</label><select id="mGov"></select></div>
               <div class="form-group"><label>العنوان / المديرية</label><input type="text" id="mAddress" /></div>
             </div>
-            <div class="form-group"><label>رابط صورة الشهيد (URL)</label><input type="url" id="mImage" placeholder="https://..." /></div>
-            <div class="form-group"><label>السيرة الذاتية *</label><textarea id="mBio" rows="4"></textarea></div>
-            <div class="form-group"><label>رابط فيديو الوصية (YouTube)</label><input type="url" id="mVideo" placeholder="https://youtube.com/watch?v=..." /></div>
-            <button class="btn btn-green" style="width:100%; justify-content:center;" onclick="addMartyr()"><i class="fas fa-plus"></i> حفظ ونشر الشهيد</button>
+            <div class="form-group"><label>صورة الشهيد (من الجهاز)</label><input type="file" id="mImageFile" accept="image/*" /></div>
+            <div class="form-group"><label>السيرة الذاتية *</label><textarea id="mBio" rows="3"></textarea></div>
+            <div class="form-group"><label>فيديو الوصية (من الجهاز - اختياري)</label><input type="file" id="mVideoFile" accept="video/*" /></div>
+            <div class="form-group"><label>أو ضع رابط فيديو يوتيوب (بديل للرفع)</label><input type="url" id="mVideoUrl" placeholder="https://youtube.com/watch?v=..." /></div>
+            <button class="btn btn-green" style="width:100%; justify-content:center;" id="btnAddMartyr" onclick="addMartyr()"><i class="fas fa-plus"></i> حفظ ونشر الشهيد</button>
           </div>
 
           <!-- إضافة وصية -->
@@ -459,14 +307,16 @@
             <div class="form-group"><label>اسم الشهيد *</label><input type="text" id="wName" /></div>
             <div class="form-group"><label>تاريخ الوصية</label><input type="date" id="wDate" /></div>
             <div class="form-group"><label>نص الوصية *</label><textarea id="wText" rows="4"></textarea></div>
-            <button class="btn btn-green" style="width:100%; justify-content:center;" onclick="addWill()"><i class="fas fa-plus"></i> حفظ الوصية</button>
+            <button class="btn btn-green" style="width:100%; justify-content:center;" id="btnAddWill" onclick="addWill()"><i class="fas fa-plus"></i> حفظ الوصية</button>
           </div>
 
-          <!-- إضافة منشور -->
+          <!-- إضافة منشور (مع صورة أو فيديو) -->
           <div id="tab-addPost" class="dash-content hidden">
             <div class="form-group"><label>عنوان المنشور *</label><input type="text" id="pTitle" /></div>
-            <div class="form-group"><label>نص المنشور *</label><textarea id="pText" rows="4"></textarea></div>
-            <button class="btn btn-green" style="width:100%; justify-content:center;" onclick="addPost()"><i class="fas fa-plus"></i> حفظ المنشور</button>
+            <div class="form-group"><label>نص المنشور *</label><textarea id="pText" rows="3"></textarea></div>
+            <div class="form-group"><label>إرفاق صورة (اختياري)</label><input type="file" id="pImageFile" accept="image/*" /></div>
+            <div class="form-group"><label>إرفاق فيديو (اختياري)</label><input type="file" id="pVideoFile" accept="video/*" /></div>
+            <button class="btn btn-green" style="width:100%; justify-content:center;" id="btnAddPost" onclick="addPost()"><i class="fas fa-plus"></i> حفظ المنشور</button>
           </div>
         </div>
       </div>
@@ -499,13 +349,13 @@
     </div>
   </footer>
 
-  <!-- Firebase & Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    // استدعاء مكتبة التخزين (Storage)
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
-    // إعدادات Firebase الخاصة بك
     const firebaseConfig = {
       apiKey: "AIzaSyDIs8p-7FBeUqZPQDhbOlzm0kgkmwNfRtM",
       authDomain: "shdeanun.firebaseapp.com",
@@ -519,6 +369,7 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const storage = getStorage(app); // تهيئة التخزين
 
     const GOVERNORATES = ["أمانة العاصمة","صنعاء","عدن","تعز","حضرموت","الحديدة","مأرب","أبين","إب","البيضاء","حجة","صعدة","ذمار","لحج","المحويت","المهرة","شبوة","الجوف","الضالع","عمران","ريمة","سقطرى"];
 
@@ -528,135 +379,111 @@
     let currentGov = 'الكل';
     let currentUser = null;
 
-    // ====== توليد بيانات وهمية (شهيدين لكل محافظة) ======
+    // ====== دالة مساعدة لرفع الملفات إلى Firebase Storage ======
+    async function uploadFile(file, folder) {
+      if (!file) return "";
+      return new Promise((resolve, reject) => {
+        // إنشاء اسم فريد للملف لتجنب التداخل
+        const fileName = `${Date.now()}_${file.name}`;
+        const storageRef = ref(storage, `${folder}/${fileName}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            // يمكن إضافة شريط تقدم هنا إذا أردت
+          },
+          (error) => { reject(error); },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            resolve(downloadURL);
+          }
+        );
+      });
+    }
+
+    // بيانات وهمية للتجربة
     function generateMockMartyrs() {
       const names = ["أحمد","محمد","علي","صالح","يوسف","خالد","عمر","حسن","فهد","سامي"];
       const families = ["اليماني","العمري","الحديدي","الصلوي","الشرعبي","القحطاني","الزبيري","الشميري"];
       const data = [];
       let idCount = 1;
-
       GOVERNORATES.forEach(gov => {
-        for (let i = 0; i < 2; i++) { // شهيدين فقط
+        for (let i = 0; i < 2; i++) {
           const name = `الشهيد ${names[Math.floor(Math.random()*names.length)]} ${families[Math.floor(Math.random()*families.length)]}`;
           data.push({
-            id: `mock-${idCount++}`,
-            name: name,
-            date: `2024-0${Math.floor(Math.random()*9)+1}-15`,
-            gov: gov,
-            address: `مديرية المركز - ${gov}`,
+            id: `mock-${idCount++}`, name: name, date: `2024-0${Math.floor(Math.random()*9)+1}-15`,
+            gov: gov, address: `مديرية المركز - ${gov}`,
             image: `https://picsum.photos/seed/${gov}${i}/400/300`,
-            bio: "قضى حياته مدافعاً عن الأرض والعرض، لم يتردد لحظة في التضحية بكل ما يملك من أجل حرية وطنه وكرامة شعبه. كان مثالاً للشجاعة والإيثار.",
-            video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            createdAt: new Date(),
-            isMock: true
+            bio: "قضى حياته مدافعاً عن الأرض والعرض، لم يتردد لحظة في التضحية بكل ما يملك من أجل حرية وطنه وكرامة شعبه.",
+            video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", createdAt: new Date(), isMock: true
           });
         }
       });
       return data;
     }
-
     const mockWills = [
       { id: "w-mock-1", name: "الشهيد أحمد", date: "2024-01-10", text: "أوصيكم بتقوى الله، والثبات على الحق، ولا تهنوا ولا تحزنوا وأنتم الأعلون إن كنتم مؤمنين.", isMock: true },
       { id: "w-mock-2", name: "الشهيد محمد", date: "2024-02-15", text: "أمي، لا تبكي عليّ، فإني ذاهب إلى الله شهيداً. أوصيك بالصبر وتربية إخوتي على حب الوطن.", isMock: true },
       { id: "w-mock-3", name: "الشهيد علي", date: "2024-03-20", text: "رفاقي، أوصيكم بالوحدة والتآخي، وعدم التفرق. النصر يأتي من عند الله ولكن الأخذ بالأسباب واجب.", isMock: true }
     ];
-
     const mockPosts = [
       { id: "p-mock-1", title: "في رثاء الشهيد", text: "كان أخي وصديقي ورفيقي في السلاح. لم أرَ في وجهه الخوف يوماً. رحل لكنه لم يمت. هو حي في قلوبنا.", date: "2024-01-01", isMock: true },
       { id: "p-mock-2", title: "كلمة في حق الشهداء", text: "الشهداء ليسوا أرقاماً في إحصائيات. كل شهيد قصة، كل شهيد حلم، كل شهيد عائلة. من حقهم علينا ألا ننساهم أبداً.", date: "2024-02-01", isMock: true },
       { id: "p-mock-3", title: "رسالة إلى أم الشهيد", text: "أيتها الأم الصابرة، ابنك الذي فقدتِه ليس ملككِ وحدك، هو ملك للوطن كله. دمه سينبت نصراً وعزة.", date: "2024-03-01", isMock: true }
     ];
 
-    // ====== التهيئة ======
     function init() {
-      // تعبئة المحافظات
       const govBar = document.getElementById('govBar');
       const mGovSelect = document.getElementById('mGov');
       GOVERNORATES.forEach(gov => {
         const btn = document.createElement('button');
-        btn.className = 'gov-chip';
-        btn.dataset.gov = gov;
-        btn.textContent = gov;
+        btn.className = 'gov-chip'; btn.dataset.gov = gov; btn.textContent = gov;
         btn.onclick = () => filterMartyrs(gov, btn);
         govBar.appendChild(btn);
-
-        const opt = document.createElement('option');
-        opt.value = gov;
-        opt.textContent = gov;
-        mGovSelect.appendChild(opt);
+        const opt = document.createElement('option'); opt.value = gov; opt.textContent = gov; mGovSelect.appendChild(opt);
       });
+      govBar.querySelector('[data-gov="الكل"]').onclick = function() { filterMartyrs('الكل', this); };
 
-      // زر "الكل"
-      govBar.querySelector('[data-gov="الكل"]').onclick = function() {
-        filterMartyrs('الكل', this);
-      };
-
-      // تحميل البيانات الأولية
-      allMartyrs = generateMockMartyrs();
-      allWills = [...mockWills];
-      allPosts = [...mockPosts];
+      allMartyrs = generateMockMartyrs(); allWills = [...mockWills]; allPosts = [...mockPosts];
       renderAll();
 
-      // الاستماع لـ Firebase (إذا توفر اتصال)
       onSnapshot(query(collection(db, "martyrs"), orderBy("createdAt", "desc")), (snap) => {
-        const fbData = [];
-        snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allMartyrs = [...fbData, ...generateMockMartyrs()]; // دمج بيانات Firebase مع الوهمية
-        renderMartyrs();
-        updateStats();
+        const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
+        allMartyrs = [...fbData, ...generateMockMartyrs()]; renderMartyrs(); updateStats();
       });
-
       onSnapshot(query(collection(db, "wills"), orderBy("createdAt", "desc")), (snap) => {
-        const fbData = [];
-        snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allWills = [...fbData, ...mockWills];
-        renderWills();
-        updateStats();
+        const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
+        allWills = [...fbData, ...mockWills]; renderWills(); updateStats();
       });
-
       onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), (snap) => {
-        const fbData = [];
-        snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allPosts = [...fbData, ...mockPosts];
-        renderPosts();
+        const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
+        allPosts = [...fbData, ...mockPosts]; renderPosts();
       });
     }
 
-    // ====== الفلترة والعرض ======
     function filterMartyrs(gov, btn) {
-      document.querySelectorAll('.gov-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentGov = gov;
-      renderMartyrs();
+      document.querySelectorAll('.gov-chip').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+      currentGov = gov; renderMartyrs();
     }
 
     function renderMartyrs() {
       const grid = document.getElementById('martyrsGrid');
       const filtered = currentGov === 'الكل' ? allMartyrs : allMartyrs.filter(m => m.gov === currentGov);
-      
-      if (filtered.length === 0) {
-        grid.innerHTML = `<p style="color:var(--text-muted); padding:20px;">لا يوجد شهداء في هذه المحافظة.</p>`;
-        return;
-      }
-
+      if (filtered.length === 0) { grid.innerHTML = `<p style="color:var(--text-muted); padding:20px;">لا يوجد شهداء.</p>`; return; }
       grid.innerHTML = filtered.map(m => `
-        <div class="martyr-card" data-id="${m.id}">
+        <div class="martyr-card">
           <div class="card-image-wrapper" onclick="openModal('${m.id}')">
-            <img class="card-image" src="${m.image || 'https://picsum.photos/400/300'}" alt="${m.name}" />
+            <img class="card-image" src="${m.image || 'https://picsum.photos/400/300'}" />
             <span class="card-badge">${m.gov}</span>
-            <!-- الأشجار الزخرفية حول الصورة -->
             <i class="fas fa-tree tree-deco top-right" style="color:#4caf50;"></i>
             <i class="fas fa-leaf tree-deco bottom-left" style="color:#81c784;"></i>
           </div>
           <div class="card-body">
             <h3>${m.name}</h3>
-            <div class="card-meta">
-              <span><i class="fas fa-calendar-alt"></i> ${m.date || 'غير محدد'}</span>
-              <span><i class="fas fa-map-marker-alt"></i> ${m.gov}</span>
-            </div>
+            <div class="card-meta"><span><i class="fas fa-calendar-alt"></i> ${m.date || 'غير محدد'}</span></div>
             <p class="card-bio">${m.bio}</p>
             <div class="card-actions">
-              <button class="btn btn-outline btn-view" onclick="openModal('${m.id}')"><i class="fas fa-book-open"></i> السيرة والوصية</button>
+              <button class="btn btn-outline btn-view" onclick="openModal('${m.id}')"><i class="fas fa-book-open"></i> السيرة</button>
               ${(!m.isMock && currentUser) ? `<button class="btn-delete-card" onclick="deleteM('${m.id}')" title="حذف"><i class="fas fa-trash"></i></button>` : ''}
             </div>
           </div>
@@ -683,6 +510,8 @@
           ${(!p.isMock && currentUser) ? `<button class="delete-btn-small" onclick="deleteP('${p.id}')"><i class="fas fa-trash"></i></button>` : ''}
           <h3>${p.title}</h3>
           <p>${p.text}</p>
+          ${p.image ? `<img src="${p.image}" class="post-media" />` : ''}
+          ${p.video ? `<video src="${p.video}" class="post-media" controls></video>` : ''}
           <div style="font-size:0.8rem; color:var(--text-muted); margin-top:10px;">${p.date || ''}</div>
         </div>
       `).join('');
@@ -691,14 +520,11 @@
     function updateStats() {
       document.getElementById('statMartyrs').textContent = allMartyrs.length;
       document.getElementById('statWills').textContent = allWills.length;
-      const govs = new Set(allMartyrs.map(m => m.gov)).size;
-      document.getElementById('statGovs').textContent = govs || 22;
+      document.getElementById('statGovs').textContent = new Set(allMartyrs.map(m => m.gov)).size || 22;
     }
 
-    // ====== النافذة المنبثقة ======
     window.openModal = (id) => {
-      const m = allMartyrs.find(x => x.id === id);
-      if (!m) return;
+      const m = allMartyrs.find(x => x.id === id); if (!m) return;
       document.getElementById('modalImage').src = m.image || 'https://picsum.photos/800/400';
       document.getElementById('modalName').textContent = m.name;
       document.getElementById('modalDate').textContent = m.date;
@@ -707,129 +533,139 @@
       document.getElementById('modalBio').textContent = m.bio;
       
       const vc = document.getElementById('modalVideoContainer');
-      if (m.video && m.video.includes('youtu')) {
-        let vid = m.video.includes('youtu.be') ? m.video.split('youtu.be/')[1] : new URL(m.video).searchParams.get('v');
-        vc.innerHTML = `<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe></div>`;
-      } else {
-        vc.innerHTML = '';
-      }
+      if (m.video) {
+        if (m.video.includes('youtu')) {
+          let vid = m.video.includes('youtu.be') ? m.video.split('youtu.be/')[1] : new URL(m.video).searchParams.get('v');
+          vc.innerHTML = `<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe></div>`;
+        } else {
+          vc.innerHTML = `<div class="video-wrapper"><video src="${m.video}" controls></video></div>`;
+        }
+      } else { vc.innerHTML = ''; }
       document.getElementById('martyrModal').classList.add('open');
     };
+    window.closeModal = (e) => { if (e && e.target !== document.getElementById('martyrModal')) return; document.getElementById('martyrModal').classList.remove('open'); };
 
-    window.closeModal = (e) => {
-      if (e && e.target !== document.getElementById('martyrModal')) return;
-      document.getElementById('martyrModal').classList.remove('open');
-    };
-
-    // ====== الإضافة والحذف ======
+    // ====== دوال الإضافة مع رفع الملفات ======
     window.addMartyr = async () => {
+      const btn = document.getElementById('btnAddMartyr');
+      const originalText = btn.innerHTML;
       const name = document.getElementById('mName').value.trim();
       const date = document.getElementById('mDate').value;
       const gov = document.getElementById('mGov').value;
       const bio = document.getElementById('mBio').value.trim();
+      const imageFile = document.getElementById('mImageFile').files[0];
+      const videoFile = document.getElementById('mVideoFile').files[0];
+      const videoUrl = document.getElementById('mVideoUrl').value.trim();
+
       if(!name || !date || !bio) { showToast('يرجى ملء الحقول الأساسية', true); return; }
       
       try {
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الرفع...`;
+        btn.disabled = true;
+
+        let imageUrl = "";
+        let finalVideoUrl = videoUrl;
+
+        if (imageFile) imageUrl = await uploadFile(imageFile, 'martyr_images');
+        if (videoFile) finalVideoUrl = await uploadFile(videoFile, 'martyr_videos');
+
         await addDoc(collection(db, "martyrs"), {
           name, date, gov, bio,
           address: document.getElementById('mAddress').value.trim(),
-          image: document.getElementById('mImage').value.trim(),
-          video: document.getElementById('mVideo').value.trim(),
+          image: imageUrl,
+          video: finalVideoUrl,
           createdAt: serverTimestamp()
         });
+        
         showToast('تمت إضافة الشهيد بنجاح');
-        ['mName','mDate','mAddress','mImage','mBio','mVideo'].forEach(id => document.getElementById(id).value = '');
-      } catch(e) { showToast('حدث خطأ، تأكد من القواعد', true); console.error(e); }
+        ['mName','mDate','mAddress','mBio','mVideoUrl'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('mImageFile').value = '';
+        document.getElementById('mVideoFile').value = '';
+      } catch(e) { 
+        console.error(e); showToast('حدث خطأ أثناء الرفع، تأكد من إعدادات التخزين', true); 
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
     };
 
     window.addWill = async () => {
+      const btn = document.getElementById('btnAddWill');
       const name = document.getElementById('wName').value.trim();
       const text = document.getElementById('wText').value.trim();
       if(!name || !text) return showToast('املأ البيانات', true);
       try {
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...`; btn.disabled = true;
         await addDoc(collection(db, "wills"), { name, date: document.getElementById('wDate').value, text, createdAt: serverTimestamp() });
         showToast('تمت إضافة الوصية');
         ['wName','wDate','wText'].forEach(id => document.getElementById(id).value = '');
-      } catch(e) { showToast('خطأ', true); }
+      } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ الوصية`; btn.disabled = false; }
     };
 
     window.addPost = async () => {
+      const btn = document.getElementById('btnAddPost');
       const title = document.getElementById('pTitle').value.trim();
       const text = document.getElementById('pText').value.trim();
+      const imageFile = document.getElementById('pImageFile').files[0];
+      const videoFile = document.getElementById('pVideoFile').files[0];
       if(!title || !text) return showToast('املأ البيانات', true);
+      
       try {
-        await addDoc(collection(db, "posts"), { title, text, date: new Date().toLocaleDateString('ar-YE'), createdAt: serverTimestamp() });
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الرفع...`; btn.disabled = true;
+        
+        let imageUrl = ""; let videoUrl = "";
+        if (imageFile) imageUrl = await uploadFile(imageFile, 'post_images');
+        if (videoFile) videoUrl = await uploadFile(videoFile, 'post_videos');
+
+        await addDoc(collection(db, "posts"), { 
+          title, text, image: imageUrl, video: videoUrl, 
+          date: new Date().toLocaleDateString('ar-YE'), createdAt: serverTimestamp() 
+        });
         showToast('تمت إضافة المنشور');
         ['pTitle','pText'].forEach(id => document.getElementById(id).value = '');
-      } catch(e) { showToast('خطأ', true); }
+        document.getElementById('pImageFile').value = '';
+        document.getElementById('pVideoFile').value = '';
+      } catch(e) { showToast('خطأ في الرفع', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ المنشور`; btn.disabled = false; }
     };
 
     window.deleteM = async (id) => { if(confirm('حذف الشهيد؟')) { await deleteDoc(doc(db, "martyrs", id)); showToast('تم الحذف'); } };
     window.deleteW = async (id) => { if(confirm('حذف الوصية؟')) { await deleteDoc(doc(db, "wills", id)); showToast('تم الحذف'); } };
     window.deleteP = async (id) => { if(confirm('حذف المنشور؟')) { await deleteDoc(doc(db, "posts", id)); showToast('تم الحذف'); } };
 
-    // ====== تسجيل الدخول والواجهة ======
     window.login = async () => {
-      const email = document.getElementById('loginEmail').value;
-      const pass = document.getElementById('loginPassword').value;
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        showToast('تم الدخول');
-        document.getElementById('loginError').textContent = '';
-      } catch(e) { document.getElementById('loginError').textContent = 'بيانات الدخول خاطئة'; }
+      try { await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPassword').value); showToast('تم الدخول'); document.getElementById('loginError').textContent = ''; }
+      catch(e) { document.getElementById('loginError').textContent = 'بيانات الدخول خاطئة'; }
     };
-
     window.logout = () => signOut(auth);
 
     onAuthStateChanged(auth, (user) => {
       currentUser = user;
       if (user) {
-        document.getElementById('loginSection').classList.add('hidden');
-        document.getElementById('dashContent').classList.add('active');
-        document.getElementById('loginBtn').classList.add('hidden');
-        document.getElementById('logoutBtn').classList.remove('hidden');
-        document.getElementById('userEmail').textContent = user.email;
-        showSection('dashboard');
+        document.getElementById('loginSection').classList.add('hidden'); document.getElementById('dashContent').classList.add('active');
+        document.getElementById('loginBtn').classList.add('hidden'); document.getElementById('logoutBtn').classList.remove('hidden');
+        document.getElementById('userEmail').textContent = user.email; showSection('dashboard');
       } else {
-        document.getElementById('loginSection').classList.remove('hidden');
-        document.getElementById('dashContent').classList.remove('active');
-        document.getElementById('loginBtn').classList.remove('hidden');
-        document.getElementById('logoutBtn').classList.add('hidden');
+        document.getElementById('loginSection').classList.remove('hidden'); document.getElementById('dashContent').classList.remove('active');
+        document.getElementById('loginBtn').classList.remove('hidden'); document.getElementById('logoutBtn').classList.add('hidden');
         document.getElementById('userEmail').textContent = '';
       }
-      renderAll(); // إعادة عرض البطاقات لإظهار/إخفاء أزرار الحذف
+      renderAll();
     });
 
     function renderAll() { renderMartyrs(); renderWills(); renderPosts(); updateStats(); }
 
     window.showSection = (id) => {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      if(id === 'dashboard') document.getElementById('dashboard').classList.add('dashboard');
-      window.scrollTo(0,0);
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active');
+      if(id === 'dashboard') document.getElementById('dashboard').classList.add('dashboard'); window.scrollTo(0,0);
     };
-
     window.switchDashTab = (tabId, btn) => {
-      document.querySelectorAll('.dash-content').forEach(el => el.classList.add('hidden'));
-      document.getElementById('tab-' + tabId).classList.remove('hidden');
-      document.querySelectorAll('.dash-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      document.querySelectorAll('.dash-content').forEach(el => el.classList.add('hidden')); document.getElementById('tab-' + tabId).classList.remove('hidden');
+      document.querySelectorAll('.dash-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active');
     };
-
-    window.setTheme = (theme, el) => {
-      document.body.className = theme;
-      document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
-      el.classList.add('active');
-    };
-
+    window.setTheme = (theme, el) => { document.body.className = theme; document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active')); el.classList.add('active'); };
     function showToast(msg, isErr) {
-      const t = document.createElement('div');
-      t.className = 'toast' + (isErr ? ' error' : '');
-      t.style.background = isErr ? '#e74c3c' : '';
-      t.textContent = msg;
-      document.body.appendChild(t);
-      setTimeout(() => t.classList.add('show'), 10);
-      setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3000);
+      const t = document.createElement('div'); t.className = 'toast' + (isErr ? ' error' : ''); t.style.background = isErr ? '#e74c3c' : '';
+      t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.classList.add('show'), 10); setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3000);
     }
 
     init();
