@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>شهداءنا العظماء | الجمهورية اليمنية</title>
   
-  <!-- إعدادات تطبيق الويب (PWA) -->
   <link rel="manifest" href='data:application/manifest+json,{"name":"شهداءنا العظماء","short_name":"شهداءنا","start_url":"./","display":"standalone","background_color":"#ffffff","theme_color":"#1b5e20","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/933/933310.png","sizes":"512x512","type":"image/png"}]}'>
   <meta name="theme-color" content="#1b5e20">
 
@@ -15,7 +14,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* ===================== الثيمات (الافتراضي هو الفاتح كما في الصورة) ===================== */
     :root {
       /* الثيم الأساسي الفاتح */
       --bg-body: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 50%, #c5e1a5 100%);
@@ -28,10 +26,9 @@
       --gold-light: #b8860b;
       --green-dark: #1b5e20; 
       --green-mid: #4caf50;
-      --designer-color: #000000; /* لون المصمم في الثيم الفاتح */
+      --designer-color: #b8860b; /* لون المصمم: ذهبي داكن */
     }
 
-    /* ثيم أبيض نقي */
     body.theme-white {
       --bg-body: linear-gradient(135deg, #ffffff 0%, #f1f8e9 100%);
       --card-bg: rgba(255, 255, 255, 1);
@@ -40,10 +37,9 @@
       --navbar-bg: rgba(255, 255, 255, 1); 
       --gold: #b8860b; 
       --gold-light: #c9a227;
-      --designer-color: #000000;
+      --designer-color: #1b5e20; 
     }
 
-    /* ثيم أخضر زمردي هادئ */
     body.theme-emerald {
       --bg-body: linear-gradient(135deg, #e8f5e9 0%, #b9f6ca 100%);
       --card-bg: rgba(255, 255, 255, 0.9);
@@ -52,10 +48,9 @@
       --navbar-bg: rgba(255, 255, 255, 0.95); 
       --gold: #ffb300; 
       --gold-light: #ffca28;
-      --designer-color: #000000;
+      --designer-color: #004d40;
     }
 
-    /* ثيم غابة (داكن للراحة الليلية) */
     body.theme-dark {
       --bg-body: linear-gradient(135deg, #0a1f12 0%, #1a4a2e 100%);
       --card-bg: rgba(13, 40, 24, 0.95);
@@ -65,7 +60,7 @@
       --border-color: rgba(165, 214, 167, 0.3);
       --gold: #e6c85a; 
       --gold-light: #c9a227;
-      --designer-color: #e6c85a; /* لون المصمم في الثيم الداكن */
+      --designer-color: #e6c85a; 
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -104,7 +99,7 @@
     .sidebar a:hover, .sidebar a.active { background: rgba(76, 175, 80, 0.1); color: var(--gold); border-right: 5px solid var(--gold); }
     
     .sidebar-footer { margin-top: auto; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); background: var(--card-bg); }
-    .sidebar-footer p { font-size: 1rem; font-weight: 900; color: var(--designer-color); letter-spacing: 0.5px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
+    .sidebar-footer p { font-size: 1.05rem; font-weight: 900; color: var(--designer-color); letter-spacing: 0.5px; }
     .sidebar-footer .phone { font-size: 1.1rem; color: var(--green-dark); direction: ltr; font-weight: bold; margin-top: 5px; }
     
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; display: none; backdrop-filter: blur(3px); }
@@ -181,6 +176,40 @@
     .lesson-name { font-size: 1.2rem; font-weight: bold; color: var(--gold-light); margin-bottom: 15px; }
     .lesson-attachment { margin-top: 15px; }
 
+    /* القرآن (التصميم الأفقي الجديد) */
+    .quran-card-container { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .quran-surah-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+    .quran-surah-list::-webkit-scrollbar { height: 5px; }
+    .quran-surah-list::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 5px; }
+    
+    .surah-item { 
+      flex: 0 0 200px; scroll-snap-align: start; background: #fff; border: 2px solid var(--border-color); 
+      border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative;
+      transition: 0.3s;
+    }
+    .surah-item:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .surah-item::before { content: '🌿'; position: absolute; top: 5px; left: 10px; font-size: 1.2rem; opacity: 0.6; }
+    .surah-item::after { content: '🌳'; position: absolute; bottom: 5px; right: 10px; font-size: 1.2rem; opacity: 0.4; }
+    
+    .surah-title { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); color: #fff; padding: 10px; text-align: center; font-weight: bold; font-size: 1.1rem; border-bottom: 2px solid var(--gold); }
+    .surah-actions { display: flex; gap: 5px; padding: 10px; position: relative; z-index: 2; }
+    .surah-actions button, .surah-actions a { flex: 1; padding: 8px 0; text-align: center; border: 1px solid var(--green-mid); border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: var(--green-dark); transition: 0.3s; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; }
+    .surah-actions button:hover, .surah-actions a:hover { background: var(--green-mid); color: #fff; }
+
+    /* برنامج رجال الله (أزرار التبويب) */
+    .program-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+    .program-tab-btn { padding: 10px 30px; border-radius: 30px; border: 2px solid var(--green-mid); background: transparent; color: var(--green-dark); font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+    .program-tab-btn.active { background: var(--green-mid); color: #fff; box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); }
+    
+    .program-horizontal { display: none; gap: 20px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; }
+    .program-horizontal.active { display: flex; } /* يظهر فقط القسم المختار */
+    
+    .program-card { flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 25px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .program-card h4 { color: var(--gold-light); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px solid var(--green-mid); padding-bottom: 10px; display: inline-block; }
+    .program-card ul { list-style: none; }
+    .program-card li { padding: 12px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.95rem; line-height: 1.6; color: var(--text-main); }
+    .program-card li b { color: var(--green-dark); }
+
     /* لوحة التحكم */
     .dashboard { display: none; }
     .dashboard.active { display: block; }
@@ -197,29 +226,11 @@
     .dash-tab.active { background: var(--green-mid); color: #fff; border-color: var(--gold); }
     .dash-content { background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
-    /* المسبحة والقرآن */
+    /* المسبحة */
     .tasbih-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .tasbih-count { font-size: 4rem; font-weight: 900; color: var(--green-dark); margin: 10px 0; }
     .tasbih-btn { background: var(--green-mid); color: #fff; border: none; width: 120px; height: 120px; border-radius: 50%; font-size: 1.5rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4); transition: 0.1s; }
-    .tasbih-btn:active { transform: scale(0.9); box-shadow: 0 2px 10px rgba(76, 175, 80, 0.4); }
-    
-    .quran-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .quran-surah-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 15px; }
-    .surah-item { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .surah-title { background: var(--green-mid); color: #fff; padding: 8px; text-align: center; font-weight: bold; font-size: 0.95rem; }
-    .surah-actions { display: flex; }
-    .surah-actions button, .surah-actions a { flex: 1; padding: 8px 0; text-align: center; border: none; background: none; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: var(--text-main); transition: 0.3s; text-decoration: none; }
-    .surah-actions button:hover { background: rgba(76, 175, 80, 0.1); color: var(--green-dark); }
-    .surah-actions a:hover { background: rgba(201, 162, 39, 0.1); color: var(--gold-light); }
-    .surah-actions i { margin-left: 3px; }
-
-    /* برنامج رجال الله */
-    .program-horizontal { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; }
-    .program-card { flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 25px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-    .program-card h4 { color: var(--gold-light); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px solid var(--green-mid); padding-bottom: 10px; display: inline-block; }
-    .program-card ul { list-style: none; }
-    .program-card li { padding: 12px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.95rem; line-height: 1.6; color: var(--text-main); }
-    .program-card li b { color: var(--green-dark); }
+    .tasbih-btn:active { transform: scale(0.9); }
 
     /* نافذة الشهيد */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
@@ -236,23 +247,13 @@
     .theme-switcher { position: fixed; bottom: 20px; left: 20px; z-index: 1500; display: flex; gap: 10px; background: var(--navbar-bg); padding: 10px 15px; border-radius: 50px; border: 1px solid var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
     .theme-dot { width: 25px; height: 25px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
     .theme-dot.active { border-color: #333; transform: scale(1.2); }
-    .t1 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); } /* الفاتح */
-    .t2 { background: linear-gradient(135deg, #ffffff, #f1f8e9); } /* الأبيض */
-    .t3 { background: linear-gradient(135deg, #b9f6ca, #69f0ae); } /* الزمردي */
-    .t4 { background: linear-gradient(135deg, #0d2818, #1a4a2e); } /* الداكن */
-
-    /* رسائل الأدعية */
-    .dua-toast {
-      position: fixed; bottom: -150px; left: 50%; transform: translateX(-50%);
-      background: var(--card-bg); border: 2px solid var(--gold); border-radius: 15px;
-      padding: 15px 20px; width: 90%; max-width: 600px; text-align: center;
-      z-index: 4000; transition: bottom 0.8s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    .dua-toast.show { bottom: 30px; }
-    .dua-toast p { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--green-dark); margin-top: 5px; line-height: 1.8; font-weight: bold; }
+    .t1 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+    .t2 { background: linear-gradient(135deg, #ffffff, #f1f8e9); }
+    .t3 { background: linear-gradient(135deg, #b9f6ca, #69f0ae); }
+    .t4 { background: linear-gradient(135deg, #0d2818, #1a4a2e); }
 
     footer { background: var(--navbar-bg); padding: 20px 0; text-align: center; border-top: 1px solid var(--border-color); margin-top: 40px; }
-    footer p { color: var(--designer-color); font-weight: bold; font-size: 1.1rem; }
+    footer p { color: var(--designer-color); font-weight: 900; font-size: 1.1rem; letter-spacing: 0.5px; }
     
     .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--green-mid); color: #fff; padding: 12px 25px; border-radius: 8px; z-index: 3000; transition: 0.3s; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
     .toast.show { transform: translateX(-50%) translateY(0); }
@@ -261,9 +262,8 @@
     @media (max-width: 900px) { .form-row { grid-template-columns: 1fr; } }
   </style>
 </head>
-<body class="theme-light"> <!-- الثيم الفاتح كافتراضي -->
+<body class="theme-light">
 
-  <!-- خلفية الأشجار -->
   <div class="tree-layer">
     <svg viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax meet">
       <g transform="translate(150,300)"><rect x="-5" y="-50" width="10" height="50" fill="#2e7d32" opacity="0.6"/><circle cx="0" cy="-70" r="40" fill="#4caf50" opacity="0.4"/></g>
@@ -280,20 +280,19 @@
     <div class="theme-dot t4" onclick="setTheme('theme-dark', this)" title="داكن"></div>
   </div>
 
-  <!-- القائمة الجانبية -->
   <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
   <div class="sidebar" id="sidebar">
     <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
-    <a onclick="showSection('home')" class="active"><i class="fas fa-home"></i> الرئيسية</a>
-    <a onclick="showSection('martyrs')"><i class="fas fa-users"></i> عرض الشهداء</a>
-    <a onclick="showSection('wills')"><i class="fas fa-feather-alt"></i> الوصايا</a>
-    <a onclick="showSection('posts')"><i class="fas fa-comment-dots"></i> كلمات فيهم</a>
-    <a onclick="showSection('quran_plan')"><i class="fas fa-book-open"></i> دروس من هدي القرآن</a>
-    <a onclick="showSection('program')"><i class="fas fa-list-ol"></i> برنامج رجال الله</a>
-    <a onclick="showSection('tasbih')"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</a>
-    <a onclick="showSection('quran')"><i class="fas fa-book-quran"></i> القرآن الكريم</a>
+    <a href="#home" onclick="showSection('home', this)" class="active"><i class="fas fa-home"></i> الرئيسية</a>
+    <a href="#martyrs" onclick="showSection('martyrs', this)"><i class="fas fa-users"></i> عرض الشهداء</a>
+    <a href="#wills" onclick="showSection('wills', this)"><i class="fas fa-feather-alt"></i> الوصايا</a>
+    <a href="#posts" onclick="showSection('posts', this)"><i class="fas fa-comment-dots"></i> كلمات فيهم</a>
+    <a href="#quran_plan" onclick="showSection('quran_plan', this)"><i class="fas fa-book-open"></i> دروس من هدي القرآن</a>
+    <a href="#program" onclick="showSection('program', this)"><i class="fas fa-list-ol"></i> برنامج رجال الله</a>
+    <a href="#tasbih" onclick="showSection('tasbih', this)"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</a>
+    <a href="#quran" onclick="showSection('quran', this)"><i class="fas fa-book-quran"></i> القرآن الكريم</a>
     
-    <a onclick="showSection('dashboard')" style="margin-top:20px; color:var(--gold-light); border-top: 2px solid var(--border-color);"><i class="fas fa-lock"></i> لوحة التحكم</a>
+    <a onclick="showSection('dashboard', this)" style="margin-top:20px; color:var(--gold-light); border-top: 2px solid var(--border-color);"><i class="fas fa-lock"></i> لوحة التحكم</a>
     
     <div class="sidebar-footer">
       <p><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري</p>
@@ -301,7 +300,6 @@
     </div>
   </div>
 
-  <!-- شريط التنقل -->
   <nav class="navbar">
     <div style="display:flex; align-items:center; gap:15px;">
       <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
@@ -383,8 +381,17 @@
     <section id="program" class="section">
       <div class="container">
         <div class="section-title"><h2>برنامج رجال الله</h2></div>
-        <div class="program-horizontal">
-          <div class="program-card beautiful-card" style="flex: 0 0 320px; cursor: default;">
+        
+        <!-- أزرار التبويب -->
+        <div class="program-tabs">
+          <button class="program-tab-btn active" onclick="switchProgTab('daily', this)">البرنامج اليومي</button>
+          <button class="program-tab-btn" onclick="switchProgTab('weekly', this)">البرنامج الأسبوعي</button>
+          <button class="program-tab-btn" onclick="switchProgTab('monthly', this)">البرنامج الشهري</button>
+        </div>
+
+        <!-- محتوى يومي -->
+        <div id="prog-daily" class="program-horizontal active">
+          <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
             <h4><i class="fas fa-sun"></i> البرنامج اليومي</h4>
             <ul>
               <li><b>الصلاة:</b> أداء الصلوات في أوقاتها بخشوع واعتبارها أساساً لتزكية النفس.</li>
@@ -394,16 +401,22 @@
               <li><b>التسبيح والأذكار:</b> ترديد الأذكار المحددة (مثل التسبيحات اليومية 100 مرة، وتسبيح النبي يونس عليه السلام في وقت الشدة).</li>
             </ul>
           </div>
+        </div>
 
-          <div class="program-card beautiful-card" style="flex: 0 0 320px; cursor: default;">
+        <!-- محتوى أسبوعي -->
+        <div id="prog-weekly" class="program-horizontal">
+          <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
             <h4><i class="fas fa-calendar-week"></i> البرنامج الأسبوعي</h4>
             <ul>
               <li><b>قراءة أو سماع ملزمة الأسبوع:</b> متابعة الدروس أو المحاضرات المقررة من القيادة أو دائرة الثقافة القرآنية ودراستها أسبوعياً.</li>
               <li><b>الإنفاق:</b> تخصيص جانب للصدقة والبذل في السياق الاجتماعي أو الجهادي المرتبط بالمسيرة.</li>
             </ul>
           </div>
+        </div>
 
-          <div class="program-card beautiful-card" style="flex: 0 0 320px; cursor: default;">
+        <!-- محتوى شهري -->
+        <div id="prog-monthly" class="program-horizontal">
+          <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
             <h4><i class="fas fa-calendar-alt"></i> البرنامج الشهري</h4>
             <ul>
               <li><b>زيارة روضات الشهداء:</b> زيارة جماعية أو فردية لمقابر القتلى التابعين لهم، وقراءة الفاتحة والدعاء لهم.</li>
@@ -412,6 +425,7 @@
             </ul>
           </div>
         </div>
+        
       </div>
     </section>
 
@@ -432,8 +446,8 @@
     <section id="quran" class="section">
       <div class="container">
         <div class="section-title"><h2>استماع وقراءة جزء عمّ (المنشاوي)</h2></div>
-        <div class="quran-card">
-          <audio id="quranAudio" controls style="width:100%; margin-bottom:15px;"></audio>
+        <div class="quran-card-container">
+          <audio id="quranAudio" controls style="width:100%; margin-bottom:20px; outline:none;"></audio>
           <div class="quran-surah-list" id="quranSurahList"></div>
         </div>
       </div>
@@ -466,7 +480,6 @@
             <button class="dash-tab" onclick="switchDashTab('addLesson', this)">إضافة درس</button>
           </div>
 
-          <!-- 1. إضافة شهيد -->
           <div id="tab-addMartyr" class="dash-content">
             <div class="form-row">
               <div class="form-group"><label>اسم الشهيد *</label><input type="text" id="mName" /></div>
@@ -488,7 +501,6 @@
             <button class="btn btn-green" style="width:100%;" id="btnAddMartyr" onclick="addMartyr()"><i class="fas fa-plus"></i> حفظ ونشر الشهيد</button>
           </div>
 
-          <!-- 2. إضافة وصية -->
           <div id="tab-addWill" class="dash-content hidden">
             <div class="form-group"><label>اسم الشهيد *</label><input type="text" id="wName" /></div>
             <div class="form-group"><label>تاريخ الوصية</label><input type="date" id="wDate" /></div>
@@ -496,7 +508,6 @@
             <button class="btn btn-green" style="width:100%;" id="btnAddWill" onclick="addWill()"><i class="fas fa-plus"></i> حفظ الوصية</button>
           </div>
 
-          <!-- 3. إضافة منشور -->
           <div id="tab-addPost" class="dash-content hidden">
             <div class="form-group"><label>عنوان المنشور *</label><input type="text" id="pTitle" /></div>
             <div class="form-group"><label>نص المنشور *</label><textarea id="pText" rows="3"></textarea></div>
@@ -507,14 +518,12 @@
             <button class="btn btn-green" style="width:100%;" id="btnAddPost" onclick="addPost()"><i class="fas fa-plus"></i> حفظ المنشور</button>
           </div>
 
-          <!-- 4. إضافة مقولة -->
           <div id="tab-addQuote" class="dash-content hidden">
             <div class="form-group"><label>عنوان المقولة (مثال: مكانة الشهداء) *</label><input type="text" id="qTitle" /></div>
             <div class="form-group"><label>نص المقولة *</label><textarea id="qText" rows="4"></textarea></div>
             <button class="btn btn-green" style="width:100%;" id="btnAddQuote" onclick="addQuote()"><i class="fas fa-plus"></i> حفظ المقولة</button>
           </div>
 
-          <!-- 5. إضافة درس -->
           <div id="tab-addLesson" class="dash-content hidden">
             <div class="form-row">
               <div class="form-group">
@@ -612,7 +621,6 @@
       localStorage.setItem('tasbihCount', 0);
     };
 
-    // إضافة القرآن (استماع وقراءة)
     const surahs = [
       { name: "النبأ", url: "https://server10.mp3quran.net/minsh/078.mp3", read: "https://quran.com/78" },
       { name: "النازعات", url: "https://server10.mp3quran.net/minsh/079.mp3", read: "https://quran.com/79" },
@@ -652,6 +660,7 @@
       { name: "الفلق", url: "https://server10.mp3quran.net/minsh/113.mp3", read: "https://quran.com/113" },
       { name: "الناس", url: "https://server10.mp3quran.net/minsh/114.mp3", read: "https://quran.com/114" }
     ];
+    
     const surahListDiv = document.getElementById('quranSurahList');
     surahs.forEach(s => {
       const div = document.createElement('div');
@@ -676,15 +685,25 @@
       document.getElementById('sidebarOverlay').classList.toggle('open');
     };
 
-    window.showSection = (id) => {
+    window.showSection = (id, element) => {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
       document.getElementById(id).classList.add('active');
       if(id === 'dashboard') document.getElementById('dashboard').classList.add('dashboard'); 
-      window.scrollTo(0,0);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       if(document.getElementById('sidebar').classList.contains('open')) toggleSidebar();
+      
       // تحديث الزر النشط في القائمة
-      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-      event.currentTarget.classList.add('active');
+      if (element) {
+        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+        element.classList.add('active');
+      }
+    };
+
+    window.switchProgTab = (tabId, btn) => {
+      document.querySelectorAll('.program-horizontal').forEach(el => el.classList.remove('active'));
+      document.getElementById('prog-' + tabId).classList.add('active');
+      document.querySelectorAll('.program-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     };
 
     function getBase64(file) {
@@ -948,7 +967,7 @@
       
       try {
         btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...`; btn.disabled = true;
-        let fileUrl = ""; // يمكن ربطه بـ Supabase لاحقاً لرفع ملفات PDF
+        let fileUrl = ""; 
         await addDoc(collection(db, "lessons"), { day, name, fileUrl, createdAt: serverTimestamp() });
         showToast('تمت إضافة الدرس');
         ['lName'].forEach(id => document.getElementById(id).value = '');
@@ -972,7 +991,7 @@
       if (user) {
         document.getElementById('loginSection').classList.add('hidden'); document.getElementById('dashContent').classList.add('active');
         document.getElementById('logoutBtn').classList.remove('hidden');
-        document.getElementById('userEmail').textContent = user.email; showSection('dashboard');
+        document.getElementById('userEmail').textContent = user.email; showSection('dashboard', null);
       } else {
         document.getElementById('loginSection').classList.remove('hidden'); document.getElementById('dashContent').classList.remove('active');
         document.getElementById('logoutBtn').classList.add('hidden');
