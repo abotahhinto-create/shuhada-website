@@ -16,9 +16,9 @@
       --green-dark: #0d2818; --green-deep: #1a4a2e; --green-mid: #2e7d32; --green-light: #4caf50;
       --green-pale: #a5d6a7; --gold: #c9a227; --gold-light: #e6c85a;
       --bg-body: linear-gradient(135deg, #0a1f12 0%, #1a4a2e 50%, #0d2818 100%);
-      --card-bg: linear-gradient(160deg, rgba(26, 74, 46, 0.8), rgba(13, 40, 24, 0.95));
+      --card-bg: linear-gradient(160deg, rgba(26, 74, 46, 0.85), rgba(13, 40, 24, 0.95));
       --text-main: #f4f9f0; --text-muted: rgba(244, 249, 240, 0.7);
-      --navbar-bg: rgba(10, 31, 18, 0.9); --border-color: rgba(165, 214, 167, 0.3);
+      --navbar-bg: rgba(10, 31, 18, 0.95); --border-color: rgba(165, 214, 167, 0.3);
     }
     body.theme-light {
       --bg-body: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
@@ -35,7 +35,7 @@
     body.theme-emerald {
       --bg-body: linear-gradient(135deg, #002b1a 0%, #004d2e 50%, #006644 100%);
       --card-bg: linear-gradient(160deg, rgba(0, 77, 46, 0.85), rgba(0, 43, 26, 0.95));
-      --text-main: #e0f2e9; --text-muted: rgba(224, 242, 233, 0.7); --navbar-bg: rgba(0, 43, 26, 0.9);
+      --text-main: #e0f2e9; --text-muted: rgba(224, 242, 233, 0.7); --navbar-bg: rgba(0, 43, 26, 0.95);
       --border-color: rgba(0, 200, 120, 0.4); --green-dark: #002b1a; --green-mid: #008866;
       --green-light: #00b377; --green-pale: #66d9a8; --gold: #d4af37; --gold-light: #f0d060;
     }
@@ -49,40 +49,48 @@
     }
     @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-    .tree-layer { position: fixed; bottom: 0; left: 0; width: 100%; height: 60vh; z-index: -1; pointer-events: none; opacity: 0.15; }
+    /* أشجار متحركة في الخلفية */
+    .tree-layer { position: fixed; bottom: 0; left: 0; width: 100%; height: 60vh; z-index: -1; pointer-events: none; opacity: 0.2; }
     .tree-layer svg { width: 100%; height: 100%; }
     .tree-layer g { animation: sway 8s ease-in-out infinite; transform-origin: bottom center; }
     .tree-layer g:nth-child(even) { animation-delay: 2s; }
     .tree-layer g:nth-child(odd) { animation-delay: 4s; }
     @keyframes sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
 
+    /* شريط التنقل */
     .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; flex-direction: column;
-      background: var(--navbar-bg); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 1.5rem; height: 65px; background: var(--navbar-bg);
+      backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
     }
-    .nav-top { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 65px; width: 100%; }
-    .navbar .logo { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; font-weight: 900; color: var(--gold-light); }
+    .navbar .logo { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 900; color: var(--gold-light); }
     .navbar .logo i { font-size: 1.7rem; color: var(--green-pale); animation: pulse 2s infinite; }
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    .menu-toggle { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
     
-    .nav-links { display: flex; gap: 5px; list-style: none; flex-wrap: wrap; justify-content: center; overflow-x: auto; }
-    .nav-links a { color: var(--text-main); text-decoration: none; padding: 8px 12px; border-radius: 10px; font-weight: 600; font-size: 0.85rem; transition: all 0.3s; white-space: nowrap; cursor: pointer; }
-    .nav-links a:hover, .nav-links a.active { background: rgba(165, 214, 167, 0.15); color: var(--gold-light); }
-    
-    /* شريط المصمم أسفل القائمة */
-    .designer-bar {
-      text-align: center; font-size: 0.75rem; font-weight: 700; color: var(--gold);
-      background: rgba(0,0,0,0.3); padding: 4px; letter-spacing: 0.5px;
+    /* القائمة الجانبية */
+    .sidebar {
+      position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--navbar-bg);
+      z-index: 2000; transition: right 0.4s ease; border-left: 1px solid var(--border-color);
+      display: flex; flex-direction: column; padding-top: 20px;
     }
+    .sidebar.open { right: 0; }
+    .sidebar-close { align-self: flex-end; margin: 0 20px 10px; background: none; border: none; color: #e74c3c; font-size: 1.5rem; cursor: pointer; }
+    .sidebar a { padding: 15px 25px; color: var(--text-main); text-decoration: none; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .sidebar a:hover, .sidebar a.active { background: rgba(165, 214, 167, 0.1); color: var(--gold-light); border-right: 4px solid var(--gold); }
+    .sidebar-footer { margin-top: auto; padding: 15px; text-align: center; border-top: 1px solid var(--border-color); }
+    .sidebar-footer p { font-size: 0.8rem; font-weight: 700; color: var(--gold-light); }
+    .sidebar-footer .phone { font-size: 0.9rem; color: var(--green-pale); direction: ltr; }
+    
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1999; display: none; }
+    .overlay.open { display: block; }
 
-    .nav-actions { display: flex; gap: 10px; align-items: center; }
     .btn { padding: 8px 18px; border-radius: 10px; border: none; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 5px; }
     .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--green-dark); }
     .btn-green { background: linear-gradient(135deg, var(--green-mid), var(--green-light)); color: #fff; }
     .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
-    .menu-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
 
-    main { padding-top: 120px; min-height: 100vh; }
+    main { padding-top: 80px; min-height: 100vh; }
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
     .hero { text-align: center; padding: 20px 1rem; }
     .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; background: linear-gradient(135deg, var(--green-pale), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
@@ -91,16 +99,12 @@
     .stat-item .num { font-size: 2rem; font-weight: 900; color: var(--gold-light); }
     .stat-item .label { font-size: 0.85rem; color: var(--text-muted); }
 
-    .governorates-bar { display: flex; gap: 10px; overflow-x: auto; padding: 15px 0; scrollbar-width: thin; }
-    .gov-chip { flex-shrink: 0; padding: 6px 18px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.85rem; cursor: pointer; transition: all 0.3s; font-weight: 600; }
-    .gov-chip:hover, .gov-chip.active { background: var(--green-mid); border-color: var(--green-pale); color: #fff; transform: translateY(-2px); }
+    .section-title { text-align: center; margin: 30px 0 20px; }
+    .section-title h2 { font-size: 1.8rem; font-weight: 900; color: var(--gold-light); }
 
-    /* ===================== العرض الأفقي (للشهداء والوصايا والمنشورات) ===================== */
+    /* العرض الأفقي */
     .horizontal-wrapper { position: relative; width: 100%; padding: 10px 0 30px; }
-    .horizontal-scroll { 
-      display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; 
-      scroll-snap-type: x mandatory; scrollbar-width: thin; 
-    }
+    .horizontal-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
     .horizontal-scroll::-webkit-scrollbar { height: 6px; }
     .horizontal-scroll::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 10px; }
     
@@ -121,43 +125,43 @@
     .card-actions { display: flex; gap: 8px; align-items: center; }
     .btn-delete-card { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
 
-    .will-card, .post-card { flex: 0 0 300px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 20px; transition: all 0.3s; position: relative; }
-    .will-card:hover, .post-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+    /* مقولات السيد (بطاقات مزينة بالأشجار) */
+    .quote-card { flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 20px; position: relative; overflow: hidden; }
+    .quote-card::before { content: '🌿'; position: absolute; top: 10px; right: 10px; font-size: 1.5rem; opacity: 0.6; }
+    .quote-card::after { content: '🌳'; position: absolute; bottom: 10px; left: 10px; font-size: 1.5rem; opacity: 0.4; }
+    .quote-card h4 { color: var(--green-pale); font-size: 0.9rem; margin-bottom: 8px; }
+    .quote-card p { font-size: 0.95rem; font-style: italic; color: var(--text-main); }
+
+    /* الوصايا والمنشورات */
+    .will-card, .post-card { flex: 0 0 300px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 20px; position: relative; }
     .will-name, .post-card h3 { color: var(--gold-light); font-size: 1.1rem; margin-bottom: 8px; }
     .will-text { font-style: italic; font-size: 0.9rem; border-right: 3px solid var(--green-light); padding-right: 10px; }
-    .delete-btn-small { position: absolute; top: 10px; left: 10px; background: transparent; border: none; color: #e74c3c; font-size: 1rem; cursor: pointer; opacity: 0.6; }
-    
-    /* ===================== الأقسام الإضافية ===================== */
-    .section-title { text-align: center; margin: 40px 0 20px; }
-    .section-title h2 { font-size: 1.8rem; font-weight: 900; color: var(--gold-light); }
-    
-    .extra-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
-    
-    /* المسبحة */
-    .tasbih-card { background: var(--card-bg); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; text-align: center; }
+    .delete-btn-small { position: absolute; top: 10px; left: 10px; background: transparent; border: none; color: #e74c3c; font-size: 1rem; cursor: pointer; }
+
+    /* الأقسام الإضافية (مسبحة، قرآن) */
+    .tasbih-card { background: var(--card-bg); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 20px; }
     .tasbih-count { font-size: 3rem; font-weight: 900; color: var(--green-pale); margin: 10px 0; }
     .tasbih-btn { background: var(--green-mid); color: #fff; border: none; width: 100px; height: 100px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.1s; }
     .tasbih-btn:active { transform: scale(0.95); }
 
-    /* الدعاء */
-    .dua-card { background: var(--card-bg); border: 1px solid var(--green-light); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
-    .dua-text { font-family: 'Amiri', serif; font-size: 1.15rem; line-height: 2; color: var(--gold-light); text-align: center; }
-    
-    /* القرآن */
-    .quran-card { background: var(--card-bg); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; }
-    .quran-surah-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+    .quran-card { background: var(--card-bg); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+    .quran-surah-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 15px; max-height: 250px; overflow-y: auto; padding-right: 5px; }
     .quran-surah-list button { padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.9rem;}
     .quran-surah-list button:hover { background: var(--green-mid); }
 
-    /* برنامج رجال الله */
-    .program-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px; margin-bottom: 30px; }
-    .program-tabs { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;}
-    .program-tab { padding: 8px 20px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); cursor: pointer; }
-    .program-tab.active { background: var(--green-mid); }
-    .program-content { display: none; }
-    .program-content.active { display: block; }
-    .program-content ul { list-style: none; }
-    .program-content li { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; }
+    /* برنامج رجال الله (أفقي) */
+    .program-horizontal { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; }
+    .program-card { flex: 0 0 280px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 20px; }
+    .program-card h4 { color: var(--gold-light); margin-bottom: 10px; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+    .program-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; }
+    .program-card ul { list-style: none; }
+    .program-card li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+
+    /* جدول هدي القرآن */
+    .quran-plan-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: var(--card-bg); border-radius: 10px; overflow: hidden; }
+    .quran-plan-table th, .quran-plan-table td { padding: 12px; text-align: right; border-bottom: 1px solid var(--border-color); }
+    .quran-plan-table th { background: var(--green-mid); color: #fff; }
+    .quran-plan-table tr:hover { background: rgba(255,255,255,0.05); }
 
     /* نافذة الشهيد */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
@@ -186,6 +190,7 @@
     .dash-tab.active { background: var(--green-mid); }
     .dash-content { background: var(--card-bg); padding: 20px; border-radius: 15px; }
 
+    /* مبدل الثيمات */
     .theme-switcher { position: fixed; bottom: 15px; left: 15px; z-index: 1500; display: flex; gap: 8px; background: var(--navbar-bg); padding: 8px 12px; border-radius: 50px; border: 1px solid var(--border-color); }
     .theme-dot { width: 20px; height: 20px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
     .theme-dot.active { border-color: var(--gold); transform: scale(1.1); }
@@ -194,22 +199,27 @@
     .t3 { background: linear-gradient(135deg, #ffffff, #dcedc8); }
     .t4 { background: linear-gradient(135deg, #002b1a, #00b377); }
 
+    /* الرسائل المنبثقة للأدعية */
+    .dua-toast {
+      position: fixed; bottom: -150px; left: 50%; transform: translateX(-50%);
+      background: var(--card-bg); border: 2px solid var(--gold); border-radius: 15px;
+      padding: 15px 20px; width: 90%; max-width: 600px; text-align: center;
+      z-index: 4000; transition: bottom 0.8s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .dua-toast.show { bottom: 30px; }
+    .dua-toast p { font-family: 'Amiri', serif; font-size: 1.1rem; color: var(--gold-light); margin-top: 5px; }
+
     footer { background: rgba(0,0,0,0.4); padding: 15px 0; text-align: center; border-top: 1px solid var(--border-color); margin-top: 30px; }
     .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--green-mid); color: #fff; padding: 10px 20px; border-radius: 8px; z-index: 3000; transition: 0.3s; }
     .toast.show { transform: translateX(-50%) translateY(0); }
     .hidden { display: none !important; }
 
-    @media (max-width: 900px) {
-      .nav-links { display: none; position: absolute; top: 100px; right: 0; left: 0; background: var(--navbar-bg); flex-direction: column; padding: 15px; border-bottom: 1px solid var(--border-color); }
-      .nav-links.open { display: flex; }
-      .menu-toggle { display: block; }
-      .form-row { grid-template-columns: 1fr; }
-      .nav-top { padding: 0 1rem; }
-    }
+    @media (max-width: 900px) { .form-row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
+  <!-- خلفية الأشجار -->
   <div class="tree-layer">
     <svg viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax meet">
       <g transform="translate(150,300)"><rect x="-5" y="-50" width="10" height="50" fill="#2e7d32" opacity="0.6"/><circle cx="0" cy="-70" r="40" fill="#4caf50" opacity="0.4"/></g>
@@ -220,69 +230,82 @@
   </div>
 
   <div class="theme-switcher">
-    <div class="theme-dot t1 active" onclick="setTheme('', this)" title="غابة داكنة"></div>
-    <div class="theme-dot t2" onclick="setTheme('theme-light', this)" title="أخضر فاتح"></div>
-    <div class="theme-dot t3" onclick="setTheme('theme-white', this)" title="أبيض"></div>
-    <div class="theme-dot t4" onclick="setTheme('theme-emerald', this)" title="زمردي"></div>
+    <div class="theme-dot t1 active" onclick="setTheme('', this)"></div>
+    <div class="theme-dot t2" onclick="setTheme('theme-light', this)"></div>
+    <div class="theme-dot t3" onclick="setTheme('theme-white', this)"></div>
+    <div class="theme-dot t4" onclick="setTheme('theme-emerald', this)"></div>
   </div>
 
-  <nav class="navbar">
-    <div class="nav-top">
-      <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا العظماء</span></div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home" class="active" onclick="showSection('home')">الرئيسية</a></li>
-        <li><a href="#martyrs" onclick="showSection('martyrs')">عرض الشهداء</a></li>
-        <li><a href="#wills" onclick="showSection('wills')">الوصايا</a></li>
-        <li><a href="#posts" onclick="showSection('posts')">كلمات فيهم</a></li>
-        <li><a href="#program" onclick="showSection('program')">برنامج رجال الله</a></li>
-        <li><a href="#dashboard" onclick="showSection('dashboard')">لوحة التحكم</a></li>
-      </ul>
-      <div class="nav-actions">
-        <button class="btn btn-gold" id="loginBtn" onclick="showSection('dashboard')"><i class="fas fa-lock"></i> دخول</button>
-        <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
-        <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')"><i class="fas fa-bars"></i></button>
-      </div>
+  <!-- القائمة الجانبية -->
+  <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  <div class="sidebar" id="sidebar">
+    <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+    <a onclick="showSection('home')" class="active"><i class="fas fa-home"></i> الرئيسية</a>
+    <a onclick="showSection('martyrs')"><i class="fas fa-users"></i> عرض الشهداء</a>
+    <a onclick="showSection('wills')"><i class="fas fa-feather-alt"></i> الوصايا</a>
+    <a onclick="showSection('posts')"><i class="fas fa-comment-dots"></i> كلمات فيهم</a>
+    <a onclick="showSection('quran_plan')"><i class="fas fa-book-open"></i> دروس من هدي القرآن</a>
+    <a onclick="showSection('program')"><i class="fas fa-list-ol"></i> برنامج رجال الله</a>
+    <a onclick="showSection('tasbih')"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</a>
+    <a onclick="showSection('quran')"><i class="fas fa-book-quran"></i> القرآن الكريم</a>
+    
+    <a onclick="showSection('dashboard')" style="margin-top:20px; color:var(--gold-light);"><i class="fas fa-lock"></i> لوحة التحكم</a>
+    
+    <!-- اسم المصمم هنا -->
+    <div class="sidebar-footer">
+      <p><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري</p>
+      <p class="phone">771713275</p>
     </div>
-    <!-- شريط المصمم -->
-    <div class="designer-bar">تصميم وتطوير: نشوان البدري - 771713275</div>
+  </div>
+
+  <!-- شريط التنقل -->
+  <nav class="navbar">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا العظماء</span></div>
+    </div>
+    <div id="authBtns">
+      <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+    </div>
   </nav>
 
   <main>
-    <!-- الرئيسية -->
+    <!-- 1. الرئيسية -->
     <section id="home" class="section active">
       <div class="container">
         <div class="hero">
           <h1>شهداءنا العظماء</h1>
           <p>ذاكرة وطن لا ينسى… نضيء هنا سِيَر من ضحّوا بأرواحهم فداءً في سبيل الله، دفاعًا عن الأرض والعرض، من أجل الحرية والكرامة، ونيل العزة لهذه البلاد، وطرد كل الغزاة والمستعمرين.</p>
           <div class="hero-stats">
-            <div class="stat-item"><div class="num" id="statMartyrs">0</div><div class="label">شهيد مسجّل</div></div>
+            <div class="stat-item"><div class="num" id="statMartyrs">0</div><div class="label">شهيد مسجل</div></div>
             <div class="stat-item"><div class="num" id="statGovs">22</div><div class="label">محافظة</div></div>
             <div class="stat-item"><div class="num" id="statWills">0</div><div class="label">وصية</div></div>
           </div>
         </div>
 
-        <!-- الأقسام الإضافية -->
-        <div class="extra-grid">
-          <!-- المسبحة -->
-          <div class="tasbih-card">
-            <h3><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</h3>
-            <div class="tasbih-count" id="tasbihCount">0</div>
-            <button class="tasbih-btn" onclick="incrementTasbih()">سبّح</button>
-            <button class="btn btn-outline" style="margin-top:10px; width:100%; justify-content:center;" onclick="resetTasbih()">تصفير العداد</button>
-          </div>
-
-          <!-- دعاء الإمام زيد -->
-          <div class="dua-card">
-            <h3 style="text-align:center; color:var(--gold-light); margin-bottom:10px;"><i class="fas fa-hands"></i> من أدعية الإمام زيد بن علي</h3>
-            <div class="dua-text" id="duaText">جاري تحميل الدعاء...</div>
-          </div>
-
-          <!-- القرآن -->
-          <div class="quran-card">
-            <h3 style="text-align:center; color:var(--gold-light);"><i class="fas fa-book-quran"></i> استماع وقراءة جزء عمّ (المنشاوي)</h3>
-            <audio id="quranAudio" controls style="width:100%; margin:10px 0;"></audio>
-            <div class="quran-surah-list" id="quranSurahList">
-              <!-- سيتم تعبئتها بالجافاسكربت -->
+        <!-- مقولات السيد القائد (أفقية) -->
+        <div class="section-title"><h2>من كلام السيد القائد عبدالملك الحوثي</h2></div>
+        <div class="horizontal-wrapper">
+          <div class="horizontal-scroll">
+            <div class="quote-card">
+              <h4><i class="fas fa-hands"></i> تحية أسر الشهداء</h4>
+              <p>"تحية الإعزاز والتبجيل والتقدير لكل أسر الشهداء الصابرة المحتسبة".</p>
+            </div>
+            <div class="quote-card">
+              <h4><i class="fas fa-star"></i> مكانة الشهادة والشهداء</h4>
+              <p>إن الذكرى السنوية للشهيد "تكتسب قدسيتها وعظمتها وأهميتها من القدسية التي جعلها الله سبحانه وتعالى للشهادة في سبيله، وللشهداء في سبيله".</p>
+            </div>
+            <div class="quote-card">
+              <h4><i class="fas fa-unlink"></i> كسر قيود الخوف</h4>
+              <p>"روحية الشهادة لها أهميتها الكبيرة في كسر كل قيود الخوف والأغلال التي يحاول الطغاة والجبابرة والظالمون والمستكبرون أن يكبلوا بها شعوب أمتنا الإسلامية".</p>
+            </div>
+            <div class="quote-card">
+              <h4><i class="fas fa-users"></i> النماذج الملهمة</h4>
+              <p>"الشهداء في سبيل الله هم نماذج ملهمة في عطائهم، في أخلاقهم، في قيمهم، في ثباتهم، وكذلك تستلهم الأمة منهم عظيم الصبر والعطاء والثبات في مواجهة الطغيان".</p>
+            </div>
+            <div class="quote-card">
+              <h4><i class="fas fa-fist-raised"></i> رفض الاستعباد والتبعية</h4>
+              <p>التأكيد على أن التحرك في سبيل الله وتضحيات الشهداء تحرر الأمة من سيطرة الطاغوت والاستكبار وتمنحها المنعة والعزة.</p>
             </div>
           </div>
         </div>
@@ -297,7 +320,7 @@
       </div>
     </section>
 
-    <!-- عرض الشهداء -->
+    <!-- 2. عرض الشهداء -->
     <section id="martyrs" class="section">
       <div class="container">
         <div class="section-title"><h2>سجل الشهداء الكامل</h2></div>
@@ -307,7 +330,7 @@
       </div>
     </section>
 
-    <!-- الوصايا -->
+    <!-- 3. الوصايا -->
     <section id="wills" class="section">
       <div class="container">
         <div class="section-title"><h2>وصايا الشهداء</h2></div>
@@ -317,7 +340,7 @@
       </div>
     </section>
 
-    <!-- المنشورات -->
+    <!-- 4. المنشورات -->
     <section id="posts" class="section">
       <div class="container">
         <div class="section-title"><h2>كلمات في الشهداء</h2></div>
@@ -327,53 +350,95 @@
       </div>
     </section>
 
-    <!-- برنامج رجال الله -->
-    <section id="program" class="section">
+    <!-- 5. دروس من هدي القرآن (جديد) -->
+    <section id="quran_plan" class="section">
       <div class="container">
-        <div class="section-title"><h2>برنامج رجال الله</h2></div>
-        <div class="program-card">
-          <div class="program-tabs">
-            <button class="program-tab active" onclick="switchProgTab('daily', this)">البرنامج اليومي</button>
-            <button class="program-tab" onclick="switchProgTab('weekly', this)">البرنامج الأسبوعي</button>
-            <button class="program-tab" onclick="switchProgTab('monthly', this)">البرنامج الشهري</button>
-          </div>
-          
-          <div id="prog-daily" class="program-content active">
-            <ul>
-              <li><span>الفجر: صلاة الفجر وقراءة الورد القرآني</span> <span>04:00 ص</span></li>
-              <li><span>الضحى: جلسة تثقيفية ومراجعة الحفظ</span> <span>08:00 ص</span></li>
-              <li><span>الظهر: الصلاة والاستماع لمحاضرة</span> <span>12:00 م</span></li>
-              <li><span>العصر: نشاط رياضي وبدني</span> <span>04:00 م</span></li>
-              <li><span>المغرب: حلقات القرآن الكريم</span> <span>06:00 م</span></li>
-              <li><span>العشاء: التسميع والختام</span> <span>08:00 م</span></li>
-            </ul>
-          </div>
-          
-          <div id="prog-weekly" class="program-content">
-            <ul>
-              <li><span>السبت: مراجعة الدروس الأسبوعية</span> <span>طوال اليوم</span></li>
-              <li><span>الأحد: زيارة أسر الشهداء والجرحى</span> <span>09:00 ص</span></li>
-              <li><span>الاثنين: جلسة أعلام وثقافة</span> <span>05:00 م</span></li>
-              <li><span>الثلاثاء: تدريبات ميدانية</span> <span>07:00 ص</span></li>
-              <li><span>الأربعاء: محاضرة أخلاقية</span> <span>06:00 م</span></li>
-              <li><span>الخميس: قراءة سورة الكهف وأدعية</span> <span>03:00 م</span></li>
-              <li><span>الجمعة: صلاة الجمعة واجتماع عام</span> <span>11:00 ص</span></li>
-            </ul>
-          </div>
-          
-          <div id="prog-monthly" class="program-content">
-            <ul>
-              <li><span>الأسبوع الأول: حملة نظافة وتطوعية</span> <span>نهاية الأسبوع</span></li>
-              <li><span>الأسبوع الثاني: مسابقة حفظ القرآن الكريم</span> <span>يوم الخميس</span></li>
-              <li><span>الأسبوع الثالث: استعراض وتقييم الأداء</span> <span>يوم الجمعة</span></li>
-              <li><span>الأسبوع الرابع: زيارة تربوية وتثقيفية</span> <span>منتصف الأسبوع</span></li>
-            </ul>
-          </div>
+        <div class="section-title"><h2>دروس من هدي القرآن (ملزمة الأسبوع)</h2></div>
+        <div style="overflow-x:auto;">
+          <table class="quran-plan-table">
+            <thead>
+              <tr>
+                <th>اليوم</th>
+                <th>عنوان الدرس / الملزمة</th>
+                <th>الوقت المقترح</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>السبت</td><td>مقدمة في التزكية وأهمية الورد اليومي</td><td>بعد صلاة الفجر</td></tr>
+              <tr><td>الأحد</td><td>تفسير آيات من سورة البقرة (آية الكرسي)</td><td>بعد صلاة العصر</td></tr>
+              <tr><td>الاثنين</td><td>أهمية الاستغفار بالأسحار وقيام الليل</td><td>قبل الفجر بنصف ساعة</td></tr>
+              <tr><td>الثلاثاء</td><td>التربية الجهادية من منظور قرآني</td><td>بعد صلاة المغرب</td></tr>
+              <tr><td>الأربعاء</td><td>براءة الله من المشركين وأهمية الولاء والبراء</td><td>بعد صلاة العشاء</td></tr>
+              <tr><td>الخميس</td><td>فضل الصلاة على محمد وآل محمد</td><td>بعد صلاة المغرب</td></tr>
+              <tr><td>الجمعة</td><td>مراجعة شاملة وتقييم الأسبوع</td><td>بعد صلاة الجمعة</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- لوحة التحكم -->
+    <!-- 6. برنامج رجال الله (أفقي ومعدل) -->
+    <section id="program" class="section">
+      <div class="container">
+        <div class="section-title"><h2>برنامج رجال الله</h2></div>
+        <div class="program-horizontal">
+          
+          <div class="program-card">
+            <h4><i class="fas fa-sun"></i> البرنامج اليومي</h4>
+            <ul>
+              <li><b>الصلاة:</b> أداء الصلوات في أوقاتها بخشوع واعتبارها أساساً لتزكية النفس.</li>
+              <li><b>تلاوة القرآن:</b> قراءة ورد يومي أو الاستماع له بإنصات وتدبر.</li>
+              <li><b>الدعاء:</b> الإكثار من التضرع واليقين، خاصة في أوقات الشدة والمواجهات.</li>
+              <li><b>الاستغفار بالأسحار:</b> ختْم أو قضاء وقت قبل الفجر بنحو 30 دقيقة وحتى انتشار نور الفجر بالاستغفار.</li>
+              <li><b>التسبيح والأذكار:</b> ترديد الأذكار المحددة (مثل التسبيحات اليومية 100 مرة: "سبحان الله، الحمد لله، لا إله إلا الله، الله أكبر، لا حول ولا قوة إلا بالله العلي العظيم، حسبنا الله ونعم الوكيل"، وتسبيح النبي يونس عليه السلام في وقت الشدة).</li>
+            </ul>
+          </div>
+
+          <div class="program-card">
+            <h4><i class="fas fa-calendar-week"></i> البرنامج الأسبوعي</h4>
+            <ul>
+              <li><b>قراءة أو سماع ملزمة الأسبوع:</b> متابعة الدروس أو المحاضرات (الملزمة) المقررة من القيادة أو دائرة الثقافة القرآنية ودراستها أسبوعياً.</li>
+              <li><b>الإنفاق:</b> تخصيص جانب للصدقة والبذل في السياق الاجتماعي أو الجهادي المرتبط بالمسيرة.</li>
+            </ul>
+          </div>
+
+          <div class="program-card">
+            <h4><i class="fas fa-calendar-alt"></i> البرنامج الشهري</h4>
+            <ul>
+              <li><b>زيارة روضات الشهداء:</b> زيارة جماعية أو فردية لمقابر القتلى التابعين لهم، وقراءة الفاتحة والدعاء لهم، باعتبارها محطة لتجديد العهد والتربية على روحية العطاء والبذل.</li>
+              <li><b>التقييم والمحاسبة النفسية:</b> مراجعة مدى الالتزام بالبرنامج اليومي والأسبوعي (كالاستغفار، والتسبيح، وقراءة الملازم) خلال الشهر الفائت، وتصحيح القصور والتقصير.</li>
+              <li><b>تجديد التثقيف بالهوية الإيمانية:</b> حضور ورش ثقافية أو اجتماعات موسعة لمناقشة المستجدات وتوجيهات القيادة، ومتابعة الدروس المخصصة للجانب التزكوي والعملي.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. المسبحة (بعد الضغط عليها) -->
+    <section id="tasbih" class="section">
+      <div class="container">
+        <div class="section-title"><h2>المسبحة الإلكترونية</h2></div>
+        <div class="tasbih-card">
+          <div class="tasbih-count" id="tasbihCount">0</div>
+          <button class="tasbih-btn" onclick="incrementTasbih()">سبّح</button>
+          <button class="btn btn-outline" style="margin-top:15px; width:100%; justify-content:center;" onclick="resetTasbih()">تصفير العداد</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. القرآن (بعد الضغط عليه) -->
+    <section id="quran" class="section">
+      <div class="container">
+        <div class="section-title"><h2>استماع وقراءة جزء عمّ (المنشاوي)</h2></div>
+        <div class="quran-card">
+          <audio id="quranAudio" controls style="width:100%; margin-bottom:15px;"></audio>
+          <div class="quran-surah-list" id="quranSurahList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. لوحة التحكم -->
     <section id="dashboard" class="section dashboard">
       <div class="container">
         <div id="loginSection">
@@ -459,8 +524,7 @@
 
   <footer>
     <div class="container">
-      <p style="color:var(--gold-light); font-size:1.1rem;"><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري</p>
-      <p style="color:var(--green-pale); font-size:1.2rem; font-weight:bold; direction:ltr;">771713275</p>
+      <p style="color:var(--gold-light); font-size:1.1rem;"><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري - 771713275</p>
     </div>
   </footer>
 
@@ -488,7 +552,35 @@
     let allMartyrs = []; let allWills = []; let allPosts = [];
     let currentGov = 'الكل'; let currentUser = null;
 
-    // ====== المسبحة الإلكترونية ======
+    // ====== أدعية تظهر كرسائل متحركة ======
+    const duas = [
+      "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّكَ أَنْتَ اللهُ لا إِلَهَ إِلا أَنْتَ، الأَحَدُ الصَّمَدُ، الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ، أَنْ تَغْفِرَ لِي ذُنُوبِي إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ.",
+      "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّ لَكَ الْحَمْدَ، لا إِلَهَ إِلا أَنْتَ، الْمَنَّانُ بَدِيعُ السَّمَاوَاتِ وَالأَرْضِ، يَا ذَا الْجَلالِ وَالإِكْرَامِ، يَا حَيُّ يَا قَيُّومُ إِنِّي أَسْأَلُكَ.",
+      "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ.",
+      "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لا إِلَهَ إِلا أَنْتَ.",
+      "حَسْبِيَ اللهُ وَكَفَى، سَمِعَ اللهُ لِمَنْ دَعَا، لَيْسَ لِي إِلا اللهُ، وَلا مُنْجِيَ مِنَ اللهِ إِلا هُوَ.",
+      "إِلَهِي كَيْفَ أَدْعُوكَ وَأَنَا أَنَا، وَكَيْفَ أَقْطَعُ رَجَائِي مِنْكَ وَأَنْتَ أَنْتَ؟ إِلَهِي إِذَا لَمْ تَغْفِرْ لِي ذُنُوبِي فَمَنْ يَغْفِرُهَا لِي؟"
+    ];
+
+    function showDuaToast() {
+      const randomDua = duas[Math.floor(Math.random() * duas.length)];
+      const toast = document.createElement('div');
+      toast.className = 'dua-toast';
+      toast.innerHTML = `<h4 style="color:var(--green-pale); font-size:0.9rem;"><i class="fas fa-hands"></i> من أدعية الإمام زيد بن علي</h4><p>"${randomDua}"</p>`;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 800);
+      }, 12000); // تختفي بعد 12 ثانية
+    }
+
+    // إظهار دعاء كل 5 دقائق
+    setTimeout(showDuaToast, 5000); 
+    setInterval(showDuaToast, 5 * 60 * 1000);
+
+    // ====== المسبحة ======
     let tasbihCount = parseInt(localStorage.getItem('tasbihCount')) || 0;
     document.getElementById('tasbihCount').innerText = tasbihCount;
     window.incrementTasbih = () => {
@@ -503,29 +595,7 @@
       localStorage.setItem('tasbihCount', 0);
     };
 
-    // ====== أدعية الإمام زيد بن علي والإمام علي (ع) ======
-    const duas = [
-      "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّكَ أَنْتَ اللهُ لا إِلَهَ إِلا أَنْتَ، الأَحَدُ الصَّمَدُ، الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ، أَنْ تَغْفِرَ لِي ذُنُوبِي إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ.",
-      "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّ لَكَ الْحَمْدَ، لا إِلَهَ إِلا أَنْتَ، الْمَنَّانُ بَدِيعُ السَّمَاوَاتِ وَالأَرْضِ، يَا ذَا الْجَلالِ وَالإِكْرَامِ، يَا حَيُّ يَا قَيُّومُ إِنِّي أَسْأَلُكَ.",
-      "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ.",
-      "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لا إِلَهَ إِلا أَنْتَ.",
-      "حَسْبِيَ اللهُ وَكَفَى، سَمِعَ اللهُ لِمَنْ دَعَا، لَيْسَ لِي إِلا اللهُ، وَلا مُنْجِيَ مِنَ اللهِ إِلا هُوَ.",
-      "إِلَهِي كَيْفَ أَدْعُوكَ وَأَنَا أَنَا، وَكَيْفَ أَقْطَعُ رَجَائِي مِنْكَ وَأَنْتَ أَنْتَ؟ إِلَهِي إِذَا لَمْ تَغْفِرْ لِي ذُنُوبِي فَمَنْ يَغْفِرُهَا لِي؟",
-      "اللَّهُمَّ يَا مَنْ لا يَخْفَى عَلَيْهِ شَيْءٌ فِي الأَرْضِ وَلا فِي السَّمَاءِ، اجْعَلْ قَبْرِي رَوْضَةً مِنْ رِيَاضِ الْجَنَّةِ، وَلا تَجْعَلْهُ حُفْرَةً مِنْ حُفَرِ النِّيرَانِ.",
-      "اللَّهُمَّ ارْزُقْنِي حُبَّكَ، وَحُبَّ مَنْ يُحِبُّكَ، وَحُبَّ عَمَلٍ يُقَرِّبُنِي إِلَى حُبِّكَ، وَاجْعَلْ حُبَّكَ أَحَبَّ إِلَيَّ مِنْ نَفْسِي وَأَهْلِي وَمَالِي.",
-      "اللَّهُمَّ إِنِّي أَسْأَلُكَ إِيمَانًا صَادِقًا، وَقَلْبًا خَاشِعًا، وَلِسَانًا ذَاكِرًا، وَعِلْمًا نَافِعًا، وَيَقِينًا صَادِقًا، وَعَمَلاً صَالِحًا.",
-      "اللَّهُمَّ اجْعَلْ لِي فِي قَلْبِي نُورًا، وَفِي بَصَرِي نُورًا، وَفِي سَمْعِي نُورًا، وَعَنْ يَمِينِي نُورًا، وَعَنْ شِمَالِي نُورًا، وَفَوْقِي نُورًا، وَتَحْتِي نُورًا."
-    ];
-    function updateDua() {
-      const interval = 15 * 60 * 1000;
-      const index = Math.floor(Date.now() / interval) % duas.length;
-      document.getElementById('duaText').innerText = duas[index];
-    }
-    updateDua();
-    setInterval(updateDua, 60000);
-
-    // ====== القرآن الكريم (بصوت المنشاوي - جزء عمّ) ======
-    // روابط صوت المنشاوي من سيرفر mp3quran
+    // ====== القرآن ======
     const surahs = [
       { name: "النبأ", url: "https://server10.mp3quran.net/minsh/078.mp3" },
       { name: "النازعات", url: "https://server10.mp3quran.net/minsh/079.mp3" },
@@ -571,21 +641,26 @@
       btn.innerText = `سورة ${s.name}`;
       btn.onclick = () => {
         const audio = document.getElementById('quranAudio');
-        audio.src = s.url;
-        audio.play();
+        audio.src = s.url; audio.play();
       };
       surahListDiv.appendChild(btn);
     });
 
-    // ====== برنامج رجال الله (تبويبات) ======
-    window.switchProgTab = (tabId, btn) => {
-      document.querySelectorAll('.program-content').forEach(el => el.classList.remove('active'));
-      document.getElementById('prog-' + tabId).classList.add('active');
-      document.querySelectorAll('.program-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    // ====== القائمة الجانبية ======
+    window.toggleSidebar = () => {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('open');
     };
 
-    // ====== دالة Base64 للصور ======
+    window.showSection = (id) => {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
+      document.getElementById(id).classList.add('active');
+      if(id === 'dashboard') document.getElementById('dashboard').classList.add('dashboard'); 
+      window.scrollTo(0,0);
+      toggleSidebar();
+    };
+
+    // ====== Firebase (بيانات حقيقية + وهمية) ======
     function getBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader(); reader.readAsDataURL(file);
@@ -593,7 +668,6 @@
       });
     }
 
-    // بيانات وهمية
     function generateMockMartyrs() {
       const names = ["أحمد","محمد","علي","صالح","يوسف"];
       const data = [];
@@ -795,31 +869,21 @@
       currentUser = user;
       if (user) {
         document.getElementById('loginSection').classList.add('hidden'); document.getElementById('dashContent').classList.add('active');
-        document.getElementById('loginBtn').classList.add('hidden'); document.getElementById('logoutBtn').classList.remove('hidden');
+        document.getElementById('logoutBtn').classList.remove('hidden');
         document.getElementById('userEmail').textContent = user.email; showSection('dashboard');
       } else {
         document.getElementById('loginSection').classList.remove('hidden'); document.getElementById('dashContent').classList.remove('active');
-        document.getElementById('loginBtn').classList.remove('hidden'); document.getElementById('logoutBtn').classList.add('hidden');
+        document.getElementById('logoutBtn').classList.add('hidden');
         document.getElementById('userEmail').textContent = '';
       }
       renderAll();
     });
 
     function renderAll() { renderMartyrs(); renderWills(); renderPosts(); updateStats(); }
-
-    window.showSection = (id) => {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
-      document.getElementById(id).classList.add('active');
-      if(id === 'dashboard') document.getElementById('dashboard').classList.add('dashboard'); 
-      window.scrollTo(0,0);
-      document.getElementById('navLinks').classList.remove('open');
-    };
-    
     window.switchDashTab = (tabId, btn) => {
       document.querySelectorAll('.dash-content').forEach(el => el.classList.add('hidden')); document.getElementById('tab-' + tabId).classList.remove('hidden');
       document.querySelectorAll('.dash-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active');
     };
-    
     window.setTheme = (theme, el) => { document.body.className = theme; document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active')); el.classList.add('active'); };
     
     function showToast(msg, isErr) {
