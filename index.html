@@ -536,7 +536,13 @@
               <div class="form-group"><label>تاريخ الاستشهاد *</label><input type="date" id="mDate" /></div>
             </div>
             <div class="form-row">
-              <div class="form-group"><label>المحافظة *</label><select id="mGov"></select></div>
+              <div class="form-group">
+                <label>المحافظة *</label>
+                <!-- تم إضافة خيار افتراضي فارغ لمنع الحفظ بالخطأ -->
+                <select id="mGov">
+                  <option value="" disabled selected>-- اختر المحافظة --</option>
+                </select>
+              </div>
               <div class="form-group"><label>العنوان</label><input type="text" id="mAddress" /></div>
             </div>
             <div class="form-group">
@@ -685,8 +691,8 @@
     const GOVERNORATES = ["أمانة العاصمة","صنعاء","عدن","تعز","حضرموت","الحديدة","مأرب","أبين","إب","البيضاء","حجة","صعدة","ذمار","لحج","المحويت","المهرة","شبوة","الجوف","الضالع","عمران","ريمة","سقطرى"];
 
     let allMartyrs = []; let allWills = []; let allPosts = []; let allQuotes = []; let allLessons = []; let allDuas = [];
-    let currentGovHome = 'الكل'; 
-    let currentGovAll = 'الكل'; 
+    // تم توحيد متغير الفلترة ليعمل على كل الصفحات
+    let currentGov = 'الكل'; 
     let currentUser = null;
     let currentUserRole = 'guest';
     let currentUserGov = '';
@@ -846,18 +852,20 @@
       const allGovs = ["الكل", ...GOVERNORATES];
 
       allGovs.forEach(gov => {
+        // الرئيسية
         const btnHome = document.createElement('button');
         btnHome.className = 'gov-chip' + (gov === 'الكل' ? ' active' : '');
         btnHome.dataset.gov = gov; 
         btnHome.innerHTML = gov === 'الكل' ? '<i class="fas fa-globe"></i> الكل' : `<i class="fas fa-map-marker-alt"></i> ${gov}`;
-        btnHome.onclick = () => filterMartyrs(gov, btnHome, 'home');
+        btnHome.onclick = () => filterMartyrs(gov);
         govBarHome.appendChild(btnHome);
 
+        // صفحة العرض
         const btnAll = document.createElement('button');
         btnAll.className = 'gov-chip' + (gov === 'الكل' ? ' active' : '');
         btnAll.dataset.gov = gov; 
         btnAll.innerHTML = gov === 'الكل' ? '<i class="fas fa-globe"></i> الكل' : `<i class="fas fa-map-marker-alt"></i> ${gov}`;
-        btnAll.onclick = () => filterMartyrs(gov, btnAll, 'all');
+        btnAll.onclick = () => filterMartyrs(gov);
         govBarAll.appendChild(btnAll);
         
         if(gov !== 'الكل') {
@@ -902,14 +910,12 @@
       });
     }
 
-    function filterMartyrs(gov, btn, source) {
-      if(source === 'home') {
-        document.querySelectorAll('#govBarHome .gov-chip').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-        currentGovHome = gov;
-      } else {
-        document.querySelectorAll('#govBarAll .gov-chip').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-        currentGovAll = gov;
-      }
+    // تم إصلاح الدالة لتحديث الفلترة في كل الصفحات
+    function filterMartyrs(gov) {
+      currentGov = gov;
+      document.querySelectorAll('.gov-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.gov === gov);
+      });
       renderMartyrs();
     }
 
@@ -930,10 +936,10 @@
       const gridHome = document.getElementById('martyrsGridHome');
       const gridAll = document.getElementById('martyrsGridAll');
       
-      const filteredHome = currentGovHome === 'الكل' ? allMartyrs : allMartyrs.filter(m => (m.gov || '').trim() === currentGovHome.trim());
-      const filteredAll = currentGovAll === 'الكل' ? allMartyrs : allMartyrs.filter(m => (m.gov || '').trim() === currentGovAll.trim());
+      // الفلترة تعتمد الآن على متغير واحد مشترك
+      const filtered = currentGov === 'الكل' ? allMartyrs : allMartyrs.filter(m => (m.gov || '').trim() === currentGov.trim());
       
-      const createHtml = (filtered) => filtered.map(m => `
+      const createHtml = (list) => list.map(m => `
         <div class="beautiful-card">
           <div class="card-image-wrapper" onclick="openModal('${m.id}')">
             <img class="card-image" src="${m.image || 'https://picsum.photos/400/300'}" />
@@ -951,8 +957,8 @@
         </div>
       `).join('');
       
-      if(gridHome) gridHome.innerHTML = createHtml(filteredHome);
-      if(gridAll) gridAll.innerHTML = createHtml(filteredAll);
+      if(gridHome) gridHome.innerHTML = createHtml(filtered);
+      if(gridAll) gridAll.innerHTML = createHtml(filtered);
     }
 
     function renderQuotes() {
@@ -1126,6 +1132,7 @@
     window.cancelEdit = () => {
       document.getElementById('editMId').value = '';
       ['mName','mDate','mAddress','mBio','mVideoUrl'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('mGov').value = ''; // إعادة تعيين القائمة
       document.getElementById('mImageFile').value = '';
       document.getElementById('btnSaveMartyr').innerHTML = `<i class="fas fa-plus"></i> حفظ ونشر الشهيد`;
       document.getElementById('btnCancelEdit').style.display = 'none';
@@ -1142,6 +1149,7 @@
       const videoUrl = document.getElementById('mVideoUrl').value.trim();
 
       if(!name || !date || !bio) { showToast('يرجى ملء الحقول الأساسية', true); return; }
+      if(!gov) { showToast('يرجى اختيار المحافظة', true); return; } // التحقق من اختيار المحافظة
       
       try {
         btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري المعالجة...`; btn.disabled = true;
