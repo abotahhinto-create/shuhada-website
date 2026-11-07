@@ -538,7 +538,6 @@
             <div class="form-row">
               <div class="form-group">
                 <label>المحافظة *</label>
-                <!-- تم إضافة خيار افتراضي فارغ لمنع الحفظ بالخطأ -->
                 <select id="mGov">
                   <option value="" disabled selected>-- اختر المحافظة --</option>
                 </select>
@@ -630,7 +629,7 @@
     <div class="modal-content" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
       <div class="modal-hero-container">
-        <img class="modal-hero" id="modalImage" src="" />
+        <img class="modal-hero" id="modalImage" src="" onerror="this.src='https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد'" />
       </div>
       <div class="modal-body">
         <h2 id="modalName" style="color:var(--gold-light); margin-bottom:5px;"></h2>
@@ -691,7 +690,6 @@
     const GOVERNORATES = ["أمانة العاصمة","صنعاء","عدن","تعز","حضرموت","الحديدة","مأرب","أبين","إب","البيضاء","حجة","صعدة","ذمار","لحج","المحويت","المهرة","شبوة","الجوف","الضالع","عمران","ريمة","سقطرى"];
 
     let allMartyrs = []; let allWills = []; let allPosts = []; let allQuotes = []; let allLessons = []; let allDuas = [];
-    // تم توحيد متغير الفلترة ليعمل على كل الصفحات
     let currentGov = 'الكل'; 
     let currentUser = null;
     let currentUserRole = 'guest';
@@ -802,7 +800,7 @@
       
       resultsDiv.innerHTML = filtered.map(m => `
         <div class="search-result-item" onclick="openModal('${m.id}'); document.getElementById('searchModal').classList.remove('open');">
-          <img src="${m.image || 'https://picsum.photos/50'}" />
+          <img src="${m.image || 'https://picsum.photos/50'}" onerror="this.src='https://placehold.co/50x50/1b5e20/a5d6a7?text=شهيد'" />
           <div class="search-result-info">
             <h4>${m.name}</h4>
             <p><i class="fas fa-map-marker-alt"></i> ${m.gov} | <i class="fas fa-calendar-alt"></i> ${m.date}</p>
@@ -910,7 +908,6 @@
       });
     }
 
-    // تم إصلاح الدالة لتحديث الفلترة في كل الصفحات
     function filterMartyrs(gov) {
       currentGov = gov;
       document.querySelectorAll('.gov-chip').forEach(b => {
@@ -919,30 +916,31 @@
       renderMartyrs();
     }
 
+    // تم تقليل البيانات التجريبية لـ 3 فقط وبأسماء مختلفة لكي لا تكرر وتوسخ الموقع
     function generateMockMartyrs() {
-      const names = ["أحمد","محمد","علي","صالح","يوسف"];
-      const data = [];
-      GOVERNORATES.forEach((gov, i) => {
-        data.push({
-          id: `mock-${i}`, name: `الشهيد ${names[i%5]} (تجريبي)`, date: `2024-05-10`,
-          gov: gov, address: `المركز`, image: `https://picsum.photos/seed/${gov}/400/300`,
-          bio: "قضى حياته مدافعاً عن الأرض والعرض، ولم يتردد لحظة في التضحية.", video: "", isMock: true
-        });
-      });
-      return data;
+      return [
+        {
+          id: 'mock-1', name: 'الشهيد أحمد (تجريبي)', date: '2024-05-10', gov: 'صنعاء', address: 'المركز', image: 'https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد+تجريبي', bio: 'هذا شهيد تجريبي لمعاينة التصميم، يمكنك حذفه من لوحة التحكم.', video: "", isMock: true
+        },
+        {
+          id: 'mock-2', name: 'الشهيد محمد (تجريبي)', date: '2024-06-15', gov: 'تعز', address: 'المركز', image: 'https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد+تجريبي', bio: 'هذا شهيد تجريبي لمعاينة التصميم.', video: "", isMock: true
+        },
+        {
+          id: 'mock-3', name: 'الشهيد خالد (تجريبي)', date: '2024-07-20', gov: 'عدن', address: 'المركز', image: 'https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد+تجريبي', bio: 'هذا شهيد تجريبي لمعاينة التصميم.', video: "", isMock: true
+        }
+      ];
     }
 
     function renderMartyrs() {
       const gridHome = document.getElementById('martyrsGridHome');
       const gridAll = document.getElementById('martyrsGridAll');
       
-      // الفلترة تعتمد الآن على متغير واحد مشترك
       const filtered = currentGov === 'الكل' ? allMartyrs : allMartyrs.filter(m => (m.gov || '').trim() === currentGov.trim());
       
       const createHtml = (list) => list.map(m => `
         <div class="beautiful-card">
           <div class="card-image-wrapper" onclick="openModal('${m.id}')">
-            <img class="card-image" src="${m.image || 'https://picsum.photos/400/300'}" />
+            <img class="card-image" src="${m.image || 'https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد'}" onerror="this.src='https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد'" />
             <span class="card-badge">${m.gov}</span>
           </div>
           <div class="card-body">
@@ -951,7 +949,7 @@
             <p class="card-bio">${m.bio}</p>
             <div class="card-actions">
               <button class="btn btn-outline" style="flex:1; font-size:0.8rem; padding:6px;" onclick="openModal('${m.id}')">السيرة</button>
-              ${(!m.isMock && currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && currentUserGov === m.gov))) ? `<button class="btn-delete-card" onclick="deleteM('${m.id}')"><i class="fas fa-trash"></i></button>` : ''}
+              ${(!m.isMock && currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && (currentUserGov || '').trim() === (m.gov || '').trim()))) ? `<button class="btn-delete-card" onclick="deleteM('${m.id}')" title="حذف"><i class="fas fa-trash"></i></button>` : ''}
             </div>
           </div>
         </div>
@@ -1070,7 +1068,7 @@
 
     window.openModal = (id) => {
       const m = allMartyrs.find(x => x.id === id); if (!m) return;
-      document.getElementById('modalImage').src = m.image || 'https://picsum.photos/800/400';
+      document.getElementById('modalImage').src = m.image || 'https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد';
       document.getElementById('modalName').textContent = m.name;
       document.getElementById('modalDate').textContent = m.date;
       document.getElementById('modalGov').textContent = m.gov;
@@ -1132,7 +1130,7 @@
     window.cancelEdit = () => {
       document.getElementById('editMId').value = '';
       ['mName','mDate','mAddress','mBio','mVideoUrl'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('mGov').value = ''; // إعادة تعيين القائمة
+      document.getElementById('mGov').value = ''; 
       document.getElementById('mImageFile').value = '';
       document.getElementById('btnSaveMartyr').innerHTML = `<i class="fas fa-plus"></i> حفظ ونشر الشهيد`;
       document.getElementById('btnCancelEdit').style.display = 'none';
@@ -1149,7 +1147,7 @@
       const videoUrl = document.getElementById('mVideoUrl').value.trim();
 
       if(!name || !date || !bio) { showToast('يرجى ملء الحقول الأساسية', true); return; }
-      if(!gov) { showToast('يرجى اختيار المحافظة', true); return; } // التحقق من اختيار المحافظة
+      if(!gov) { showToast('يرجى اختيار المحافظة', true); return; }
       
       try {
         btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري المعالجة...`; btn.disabled = true;
@@ -1170,7 +1168,7 @@
         } else {
           updateData.createdAt = serverTimestamp();
           updateData.addedBy = currentUser.email;
-          if(!updateData.image) updateData.image = "";
+          if(!updateData.image) updateData.image = ""; 
           await addDoc(collection(db, "martyrs"), updateData);
           showToast('تمت إضافة الشهيد بنجاح');
         }
