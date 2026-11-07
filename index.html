@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>أنصار الله شهداءنا العظماء | اليمن - شهداءنا العظماء</title>
+  <title>شهداءنا عظماءنا | أنصار الله</title>
   
-  <link rel="manifest" href='data:application/manifest+json,{"name":"أنصار الله | اليمن","short_name":"أنصار الله","start_url":"./","display":"standalone","background_color":"#ffffff","theme_color":"#1b5e20","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/933/933310.png","sizes":"512x512","type":"image/png"}]}'>
+  <link rel="manifest" href='data:application/manifest+json,{"name":"شهداءنا عظماءنا","short_name":"شهداءنا","start_url":"./","display":"standalone","background_color":"#ffffff","theme_color":"#1b5e20","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/933/933310.png","sizes":"512x512","type":"image/png"}]}'>
   <meta name="theme-color" content="#1b5e20">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,37 +14,44 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* ===================== الثيمات ===================== */
+    /* ===================== الثيمات المتغيرة (تم حل مشكلة وضوح النص) ===================== */
     :root {
       --bg-body: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 50%, #c5e1a5 100%);
       --card-bg: rgba(255, 255, 255, 0.95);
       --text-main: #1b5e20; 
-      --text-muted: #4caf50;
+      --text-muted: #2e7d32; /* لون أغمق للقراءة الأفضل */
       --navbar-bg: rgba(255, 255, 255, 0.98); 
       --border-color: rgba(27, 94, 32, 0.2);
       --gold: #c9a227; 
       --gold-light: #b8860b;
       --green-dark: #1b5e20; 
       --green-mid: #4caf50;
-      --designer-color: #b8860b; 
+      --designer-color: #1b5e20; 
     }
 
     body.theme-white {
       --bg-body: linear-gradient(135deg, #ffffff 0%, #f1f8e9 100%);
       --card-bg: rgba(255, 255, 255, 1);
-      --text-main: #2e7d32; --text-muted: #66bb6a; --navbar-bg: rgba(255, 255, 255, 1); 
-      --gold: #b8860b; --gold-light: #c9a227; --designer-color: #1b5e20; 
+      --text-main: #1b5e20; --text-muted: #388e3c; --navbar-bg: rgba(255, 255, 255, 1); 
+      --gold: #b8860b; --gold-light: #c9a227; --designer-color: #1b5e20;
+      --green-dark: #1b5e20; --green-mid: #4caf50;
     }
+    
     body.theme-emerald {
-      --bg-body: linear-gradient(135deg, #e8f5e9 0%, #b9f6ca 100%);
-      --card-bg: rgba(255, 255, 255, 0.9); --text-main: #004d40; --text-muted: #00796b;
-      --navbar-bg: rgba(255, 255, 255, 0.95); --gold: #ffb300; --gold-light: #ffca28; --designer-color: #004d40;
+      --bg-body: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+      --card-bg: rgba(255, 255, 255, 0.95); 
+      --text-main: #004d40; --text-muted: #00695c;
+      --navbar-bg: rgba(255, 255, 255, 0.98); --gold: #ffb300; --gold-light: #ffa000; --designer-color: #004d40;
+      --green-dark: #004d40; --green-mid: #00897b;
     }
+
     body.theme-dark {
       --bg-body: linear-gradient(135deg, #0a1f12 0%, #1a4a2e 100%);
-      --card-bg: rgba(13, 40, 24, 0.95); --text-main: #f4f9f0; --text-muted: rgba(244, 249, 240, 0.7);
+      --card-bg: rgba(13, 40, 24, 0.95); 
+      --text-main: #e0f2e9; --text-muted: #a5d6a7;
       --navbar-bg: rgba(10, 31, 18, 0.98); --border-color: rgba(165, 214, 167, 0.3);
       --gold: #e6c85a; --gold-light: #c9a227; --designer-color: #e6c85a; 
+      --green-dark: #002b1a; --green-mid: #4caf50;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -56,6 +63,7 @@
     }
     @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
+    /* خلفية الأشجار */
     .tree-layer { position: fixed; bottom: 0; left: 0; width: 100%; height: 60vh; z-index: -1; pointer-events: none; opacity: 0.3; }
     .tree-layer svg { width: 100%; height: 100%; }
     .tree-layer g { animation: sway 8s ease-in-out infinite; transform-origin: bottom center; }
@@ -67,10 +75,10 @@
       justify-content: space-between; padding: 0 1rem; height: 60px; background: var(--navbar-bg);
       backdrop-filter: blur(15px); border-bottom: 2px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
-    .navbar .logo { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 900; color: var(--gold); }
+    .navbar .logo { display: flex; align-items: center; gap: 8px; font-size: 1.15rem; font-weight: 900; color: var(--gold); }
     .navbar .logo i { font-size: 1.5rem; color: var(--green-mid); }
     .nav-icons { display: flex; align-items: center; gap: 15px; }
-    .icon-btn { background: transparent; border: none; color: var(--green-dark); font-size: 1.4rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+    .icon-btn { background: transparent; border: none; color: var(--text-main); font-size: 1.4rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
     .icon-btn:hover { color: var(--gold); transform: scale(1.1); }
 
     /* شريط المهام (Ticker) */
@@ -79,9 +87,9 @@
       background: rgba(27, 94, 32, 0.9); color: #fff; height: 30px; display: flex; align-items: center; overflow: hidden;
       border-bottom: 1px solid var(--gold);
     }
-    .ticker-label { background: var(--gold); color: var(--green-dark); font-weight: bold; padding: 0 15px; height: 100%; display: flex; align-items: center; font-size: 0.8rem; z-index: 2; }
+    .ticker-label { background: var(--gold); color: #000; font-weight: bold; padding: 0 15px; height: 100%; display: flex; align-items: center; font-size: 0.8rem; z-index: 2; }
     .ticker-content { display: flex; white-space: nowrap; animation: ticker 25s linear infinite; }
-    .ticker-item { margin: 0 20px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+    .ticker-item { margin: 0 20px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 5px; color: #fff; }
     @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
     /* القائمة الجانبية */
@@ -123,9 +131,7 @@
     .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #fff; }
     .btn-green { background: var(--green-mid); color: #fff; }
     .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
-    .btn-edit { background: #3498db; color: #fff; padding: 6px 10px; border-radius: 8px; border: none; cursor: pointer; }
-    .btn-delete { background: #e74c3c; color: #fff; padding: 6px 10px; border-radius: 8px; border: none; cursor: pointer; }
-
+    
     main { padding-top: 100px; min-height: 100vh; }
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
     
@@ -136,6 +142,19 @@
     .hero-stats { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 15px; }
     .stat-item .num { font-size: 2rem; font-weight: 900; color: var(--gold-light); }
     .stat-item .label { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
+
+    /* بطاقة المصمم البارزة */
+    .designer-card-main {
+      background: var(--card-bg); border: 3px solid var(--gold); border-radius: 25px;
+      padding: 30px 20px; text-align: center; margin: 30px auto; max-width: 600px;
+      position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden;
+    }
+    .designer-card-main::before { content: '🌿'; position: absolute; top: 15px; right: 20px; font-size: 2rem; }
+    .designer-card-main::after { content: '🌳'; position: absolute; bottom: 15px; left: 20px; font-size: 2rem; }
+    .designer-card-main h3 { color: var(--text-main); font-size: 1.4rem; margin-bottom: 10px; }
+    .designer-card-main .name { font-size: 1.8rem; font-weight: 900; color: var(--designer-color); margin-bottom: 5px; text-shadow: 0 0 10px rgba(201,162,39,0.3); }
+    .designer-card-main .phone { font-size: 1.5rem; font-weight: bold; color: var(--green-mid); direction: ltr; }
+    .designer-card-main i.fa-pen-fancy { font-size: 2.5rem; color: var(--gold); margin-bottom: 10px; }
 
     .section-title { text-align: center; margin: 30px 0 20px; }
     .section-title h2 { font-size: 1.6rem; font-weight: 900; color: var(--gold-light); display: inline-block; position: relative; padding-bottom: 10px; }
@@ -181,62 +200,69 @@
     .lesson-name { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); margin-bottom: 10px; }
 
     .quran-card-container { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 15px; margin-bottom: 20px; }
-    .surah-item { flex: 0 0 160px; scroll-snap-align: start; background: #fff; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; position: relative; }
+    .surah-item { flex: 0 0 160px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; position: relative; }
     .surah-title { background: var(--green-mid); color: #fff; padding: 8px; text-align: center; font-weight: bold; font-size: 0.95rem; }
     .surah-actions { display: flex; gap: 5px; padding: 8px; }
-    .surah-actions button, .surah-actions a { flex: 1; padding: 6px 0; border: 1px solid var(--green-mid); border-radius: 6px; background: #fff; color: var(--green-dark); font-size: 0.75rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 3px; }
+    .surah-actions button, .surah-actions a { flex: 1; padding: 6px 0; border: 1px solid var(--green-mid); border-radius: 6px; background: transparent; color: var(--text-main); font-size: 0.75rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 3px; }
     .surah-actions button:hover, .surah-actions a:hover { background: var(--green-mid); color: #fff; }
 
     /* برنامج رجال الله (أفقي) */
     .program-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px;}
-    .program-tab-btn { flex: 0 0 auto; padding: 8px 20px; border-radius: 30px; border: 2px solid var(--green-mid); background: transparent; color: var(--green-dark); font-weight: bold; cursor: pointer; }
+    .program-tab-btn { flex: 0 0 auto; padding: 8px 20px; border-radius: 30px; border: 2px solid var(--green-mid); background: transparent; color: var(--text-main); font-weight: bold; cursor: pointer; }
     .program-tab-btn.active { background: var(--green-mid); color: #fff; }
     .program-horizontal { display: none; gap: 15px; overflow-x: auto; padding-bottom: 15px; }
     .program-horizontal.active { display: flex; }
     .program-card { flex: 0 0 100%; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 20px; }
     .program-card h4 { color: var(--gold-light); margin-bottom: 15px; font-size: 1.1rem; }
     .program-card ul { list-style: none; }
-    .program-card li { padding: 10px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.9rem; }
-    .program-card li b { color: var(--green-dark); }
+    .program-card li { padding: 10px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.9rem; color: var(--text-main); }
+    .program-card li b { color: var(--gold-light); }
 
     /* لوحة التحكم */
     .dashboard { display: none; }
     .dashboard.active { display: block; }
-    .login-box { max-width: 350px; margin: 40px auto; background: var(--card-bg); padding: 25px; border-radius: 15px; text-align: center; border: 1px solid var(--gold); }
+    .login-box { max-width: 350px; margin: 40px auto; background: var(--card-bg); padding: 25px; border-radius: 15px; text-align: center; border: 1px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .form-group { margin-bottom: 15px; text-align: right; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.85rem; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); font-family: inherit; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.85rem; color: var(--text-main); }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--navbar-bg); color: var(--text-main); font-family: inherit; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .dash-panel { display: none; }
     .dash-panel.active { display: block; }
-    .dash-tabs { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-    .dash-tab { padding: 8px 15px; border-radius: 8px; background: var(--card-bg); border: 1px solid var(--border-color); font-weight: bold; cursor: pointer; font-size: 0.85rem; }
-    .dash-tab.active { background: var(--green-mid); color: #fff; }
-    .dash-content { background: var(--card-bg); padding: 20px; border-radius: 15px; }
+    
+    /* أزرار لوحة التحكم الحديثة */
+    .dash-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+    .dash-tab { 
+      padding: 10px 20px; border-radius: 30px; background: rgba(0,0,0,0.05); 
+      border: 2px solid var(--green-mid); color: var(--text-main); 
+      font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 0.9rem;
+    }
+    .dash-tab:hover { background: var(--green-mid); color: #fff; box-shadow: 0 5px 15px rgba(76,175,80,0.3); }
+    .dash-tab.active { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); color: #fff; border-color: var(--gold); }
+    
+    .dash-content { background: var(--card-bg); padding: 25px; border-radius: 15px; border: 2px solid var(--gold); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 
     .tasbih-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 20px; text-align: center; }
     .tasbih-count { font-size: 3rem; font-weight: 900; color: var(--green-dark); margin: 10px 0; }
     .tasbih-btn { background: var(--green-mid); color: #fff; border: none; width: 100px; height: 100px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
 
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 15px; }
+    /* نافذة عرض الشهيد */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 15px; }
     .modal-overlay.open { display: flex; }
-    .modal-content { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
-    .modal-close { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.5); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; z-index: 10; }
-    .modal-hero { width: 100%; height: 250px; object-fit: cover; border-radius: 18px 18px 0 0; }
+    .modal-content { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+    .modal-close { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.5); border: none; color: #fff; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 1.2rem; }
+    .modal-hero { width: 100%; height: 280px; object-fit: cover; border-radius: 18px 18px 0 0; }
     .modal-body { padding: 20px; }
-    
-    /* تم إصلاح عرض النص الطويل */
     .modal-bio { font-size: 1rem; line-height: 1.8; white-space: pre-wrap; color: var(--text-main); margin-bottom: 20px; }
-    
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 10px; overflow: hidden; }
     .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 
-    .theme-switcher { position: fixed; bottom: 15px; left: 15px; z-index: 1500; display: flex; gap: 8px; background: var(--navbar-bg); padding: 8px 12px; border-radius: 50px; border: 1px solid var(--gold); }
-    .theme-dot { width: 20px; height: 20px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+    /* مبدل الثيمات */
+    .theme-switcher { position: fixed; bottom: 15px; left: 15px; z-index: 1500; display: flex; gap: 8px; background: var(--navbar-bg); padding: 8px 12px; border-radius: 50px; border: 1px solid var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    .theme-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
     .theme-dot.active { border-color: #333; transform: scale(1.2); }
     .t1 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
     .t2 { background: linear-gradient(135deg, #ffffff, #f1f8e9); }
-    .t3 { background: linear-gradient(135deg, #b9f6ca, #69f0ae); }
+    .t3 { background: linear-gradient(135deg, #a5d6a7, #69f0ae); }
     .t4 { background: linear-gradient(135deg, #0d2818, #1a4a2e); }
 
     /* رسائل الأدعية */
@@ -249,13 +275,11 @@
     .dua-toast.show { bottom: 20px; }
     .dua-toast p { font-family: 'Amiri', serif; font-size: 1.1rem; color: var(--green-dark); margin-top: 5px; font-weight: bold; }
 
-    footer { background: var(--navbar-bg); padding: 20px 0 30px; text-align: center; border-top: 1px solid var(--border-color); margin-top: 40px; position: relative; overflow: hidden; }
-    footer p { color: var(--designer-color); font-weight: 900; font-size: 1rem; position: relative; z-index: 2; }
+    footer { background: var(--navbar-bg); padding: 20px 0; text-align: center; border-top: 1px solid var(--border-color); margin-top: 40px; position: relative; overflow: hidden; }
     
-    /* اللوحة الفنية لرجال الله (الخلفية) */
     .footer-art {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 200px; opacity: 0.15; pointer-events: none; z-index: 1;
+      width: 150px; opacity: 0.1; pointer-events: none; z-index: 1;
     }
 
     .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--green-mid); color: #fff; padding: 10px 20px; border-radius: 8px; z-index: 3000; transition: 0.3s; font-weight: bold; }
@@ -306,7 +330,6 @@
     <a href="#tasbih" onclick="showSection('tasbih', this)"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</a>
     <a href="#quran" onclick="showSection('quran', this)"><i class="fas fa-book-quran"></i> القرآن الكريم</a>
     
-    <!-- تم إصلاح زر لوحة التحكم ليعمل -->
     <a onclick="showSection('dashboard', this)" style="margin-top:20px; color:var(--gold-light); border-top: 2px solid var(--border-color);"><i class="fas fa-lock"></i> لوحة التحكم</a>
     
     <div class="sidebar-footer">
@@ -319,7 +342,7 @@
   <nav class="navbar">
     <div style="display:flex; align-items:center; gap:10px;">
       <button class="icon-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-      <div class="logo"><i class="fas fa-tree"></i><span>أنصار الله</span></div>
+      <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا عظماءنا</span></div>
     </div>
     <div class="nav-icons">
       <button class="icon-btn" onclick="openSearch()" title="بحث عن شهيد"><i class="fas fa-search"></i></button>
@@ -338,13 +361,21 @@
     <section id="home" class="section active">
       <div class="container">
         <div class="hero">
-          <h1>شهداءنا العظماء</h1>
+          <h1>شهداءنا عظماءنا</h1>
           <p>ذاكرة وطن لا ينسى… نضيء هنا سِيَر من ضحّوا بأرواحهم فداءً في سبيل الله، دفاعًا عن الأرض والعرض، من أجل الحرية والكرامة.</p>
           <div class="hero-stats">
             <div class="stat-item"><div class="num" id="statMartyrs">0</div><div class="label">شهيد مسجل</div></div>
             <div class="stat-item"><div class="num" id="statGovs">22</div><div class="label">محافظة</div></div>
             <div class="stat-item"><div class="num" id="statWills">0</div><div class="label">وصية</div></div>
           </div>
+        </div>
+
+        <!-- بطاقة المصمم -->
+        <div class="designer-card-main">
+          <i class="fas fa-pen-fancy"></i>
+          <h3>تصميم وتطوير المنصة</h3>
+          <div class="name">نشوان البدري</div>
+          <div class="phone"><i class="fas fa-phone-alt"></i> 771713275</div>
         </div>
 
         <div class="section-title"><h2>من كلام السيد القائد</h2></div>
@@ -482,22 +513,22 @@
         <div id="dashContent" class="dash-panel">
           <div style="display:flex; justify-content:space-between; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
             <h2 style="color:var(--gold-light); font-size:1.3rem;"><i class="fas fa-cogs"></i> لوحة التحكم</h2>
-            <span style="color:var(--green-dark); font-weight:bold; background:var(--card-bg); padding:5px 15px; border-radius:20px; font-size:0.85rem;" id="welcomeMsg"></span>
+            <span style="color:#fff; font-weight:bold; background:var(--green-dark); padding:5px 15px; border-radius:20px; font-size:0.85rem;" id="welcomeMsg"></span>
           </div>
           
+          <!-- أزرار التبويب الحديثة -->
           <div class="dash-tabs" id="adminTabs">
-            <button class="dash-tab active" onclick="switchDashTab('addMartyr', this)">إضافة / تعديل شهيد</button>
-            <button class="dash-tab" onclick="switchDashTab('addWill', this)">إضافة وصية</button>
-            <button class="dash-tab" onclick="switchDashTab('addPost', this)">إضافة منشور</button>
-            <button class="dash-tab admin-only" onclick="switchDashTab('addQuote', this)">إضافة مقولة</button>
-            <button class="dash-tab admin-only" onclick="switchDashTab('addDua', this)">إضافة دعاء</button>
-            <button class="dash-tab admin-only" onclick="switchDashTab('addLesson', this)">إضافة درس</button>
-            <button class="dash-tab admin-only" onclick="switchDashTab('manageSupervisors', this)">إدارة المشرفين</button>
+            <button class="dash-tab active" onclick="switchDashTab('addMartyr', this)"><i class="fas fa-user-plus"></i> إضافة / تعديل شهيد</button>
+            <button class="dash-tab" onclick="switchDashTab('addWill', this)"><i class="fas fa-feather-alt"></i> إضافة وصية</button>
+            <button class="dash-tab" onclick="switchDashTab('addPost', this)"><i class="fas fa-comment-dots"></i> إضافة منشور</button>
+            <button class="dash-tab admin-only" onclick="switchDashTab('addQuote', this)"><i class="fas fa-quote-right"></i> إضافة مقولة</button>
+            <button class="dash-tab admin-only" onclick="switchDashTab('addDua', this)"><i class="fas fa-hands"></i> إضافة دعاء</button>
+            <button class="dash-tab admin-only" onclick="switchDashTab('addLesson', this)"><i class="fas fa-book-open"></i> إضافة درس</button>
+            <button class="dash-tab admin-only" onclick="switchDashTab('manageSupervisors', this)"><i class="fas fa-users-cog"></i> إدارة المشرفين</button>
           </div>
 
           <!-- إضافة وتعديل شهيد -->
           <div id="tab-addMartyr" class="dash-content">
-            <!-- شريط البحث في لوحة التحكم -->
             <div style="margin-bottom: 20px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; display: flex; gap: 10px; align-items: center;">
               <input type="text" id="dashSearchInput" placeholder="ابحث عن شهيد لتعديله..." style="flex:1; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color);" onkeyup="dashSearch()" />
               <i class="fas fa-search" style="color: var(--green-dark);"></i>
@@ -605,7 +636,6 @@
           <span><i class="fas fa-map-marker-alt"></i> <span id="modalGov"></span></span>
           <span><i class="fas fa-home"></i> <span id="modalAddress"></span></span>
         </div>
-        <!-- هنا يتم عرض النص كاملاً -->
         <div class="modal-bio" id="modalBio"></div>
         <div id="modalVideoContainer"></div>
       </div>
@@ -613,8 +643,12 @@
   </div>
 
   <footer>
-    <!-- تم تضمين صورة رجال الله مباشرة بدون روابط خارجية لضمان ظهورها -->
-    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='40' fill='%231b5e20'>رجال الله</text></svg>" alt="رجال الله" class="footer-art">
+    <!-- تصميم شعار رجال الله برمجياً ليكون واضحاً وبارزاً -->
+    <svg class="footer-art" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50,180 C50,100 20,80 100,20 C180,80 150,100 150,180 Z" fill="#1b5e20" opacity="0.8"/>
+      <text x="100" y="130" font-family="Tajawal" font-weight="bold" font-size="40" fill="#ffffff" text-anchor="middle" transform="rotate(-15 100 130)">رجال الله</text>
+      <text x="100" y="160" font-family="Tajawal" font-weight="bold" font-size="16" fill="#c9a227" text-anchor="middle">ما عاهدوا الله عليه</text>
+    </svg>
     
     <div class="container">
       <p><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري - 771713275</p>
@@ -738,7 +772,6 @@
         audio.src = url; audio.play();
     }
 
-    // البحث
     window.openSearch = () => {
       document.getElementById('searchModal').classList.add('open');
       document.getElementById('searchInput').focus();
@@ -807,7 +840,6 @@
       const allGovs = ["الكل", ...GOVERNORATES];
 
       allGovs.forEach(gov => {
-        // الرئيسية
         const btnHome = document.createElement('button');
         btnHome.className = 'gov-chip' + (gov === 'الكل' ? ' active' : '');
         btnHome.dataset.gov = gov; 
@@ -815,7 +847,6 @@
         btnHome.onclick = () => filterMartyrs(gov, btnHome, 'home');
         govBarHome.appendChild(btnHome);
 
-        // صفحة العرض
         const btnAll = document.createElement('button');
         btnAll.className = 'gov-chip' + (gov === 'الكل' ? ' active' : '');
         btnAll.dataset.gov = gov; 
@@ -1003,7 +1034,7 @@
       if(allMartyrs.length > 0 && !allMartyrs[0].isMock) items.push(`<div class="ticker-item"><i class="fas fa-star" style="color:gold;"></i> إضافة شهيد جديد: ${allMartyrs[0].name}</div>`);
       if(allWills.length > 0) items.push(`<div class="ticker-item"><i class="fas fa-feather-alt" style="color:#a5d6a7;"></i> إضافة وصية جديدة للشهيد: ${allWills[0].name}</div>`);
       if(allPosts.length > 0) items.push(`<div class="ticker-item"><i class="fas fa-comment-dots" style="color:#81c784;"></i> منشور جديد: ${allPosts[0].title}</div>`);
-      if(items.length === 0) items.push(`<div class="ticker-item">مرحباً بكم في موقع شهداءنا العظماء</div>`);
+      if(items.length === 0) items.push(`<div class="ticker-item">مرحباً بكم في موقع شهداءنا عظماءنا</div>`);
       ticker.innerHTML = items.join('') + items.join('');
     }
 
@@ -1033,7 +1064,6 @@
       document.getElementById('modalGov').textContent = m.gov;
       document.getElementById('modalAddress').textContent = m.address || '—';
       
-      // دعم النص الطويل
       document.getElementById('modalBio').innerHTML = m.bio.replace(/\n/g, '<br>');
       
       const vc = document.getElementById('modalVideoContainer');
@@ -1045,7 +1075,6 @@
     };
     window.closeModal = (e) => { if (e && e.target !== document.getElementById('martyrModal')) return; document.getElementById('martyrModal').classList.remove('open'); };
 
-    // دالة البحث في لوحة التحكم (للتعديل)
     window.dashSearch = () => {
       const query = document.getElementById('dashSearchInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('dashSearchResults');
@@ -1061,8 +1090,8 @@
       resultsDiv.style.display = 'flex';
       resultsDiv.innerHTML = filtered.map(m => `
         <div style="display:flex; justify-content:space-between; align-items:center; background:#fff; padding:8px; border-radius:8px; border:1px solid var(--border-color);">
-          <span style="font-size:0.85rem; font-weight:bold;">${m.name} - ${m.gov}</span>
-          <button class="btn-edit" onclick="editMartyr('${m.id}')"><i class="fas fa-edit"></i> تعديل</button>
+          <span style="font-size:0.85rem; font-weight:bold; color:#333;">${m.name} - ${m.gov}</span>
+          <button class="btn-edit" onclick="editMartyr('${m.id}')" style="background:#3498db; color:#fff; border:none; padding:4px 10px; border-radius:6px; cursor:pointer;"><i class="fas fa-edit"></i> تعديل</button>
         </div>
       `).join('');
     };
@@ -1084,7 +1113,6 @@
       document.getElementById('dashSearchResults').style.display = 'none';
       document.getElementById('dashSearchInput').value = '';
       
-      // التمرير لأعلى النموذج
       document.getElementById('tab-addMartyr').scrollIntoView({behavior: 'smooth'});
       showToast('يمكنك الآن تعديل البيانات');
     };
@@ -1123,14 +1151,12 @@
         }
 
         if(editId) {
-          // تعديل
           await updateDoc(doc(db, "martyrs", editId), updateData);
           showToast('تم تعديل بيانات الشهيد بنجاح');
         } else {
-          // إضافة جديدة
           updateData.createdAt = serverTimestamp();
           updateData.addedBy = currentUser.email;
-          if(!updateData.image) updateData.image = ""; // في حال لم يضع صورة
+          if(!updateData.image) updateData.image = "";
           await addDoc(collection(db, "martyrs"), updateData);
           showToast('تمت إضافة الشهيد بنجاح');
         }
@@ -1143,7 +1169,6 @@
       }
     };
 
-    // ====== باقي الإضافات ======
     window.addWill = async () => { 
       const btn = document.getElementById('btnAddWill');
       const name = document.getElementById('wName').value.trim();
