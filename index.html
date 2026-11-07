@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* ===================== الثيمات المتغيرة ===================== */
+    /* ===================== الثيمات ===================== */
     :root {
       --bg-body: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 50%, #c5e1a5 100%);
       --card-bg: rgba(255, 255, 255, 0.95);
@@ -61,15 +61,30 @@
     .tree-layer g { animation: sway 8s ease-in-out infinite; transform-origin: bottom center; }
     @keyframes sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
 
+    /* شريط التنقل */
     .navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center;
-      justify-content: space-between; padding: 0 1.5rem; height: 65px; background: var(--navbar-bg);
+      justify-content: space-between; padding: 0 1rem; height: 60px; background: var(--navbar-bg);
       backdrop-filter: blur(15px); border-bottom: 2px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
-    .navbar .logo { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 900; color: var(--gold); }
-    .navbar .logo i { font-size: 1.7rem; color: var(--green-mid); }
-    .menu-toggle { background: none; border: none; color: var(--green-dark); font-size: 1.5rem; cursor: pointer; }
-    
+    .navbar .logo { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 900; color: var(--gold); }
+    .navbar .logo i { font-size: 1.5rem; color: var(--green-mid); }
+    .nav-icons { display: flex; align-items: center; gap: 15px; }
+    .icon-btn { background: none; border: none; color: var(--green-dark); font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
+    .icon-btn:hover { color: var(--gold); transform: scale(1.1); }
+
+    /* شريط المهام (Ticker) */
+    .ticker-wrapper {
+      position: fixed; top: 60px; left: 0; right: 0; z-index: 999;
+      background: rgba(27, 94, 32, 0.9); color: #fff; height: 30px; display: flex; align-items: center; overflow: hidden;
+      border-bottom: 1px solid var(--gold);
+    }
+    .ticker-label { background: var(--gold); color: var(--green-dark); font-weight: bold; padding: 0 15px; height: 100%; display: flex; align-items: center; font-size: 0.8rem; z-index: 2; }
+    .ticker-content { display: flex; white-space: nowrap; animation: ticker 25s linear infinite; }
+    .ticker-item { margin: 0 20px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+    @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    /* القائمة الجانبية */
     .sidebar {
       position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--navbar-bg);
       z-index: 2000; transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); border-left: 2px solid var(--border-color);
@@ -81,147 +96,158 @@
     .sidebar a:hover, .sidebar a.active { background: rgba(76, 175, 80, 0.1); color: var(--gold); border-right: 5px solid var(--gold); }
     
     .sidebar-footer { margin-top: auto; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); background: var(--card-bg); }
-    .sidebar-footer p { font-size: 1.05rem; font-weight: 900; color: var(--designer-color); letter-spacing: 0.5px; }
+    .sidebar-footer p { font-size: 1.05rem; font-weight: 900; color: var(--designer-color); }
     .sidebar-footer .phone { font-size: 1.1rem; color: var(--green-dark); direction: ltr; font-weight: bold; margin-top: 5px; }
     
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; display: none; backdrop-filter: blur(3px); }
     .overlay.open { display: block; }
 
+    /* نافذة البحث */
+    .search-modal {
+      position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-20px);
+      width: 90%; max-width: 600px; background: var(--card-bg); border: 2px solid var(--gold);
+      border-radius: 15px; z-index: 2001; padding: 20px; display: none; opacity: 0; transition: 0.3s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .search-modal.open { display: block; opacity: 1; transform: translateX(-50%) translateY(0); }
+    .search-input-wrapper { display: flex; gap: 10px; }
+    .search-input-wrapper input { flex: 1; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-family: inherit; outline: none; }
+    .search-results { max-height: 300px; overflow-y: auto; margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+    .search-result-item { display: flex; gap: 15px; background: rgba(0,0,0,0.03); padding: 10px; border-radius: 10px; cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
+    .search-result-item:hover { border-color: var(--gold); background: rgba(201, 162, 39, 0.1); }
+    .search-result-item img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--green-mid); }
+    .search-result-info h4 { color: var(--gold-light); font-size: 1rem; margin-bottom: 3px; }
+    .search-result-info p { font-size: 0.8rem; color: var(--text-muted); }
+
     .btn { padding: 8px 18px; border-radius: 10px; border: none; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
-    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #fff; }
     .btn-green { background: var(--green-mid); color: #fff; }
     .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
 
-    main { padding-top: 80px; min-height: 100vh; }
+    main { padding-top: 100px; min-height: 100vh; }
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
     
-    .hero { text-align: center; padding: 20px 1rem; }
+    .hero { text-align: center; padding: 10px 1rem 20px; }
     .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; color: var(--gold); margin-bottom: 10px; }
-    .hero p { font-size: 1.05rem; color: var(--text-main); font-weight: 500; max-width: 800px; margin: 0 auto; }
+    .hero p { font-size: 1rem; color: var(--text-main); font-weight: 500; max-width: 800px; margin: 0 auto; }
     
-    .hero-stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 20px; }
-    .stat-item .num { font-size: 2.2rem; font-weight: 900; color: var(--gold-light); }
-    .stat-item .label { font-size: 0.9rem; font-weight: bold; color: var(--text-main); }
+    .hero-stats { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 15px; }
+    .stat-item .num { font-size: 2rem; font-weight: 900; color: var(--gold-light); }
+    .stat-item .label { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
 
-    .section-title { text-align: center; margin: 40px 0 25px; }
-    .section-title h2 { font-size: 1.8rem; font-weight: 900; color: var(--gold-light); display: inline-block; position: relative; padding-bottom: 10px; text-shadow: 1px 1px 2px rgba(255,255,255,0.3); }
+    .section-title { text-align: center; margin: 30px 0 20px; }
+    .section-title h2 { font-size: 1.6rem; font-weight: 900; color: var(--gold-light); display: inline-block; position: relative; padding-bottom: 10px; }
     .section-title h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 3px; background: var(--gold); border-radius: 3px; }
 
-    .governorates-bar { display: flex; gap: 10px; overflow-x: auto; padding: 15px 0; scrollbar-width: none; }
+    .governorates-bar { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
     .governorates-bar::-webkit-scrollbar { display: none; }
-    .gov-chip { flex-shrink: 0; padding: 8px 20px; border-radius: 50px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.9rem; cursor: pointer; transition: all 0.3s; font-weight: 700; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .gov-chip i { color: var(--green-mid); }
-    .gov-chip:hover, .gov-chip.active { background: var(--green-mid); border-color: var(--green-mid); color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); }
-    .gov-chip.active i, .gov-chip:hover i { color: #fff; }
+    .gov-chip { flex-shrink: 0; padding: 6px 15px; border-radius: 50px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.85rem; cursor: pointer; transition: all 0.3s; font-weight: 700; display: flex; align-items: center; gap: 5px; }
+    .gov-chip:hover, .gov-chip.active { background: var(--green-mid); border-color: var(--green-mid); color: #fff; transform: translateY(-2px); }
 
-    .horizontal-wrapper { position: relative; width: 100%; padding: 10px 0 30px; }
-    .horizontal-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
-    .horizontal-scroll::-webkit-scrollbar { height: 6px; }
+    .horizontal-wrapper { position: relative; width: 100%; padding: 10px 0 20px; }
+    .horizontal-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+    .horizontal-scroll::-webkit-scrollbar { height: 5px; }
     .horizontal-scroll::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 10px; }
     
     .beautiful-card {
-      flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); 
-      border: 2px solid var(--border-color); border-radius: 24px; overflow: hidden; 
-      position: relative; cursor: pointer; transition: all 0.4s ease; 
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      flex: 0 0 280px; scroll-snap-align: start; background: var(--card-bg); 
+      border: 2px solid var(--border-color); border-radius: 20px; overflow: hidden; 
+      position: relative; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
-    .beautiful-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--gold); box-shadow: 0 15px 35px rgba(201, 162, 39, 0.2); }
-    .beautiful-card::before { content: '🌿'; position: absolute; top: 10px; right: 15px; font-size: 1.4rem; z-index: 5; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .beautiful-card::after { content: '🌳'; position: absolute; bottom: 10px; left: 15px; font-size: 1.4rem; z-index: 5; opacity: 0.8; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .beautiful-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+    .beautiful-card::before { content: '🌿'; position: absolute; top: 8px; right: 10px; font-size: 1.2rem; z-index: 5; }
+    .beautiful-card::after { content: '🌳'; position: absolute; bottom: 8px; left: 10px; font-size: 1.2rem; z-index: 5; opacity: 0.7; }
 
-    .card-image-wrapper { position: relative; overflow: hidden; height: 220px; border-bottom: 3px solid var(--green-mid); }
+    .card-image-wrapper { position: relative; overflow: hidden; height: 180px; border-bottom: 3px solid var(--green-mid); }
     .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-    .beautiful-card:hover .card-image { transform: scale(1.08); }
-    .card-badge { position: absolute; top: 15px; left: 15px; background: var(--green-dark); padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; color: #fff; border: 1px solid var(--gold); z-index: 4; }
+    .beautiful-card:hover .card-image { transform: scale(1.05); }
+    .card-badge { position: absolute; top: 10px; left: 10px; background: var(--green-dark); padding: 4px 10px; border-radius: 50px; font-size: 0.75rem; color: #fff; border: 1px solid var(--gold); z-index: 4; }
     
-    .card-body { padding: 20px; position: relative; z-index: 2; }
-    .card-body h3 { font-size: 1.2rem; font-weight: 800; color: var(--gold-light); margin-bottom: 8px; }
-    .card-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 5px;}
-    .card-bio { font-size: 0.9rem; color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 15px; line-height: 1.6; font-weight: 500; }
+    .card-body { padding: 15px; position: relative; z-index: 2; }
+    .card-body h3 { font-size: 1.1rem; font-weight: 800; color: var(--gold-light); margin-bottom: 5px; }
+    .card-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; }
+    .card-bio { font-size: 0.85rem; color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 10px; font-weight: 500; }
     
-    .card-actions { display: flex; gap: 10px; align-items: center; }
-    .btn-delete-card { background: rgba(231, 76, 60, 0.1); color: #e74c3c; border: 1px solid #e74c3c; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-    .btn-delete-card:hover { background: #e74c3c; color: #fff; }
+    .card-actions { display: flex; gap: 8px; align-items: center; }
+    .btn-delete-card { background: rgba(231, 76, 60, 0.1); color: #e74c3c; border: 1px solid #e74c3c; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
 
-    .text-card { padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; }
-    .text-card h3 { font-size: 1.15rem; color: var(--gold-light); margin-bottom: 10px; }
-    .text-card p { font-size: 0.95rem; line-height: 1.8; color: var(--text-main); font-weight: 500; }
-    .text-card .quote-text { font-style: italic; border-right: 3px solid var(--green-mid); padding-right: 15px; }
+    .text-card { padding: 20px 15px; }
+    .text-card h3 { font-size: 1.05rem; color: var(--gold-light); margin-bottom: 8px; }
+    .text-card p { font-size: 0.9rem; color: var(--text-main); font-weight: 500; line-height: 1.6; }
     
-    .lesson-card { padding: 20px; text-align: center; }
-    .lesson-day { background: var(--green-mid); color: #fff; display: inline-block; padding: 5px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; margin-bottom: 15px; }
-    .lesson-name { font-size: 1.2rem; font-weight: bold; color: var(--gold-light); margin-bottom: 15px; }
-    .lesson-attachment { margin-top: 15px; }
+    .lesson-card { padding: 15px; text-align: center; }
+    .lesson-day { background: var(--green-mid); color: #fff; display: inline-block; padding: 3px 15px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; margin-bottom: 10px; }
+    .lesson-name { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); margin-bottom: 10px; }
 
-    .quran-card-container { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .quran-surah-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
-    .quran-surah-list::-webkit-scrollbar { height: 5px; }
-    .quran-surah-list::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 5px; }
-    
-    .surah-item { flex: 0 0 200px; scroll-snap-align: start; background: #fff; border: 2px solid var(--border-color); border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; transition: 0.3s; }
-    .surah-item:hover { border-color: var(--gold); transform: translateY(-3px); }
-    .surah-item::before { content: '🌿'; position: absolute; top: 5px; left: 10px; font-size: 1.2rem; opacity: 0.6; }
-    .surah-item::after { content: '🌳'; position: absolute; bottom: 5px; right: 10px; font-size: 1.2rem; opacity: 0.4; }
-    .surah-title { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); color: #fff; padding: 10px; text-align: center; font-weight: bold; font-size: 1.1rem; border-bottom: 2px solid var(--gold); }
-    .surah-actions { display: flex; gap: 5px; padding: 10px; position: relative; z-index: 2; }
-    .surah-actions button, .surah-actions a { flex: 1; padding: 8px 0; text-align: center; border: 1px solid var(--green-mid); border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: var(--green-dark); transition: 0.3s; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; }
+    .quran-card-container { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 15px; margin-bottom: 20px; }
+    .surah-item { flex: 0 0 160px; scroll-snap-align: start; background: #fff; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; position: relative; }
+    .surah-title { background: var(--green-mid); color: #fff; padding: 8px; text-align: center; font-weight: bold; font-size: 0.95rem; }
+    .surah-actions { display: flex; gap: 5px; padding: 8px; }
+    .surah-actions button, .surah-actions a { flex: 1; padding: 6px 0; border: 1px solid var(--green-mid); border-radius: 6px; background: #fff; color: var(--green-dark); font-size: 0.75rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 3px; }
     .surah-actions button:hover, .surah-actions a:hover { background: var(--green-mid); color: #fff; }
 
-    .program-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
-    .program-tab-btn { padding: 10px 30px; border-radius: 30px; border: 2px solid var(--green-mid); background: transparent; color: var(--green-dark); font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; }
-    .program-tab-btn.active { background: var(--green-mid); color: #fff; box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); }
-    
-    .program-horizontal { display: none; gap: 20px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; }
+    /* برنامج رجال الله (أفقي) */
+    .program-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px;}
+    .program-tab-btn { flex: 0 0 auto; padding: 8px 20px; border-radius: 30px; border: 2px solid var(--green-mid); background: transparent; color: var(--green-dark); font-weight: bold; cursor: pointer; }
+    .program-tab-btn.active { background: var(--green-mid); color: #fff; }
+    .program-horizontal { display: none; gap: 15px; overflow-x: auto; padding-bottom: 15px; }
     .program-horizontal.active { display: flex; }
-    
-    .program-card { flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 25px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-    .program-card h4 { color: var(--gold-light); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px solid var(--green-mid); padding-bottom: 10px; display: inline-block; }
+    .program-card { flex: 0 0 100%; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 20px; }
+    .program-card h4 { color: var(--gold-light); margin-bottom: 15px; font-size: 1.1rem; }
     .program-card ul { list-style: none; }
-    .program-card li { padding: 12px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.95rem; line-height: 1.6; color: var(--text-main); }
+    .program-card li { padding: 10px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.9rem; }
     .program-card li b { color: var(--green-dark); }
 
+    /* لوحة التحكم */
     .dashboard { display: none; }
     .dashboard.active { display: block; }
-    .login-box { max-width: 350px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .login-box { max-width: 350px; margin: 40px auto; background: var(--card-bg); padding: 25px; border-radius: 15px; text-align: center; border: 1px solid var(--gold); }
     .form-group { margin-bottom: 15px; text-align: right; }
-    .form-group label { display: block; margin-bottom: 5px; color: var(--text-main); font-weight: bold; font-size: 0.9rem; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: #fff; color: #333; font-family: inherit; }
-    .form-group input[type="file"] { padding: 5px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.85rem; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); font-family: inherit; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .dash-panel { display: none; }
     .dash-panel.active { display: block; }
-    .dash-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    .dash-tab { padding: 10px 20px; border-radius: 8px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); font-weight: bold; cursor: pointer; transition: 0.3s; }
-    .dash-tab.active { background: var(--green-mid); color: #fff; border-color: var(--gold); }
-    .dash-content { background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .dash-tabs { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+    .dash-tab { padding: 8px 15px; border-radius: 8px; background: var(--card-bg); border: 1px solid var(--border-color); font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+    .dash-tab.active { background: var(--green-mid); color: #fff; }
+    .dash-content { background: var(--card-bg); padding: 20px; border-radius: 15px; }
 
-    .tasbih-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .tasbih-count { font-size: 4rem; font-weight: 900; color: var(--green-dark); margin: 10px 0; }
-    .tasbih-btn { background: var(--green-mid); color: #fff; border: none; width: 120px; height: 120px; border-radius: 50%; font-size: 1.5rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4); transition: 0.1s; }
-    .tasbih-btn:active { transform: scale(0.9); }
+    .tasbih-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 20px; text-align: center; }
+    .tasbih-count { font-size: 3rem; font-weight: 900; color: var(--green-dark); margin: 10px 0; }
+    .tasbih-btn { background: var(--green-mid); color: #fff; border: none; width: 100px; height: 100px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
 
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 15px; }
     .modal-overlay.open { display: flex; }
-    .modal-content { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 24px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 15px 50px rgba(0,0,0,0.3); }
-    .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 1.2rem; }
-    .modal-hero { width: 100%; height: 300px; object-fit: cover; border-radius: 22px 22px 0 0; }
-    .modal-body { padding: 25px; }
-    .modal-bio { font-size: 1.05rem; margin-bottom: 20px; line-height: 1.8; color: var(--text-main); }
-    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
-    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .modal-content { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+    .modal-close { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.5); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; z-index: 10; }
+    .modal-hero { width: 100%; height: 250px; object-fit: cover; border-radius: 18px 18px 0 0; }
+    .modal-body { padding: 20px; }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 10px; overflow: hidden; }
+    .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 
-    .theme-switcher { position: fixed; bottom: 20px; left: 20px; z-index: 1500; display: flex; gap: 10px; background: var(--navbar-bg); padding: 10px 15px; border-radius: 50px; border: 1px solid var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-    .theme-dot { width: 25px; height: 25px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+    .theme-switcher { position: fixed; bottom: 15px; left: 15px; z-index: 1500; display: flex; gap: 8px; background: var(--navbar-bg); padding: 8px 12px; border-radius: 50px; border: 1px solid var(--gold); }
+    .theme-dot { width: 20px; height: 20px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
     .theme-dot.active { border-color: #333; transform: scale(1.2); }
     .t1 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
     .t2 { background: linear-gradient(135deg, #ffffff, #f1f8e9); }
     .t3 { background: linear-gradient(135deg, #b9f6ca, #69f0ae); }
     .t4 { background: linear-gradient(135deg, #0d2818, #1a4a2e); }
 
-    footer { background: var(--navbar-bg); padding: 20px 0; text-align: center; border-top: 1px solid var(--border-color); margin-top: 40px; }
-    footer p { color: var(--designer-color); font-weight: 900; font-size: 1.1rem; letter-spacing: 0.5px; }
+    /* رسائل الأدعية */
+    .dua-toast {
+      position: fixed; bottom: -150px; left: 50%; transform: translateX(-50%);
+      background: var(--card-bg); border: 2px solid var(--gold); border-radius: 15px;
+      padding: 15px 20px; width: 90%; max-width: 500px; text-align: center;
+      z-index: 4000; transition: bottom 0.8s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .dua-toast.show { bottom: 20px; }
+    .dua-toast p { font-family: 'Amiri', serif; font-size: 1.1rem; color: var(--green-dark); margin-top: 5px; font-weight: bold; }
+
+    footer { background: var(--navbar-bg); padding: 15px 0; text-align: center; border-top: 1px solid var(--border-color); margin-top: 30px; }
+    footer p { color: var(--designer-color); font-weight: 900; font-size: 1rem; }
     
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--green-mid); color: #fff; padding: 12px 25px; border-radius: 8px; z-index: 3000; transition: 0.3s; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--green-mid); color: #fff; padding: 10px 20px; border-radius: 8px; z-index: 3000; transition: 0.3s; font-weight: bold; }
     .toast.show { transform: translateX(-50%) translateY(0); }
     .hidden { display: none !important; }
 
@@ -230,6 +256,7 @@
 </head>
 <body class="theme-light">
 
+  <!-- خلفية الأشجار -->
   <div class="tree-layer">
     <svg viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax meet">
       <g transform="translate(150,300)"><rect x="-5" y="-50" width="10" height="50" fill="#2e7d32" opacity="0.6"/><circle cx="0" cy="-70" r="40" fill="#4caf50" opacity="0.4"/></g>
@@ -240,12 +267,22 @@
   </div>
 
   <div class="theme-switcher">
-    <div class="theme-dot t1 active" onclick="setTheme('theme-light', this)" title="فاتح"></div>
-    <div class="theme-dot t2" onclick="setTheme('theme-white', this)" title="أبيض"></div>
-    <div class="theme-dot t3" onclick="setTheme('theme-emerald', this)" title="زمردي"></div>
-    <div class="theme-dot t4" onclick="setTheme('theme-dark', this)" title="داكن"></div>
+    <div class="theme-dot t1 active" onclick="setTheme('theme-light', this)"></div>
+    <div class="theme-dot t2" onclick="setTheme('theme-white', this)"></div>
+    <div class="theme-dot t3" onclick="setTheme('theme-emerald', this)"></div>
+    <div class="theme-dot t4" onclick="setTheme('theme-dark', this)"></div>
   </div>
 
+  <!-- نافذة البحث -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-input-wrapper">
+      <input type="text" id="searchInput" placeholder="ابحث باسم الشهيد..." onkeyup="performSearch()" />
+      <button class="btn btn-gold" onclick="document.getElementById('searchModal').classList.remove('open')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <!-- القائمة الجانبية -->
   <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
   <div class="sidebar" id="sidebar">
     <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
@@ -266,23 +303,33 @@
     </div>
   </div>
 
+  <!-- شريط التنقل -->
   <nav class="navbar">
-    <div style="display:flex; align-items:center; gap:15px;">
-      <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-      <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا العظماء</span></div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button class="icon-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا</span></div>
     </div>
-    <div id="authBtns">
-      <span id="userRoleBadge" style="font-size:0.8rem; font-weight:bold; color:var(--gold-light); margin-left:10px;"></span>
-      <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()" style="border-color:#e74c3c; color:#e74c3c;"><i class="fas fa-sign-out-alt"></i> خروج</button>
+    <div class="nav-icons">
+      <button class="icon-btn" onclick="openSearch()"><i class="fas fa-search"></i></button>
+      <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()" style="border-color:#e74c3c; color:#e74c3c; padding:5px 10px; font-size:0.75rem;"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
   </nav>
 
+  <!-- شريط المهام الأفقي -->
+  <div class="ticker-wrapper">
+    <div class="ticker-label"><i class="fas fa-bullhorn"></i> جديد</div>
+    <div class="ticker-content" id="tickerContent">
+      <!-- سيتم تعبئته بالجافاسكريبت -->
+    </div>
+  </div>
+
   <main>
+    <!-- 1. الرئيسية -->
     <section id="home" class="section active">
       <div class="container">
         <div class="hero">
           <h1>شهداءنا العظماء</h1>
-          <p>ذاكرة وطن لا ينسى… نضيء هنا سِيَر من ضحّوا بأرواحهم فداءً في سبيل الله، دفاعًا عن الأرض والعرض، من أجل الحرية والكرامة، ونيل العزة لهذه البلاد، وطرد كل الغزاة والمستعمرين.</p>
+          <p>ذاكرة وطن لا ينسى… نضيء هنا سِيَر من ضحّوا بأرواحهم فداءً في سبيل الله، دفاعًا عن الأرض والعرض، من أجل الحرية والكرامة.</p>
           <div class="hero-stats">
             <div class="stat-item"><div class="num" id="statMartyrs">0</div><div class="label">شهيد مسجل</div></div>
             <div class="stat-item"><div class="num" id="statGovs">22</div><div class="label">محافظة</div></div>
@@ -290,22 +337,24 @@
           </div>
         </div>
 
-        <div class="section-title"><h2>من كلام السيد القائد عبدالملك الحوثي</h2></div>
+        <div class="section-title"><h2>من كلام السيد القائد</h2></div>
         <div class="horizontal-wrapper">
           <div class="horizontal-scroll" id="quotesGrid"></div>
         </div>
 
         <div class="section-title"><h2>سجل الشهداء</h2></div>
-        <div class="governorates-bar" id="govBar"></div>
+        <div class="governorates-bar" id="govBarHome"></div>
         <div class="horizontal-wrapper">
           <div class="horizontal-scroll" id="martyrsGridHome"></div>
         </div>
       </div>
     </section>
 
+    <!-- 2. عرض الشهداء (تم إصلاح الفلترة هنا) -->
     <section id="martyrs" class="section">
       <div class="container">
         <div class="section-title"><h2>سجل الشهداء الكامل</h2></div>
+        <div class="governorates-bar" id="govBarAll"></div>
         <div class="horizontal-wrapper">
           <div class="horizontal-scroll" id="martyrsGridAll"></div>
         </div>
@@ -339,17 +388,18 @@
       </div>
     </section>
 
+    <!-- 3. برنامج رجال الله -->
     <section id="program" class="section">
       <div class="container">
         <div class="section-title"><h2>برنامج رجال الله</h2></div>
         <div class="program-tabs">
-          <button class="program-tab-btn active" onclick="switchProgTab('daily', this)">البرنامج اليومي</button>
-          <button class="program-tab-btn" onclick="switchProgTab('weekly', this)">البرنامج الأسبوعي</button>
-          <button class="program-tab-btn" onclick="switchProgTab('monthly', this)">البرنامج الشهري</button>
+          <button class="program-tab-btn active" onclick="switchProgTab('daily', this)">اليومي</button>
+          <button class="program-tab-btn" onclick="switchProgTab('weekly', this)">الأسبوعي</button>
+          <button class="program-tab-btn" onclick="switchProgTab('monthly', this)">الشهري</button>
         </div>
 
         <div id="prog-daily" class="program-horizontal active">
-          <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
+          <div class="program-card">
             <h4><i class="fas fa-sun"></i> البرنامج اليومي</h4>
             <ul>
               <li><b>الصلاة:</b> أداء الصلوات في أوقاتها بخشوع واعتبارها أساساً لتزكية النفس.</li>
@@ -362,7 +412,7 @@
         </div>
 
         <div id="prog-weekly" class="program-horizontal">
-          <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
+          <div class="program-card">
             <h4><i class="fas fa-calendar-week"></i> البرنامج الأسبوعي</h4>
             <ul>
               <li><b>قراءة أو سماع ملزمة الأسبوع:</b> متابعة الدروس أو المحاضرات المقررة من القيادة أو دائرة الثقافة القرآنية ودراستها أسبوعياً.</li>
@@ -372,7 +422,7 @@
         </div>
 
         <div id="prog-monthly" class="program-horizontal">
-          <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
+          <div class="program-card">
             <h4><i class="fas fa-calendar-alt"></i> البرنامج الشهري</h4>
             <ul>
               <li><b>زيارة روضات الشهداء:</b> زيارة جماعية أو فردية لمقابر القتلى التابعين لهم، وقراءة الفاتحة والدعاء لهم.</li>
@@ -391,17 +441,17 @@
           <div class="tasbih-count" id="tasbihCount">0</div>
           <button class="tasbih-btn" onclick="incrementTasbih()">سبّح</button>
           <br>
-          <button class="btn btn-outline" style="margin-top:20px;" onclick="resetTasbih()">تصفير العداد</button>
+          <button class="btn btn-outline" style="margin-top:15px;" onclick="resetTasbih()">تصفير</button>
         </div>
       </div>
     </section>
 
     <section id="quran" class="section">
       <div class="container">
-        <div class="section-title"><h2>استماع وقراءة جزء عمّ (المنشاوي)</h2></div>
+        <div class="section-title"><h2>استماع وقراءة جزء عمّ</h2></div>
         <div class="quran-card-container">
-          <audio id="quranAudio" controls style="width:100%; margin-bottom:20px; outline:none;"></audio>
-          <div class="quran-surah-list" id="quranSurahList"></div>
+          <audio id="quranAudio" controls style="width:100%; margin-bottom:15px;"></audio>
+          <div class="horizontal-scroll" id="quranSurahList"></div>
         </div>
       </div>
     </section>
@@ -411,7 +461,7 @@
       <div class="container">
         <div id="loginSection">
           <div class="login-box">
-            <h2><i class="fas fa-lock"></i> دخول الإدارة</h2><br>
+            <h2 style="color:var(--gold-light);"><i class="fas fa-lock"></i> دخول الإدارة</h2><br>
             <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" /></div>
             <div class="form-group"><label>كلمة المرور</label><input type="password" id="loginPassword" /></div>
             <button class="btn btn-gold" style="width:100%;" onclick="login()">تسجيل الدخول</button>
@@ -430,6 +480,7 @@
             <button class="dash-tab" onclick="switchDashTab('addWill', this)">إضافة وصية</button>
             <button class="dash-tab" onclick="switchDashTab('addPost', this)">إضافة منشور</button>
             <button class="dash-tab admin-only" onclick="switchDashTab('addQuote', this)">إضافة مقولة</button>
+            <button class="dash-tab admin-only" onclick="switchDashTab('addDua', this)">إضافة دعاء</button>
             <button class="dash-tab admin-only" onclick="switchDashTab('addLesson', this)">إضافة درس</button>
             <button class="dash-tab admin-only" onclick="switchDashTab('manageSupervisors', this)">إدارة المشرفين</button>
           </div>
@@ -444,7 +495,7 @@
               <div class="form-group"><label>العنوان</label><input type="text" id="mAddress" /></div>
             </div>
             <div class="form-group">
-              <label>صورة الشهيد (من الجهاز - أقل من 800 كيلوبايت)</label>
+              <label>صورة الشهيد (أقل من 800 كيلوبايت)</label>
               <input type="file" id="mImageFile" accept="image/*" />
             </div>
             <div class="form-group"><label>السيرة الذاتية *</label><textarea id="mBio" rows="3"></textarea></div>
@@ -478,6 +529,12 @@
             <button class="btn btn-green" style="width:100%;" id="btnAddQuote" onclick="addQuote()"><i class="fas fa-plus"></i> حفظ المقولة</button>
           </div>
 
+          <!-- إضافة دعاء (للمدير فقط) -->
+          <div id="tab-addDua" class="dash-content hidden">
+            <div class="form-group"><label>نص الدعاء المأثور *</label><textarea id="dText" rows="4" placeholder="اللهم إني أسألك..."></textarea></div>
+            <button class="btn btn-green" style="width:100%;" id="btnAddDua" onclick="addDua()"><i class="fas fa-plus"></i> حفظ الدعاء</button>
+          </div>
+
           <div id="tab-addLesson" class="dash-content hidden">
             <div class="form-row">
               <div class="form-group">
@@ -509,7 +566,7 @@
             </div>
             <button class="btn btn-gold" style="width:100%; margin-bottom:20px;" id="btnAddSupervisor" onclick="addSupervisor()"><i class="fas fa-user-plus"></i> إنشاء حساب المشرف</button>
             
-            <h3 style="color:var(--gold-light); margin-bottom:15px; border-top:1px solid var(--border-color); padding-top:20px;"><i class="fas fa-list"></i> قائمة المشرفين الحاليين</h3>
+            <h3 style="color:var(--gold-light); margin-bottom:15px; border-top:1px solid var(--border-color); padding-top:20px;"><i class="fas fa-list"></i> قائمة المشرفين</h3>
             <div id="supervisorsList" style="display:flex; flex-direction:column; gap:10px;"></div>
           </div>
 
@@ -524,12 +581,12 @@
       <img class="modal-hero" id="modalImage" src="" />
       <div class="modal-body">
         <h2 id="modalName" style="color:var(--gold-light); margin-bottom:5px;"></h2>
-        <div class="modal-meta" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px; display:flex; gap:15px; font-weight:bold;">
+        <div class="modal-meta" style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px; display:flex; gap:10px; flex-wrap:wrap; font-weight:bold;">
           <span><i class="fas fa-calendar-alt"></i> <span id="modalDate"></span></span>
           <span><i class="fas fa-map-marker-alt"></i> <span id="modalGov"></span></span>
           <span><i class="fas fa-home"></i> <span id="modalAddress"></span></span>
         </div>
-        <div class="modal-bio" id="modalBio"></div>
+        <div class="modal-bio" id="modalBio" style="font-size:1rem; line-height:1.8;"></div>
         <div id="modalVideoContainer"></div>
       </div>
     </div>
@@ -544,7 +601,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, getDoc, setDoc, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDIs8p-7FBeUqZPQDhbOlzm0kgkmwNfRtM",
@@ -560,13 +617,13 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // تم وضع إيميلك هنا كمدير عام
     const ADMIN_EMAIL = "sgeanashwan@gmail.com"; 
 
-    const GOVERNORATES = ["أمانة العاصمة","صنعاء","عدن","تعز","حضرموت","الحديدة","مأرب","أبين","إب","البيضاء","حجة","صعدة","ذمار","لحج","المحويت","المهرة","شبوة","الجوف","الضالع","عمران","ريمة","سقطرى"];
+    const GOVERNORATES = ["الكل", "أمانة العاصمة","صنعاء","عدن","تعز","حضرموت","الحديدة","مأرب","أبين","إب","البيضاء","حجة","صعدة","ذمار","لحج","المحويت","المهرة","شبوة","الجوف","الضالع","عمران","ريمة","سقطرى"];
 
-    let allMartyrs = []; let allWills = []; let allPosts = []; let allQuotes = []; let allLessons = [];
-    let currentGov = 'الكل'; 
+    let allMartyrs = []; let allWills = []; let allPosts = []; let allQuotes = []; let allLessons = []; let allDuas = [];
+    let currentGovHome = 'الكل'; 
+    let currentGovAll = 'الكل'; 
     let currentUser = null;
     let currentUserRole = 'guest';
     let currentUserGov = '';
@@ -576,6 +633,14 @@
       { id: 'q2', title: 'مكانة الشهادة والشهداء', text: 'إن الذكرى السنوية للشهيد "تكتسب قدسيتها وعظمتها وأهميتها من القدسية التي جعلها الله سبحانه وتعالى للشهادة في سبيله، وللشهداء في سبيله".', isMock: true },
       { id: 'q3', title: 'كسر قيود الخوف', text: 'روحية الشهادة لها أهميتها الكبيرة في كسر كل قيود الخوف والأغلال التي يحاول الطغاة والجبابرة والظالمون والمستكبرون أن يكبلوا بها شعوب أمتنا الإسلامية.', isMock: true },
       { id: 'q4', title: 'النماذج الملهمة', text: 'الشهداء في سبيل الله هم نماذج ملهمة في عطائهم، في أخلاقهم، في قيمهم، في ثباتهم، وكذلك تستلهم الأمة منهم عظيم الصبر والعطاء والثبات.', isMock: true }
+    ];
+
+    // الأدعية الافتراضية (تظهر كرسائل إذا لم يضف المدير أدعية)
+    const defaultDuas = [
+      { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّكَ أَنْتَ اللهُ لا إِلَهَ إِلا أَنْتَ، الأَحَدُ الصَّمَدُ، الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ، أَنْ تَغْفِرَ لِي ذُنُوبِي إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ.", isMock: true },
+      { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّ لَكَ الْحَمْدَ، لا إِلَهَ إِلا أَنْتَ، الْمَنَّانُ بَدِيعُ السَّمَاوَاتِ وَالأَرْضِ، يَا ذَا الْجَلالِ وَالإِكْرَامِ، يَا حَيُّ يَا قَيُّومُ إِنِّي أَسْأَلُكَ.", isMock: true },
+      { text: "إِلَهِي كَيْفَ أَدْعُوكَ وَأَنَا أَنَا، وَكَيْفَ أَقْطَعُ رَجَائِي مِنْكَ وَأَنْتَ أَنْتَ؟ إِلَهِي إِذَا لَمْ تَغْفِرْ لِي ذُنُوبِي فَمَنْ يَغْفِرُهَا لِي؟", isMock: true },
+      { text: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لا إِلَهَ إِلا أَنْتَ.", isMock: true }
     ];
 
     let tasbihCount = parseInt(localStorage.getItem('tasbihCount')) || 0;
@@ -651,6 +716,34 @@
         audio.src = url; audio.play();
     }
 
+    // البحث
+    window.openSearch = () => {
+      document.getElementById('searchModal').classList.add('open');
+      document.getElementById('searchInput').focus();
+    };
+
+    window.performSearch = () => {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const resultsDiv = document.getElementById('searchResults');
+      if(!query) { resultsDiv.innerHTML = ''; return; }
+      
+      const filtered = allMartyrs.filter(m => m.name.toLowerCase().includes(query));
+      if(filtered.length === 0) {
+        resultsDiv.innerHTML = '<p style="text-align:center; color:var(--text-muted); font-size:0.9rem;">لا توجد نتائج مطابقة.</p>';
+        return;
+      }
+      
+      resultsDiv.innerHTML = filtered.map(m => `
+        <div class="search-result-item" onclick="openModal('${m.id}'); document.getElementById('searchModal').classList.remove('open');">
+          <img src="${m.image || 'https://picsum.photos/50'}" />
+          <div class="search-result-info">
+            <h4>${m.name}</h4>
+            <p><i class="fas fa-map-marker-alt"></i> ${m.gov} | <i class="fas fa-calendar-alt"></i> ${m.date}</p>
+          </div>
+        </div>
+      `).join('');
+    };
+
     window.toggleSidebar = () => {
       document.getElementById('sidebar').classList.toggle('open');
       document.getElementById('sidebarOverlay').classList.toggle('open');
@@ -684,45 +777,63 @@
     }
 
     function init() {
-      const govBar = document.getElementById('govBar');
+      const govBarHome = document.getElementById('govBarHome');
+      const govBarAll = document.getElementById('govBarAll');
       const mGovSelect = document.getElementById('mGov');
       const sGovSelect = document.getElementById('sGov');
       
       GOVERNORATES.forEach(gov => {
-        const btn = document.createElement('button');
-        btn.className = 'gov-chip' + (gov === 'الكل' ? ' active' : '');
-        btn.dataset.gov = gov; 
-        btn.innerHTML = gov === 'الكل' ? '<i class="fas fa-globe"></i> الكل' : `<i class="fas fa-map-marker-alt"></i> ${gov}`;
-        btn.onclick = () => filterMartyrs(gov, btn);
-        govBar.appendChild(btn);
+        // الرئيسية
+        const btnHome = document.createElement('button');
+        btnHome.className = 'gov-chip' + (gov === 'الكل' ? ' active' : '');
+        btnHome.dataset.gov = gov; 
+        btnHome.innerHTML = gov === 'الكل' ? '<i class="fas fa-globe"></i> الكل' : `<i class="fas fa-map-marker-alt"></i> ${gov}`;
+        btnHome.onclick = () => filterMartyrs(gov, btnHome, 'home');
+        govBarHome.appendChild(btnHome);
+
+        // صفحة العرض
+        const btnAll = document.createElement('button');
+        btnAll.className = 'gov-chip' + (gov === 'الكل' ? ' active' : '');
+        btnAll.dataset.gov = gov; 
+        btnAll.innerHTML = gov === 'الكل' ? '<i class="fas fa-globe"></i> الكل' : `<i class="fas fa-map-marker-alt"></i> ${gov}`;
+        btnAll.onclick = () => filterMartyrs(gov, btnAll, 'all');
+        govBarAll.appendChild(btnAll);
         
-        const opt = document.createElement('option'); opt.value = gov; opt.textContent = gov; mGovSelect.appendChild(opt);
-        const opt2 = document.createElement('option'); opt2.value = gov; opt2.textContent = gov; sGovSelect.appendChild(opt2);
+        if(gov !== 'الكل') {
+          const opt = document.createElement('option'); opt.value = gov; opt.textContent = gov; mGovSelect.appendChild(opt);
+          const opt2 = document.createElement('option'); opt2.value = gov; opt2.textContent = gov; sGovSelect.appendChild(opt2);
+        }
       });
 
       allMartyrs = generateMockMartyrs();
       allQuotes = [...defaultQuotes];
+      allDuas = [...defaultDuas];
       renderAll();
+      startDuaToasts();
 
       onSnapshot(query(collection(db, "martyrs"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allMartyrs = [...fbData, ...generateMockMartyrs()]; renderMartyrs(); updateStats();
+        allMartyrs = [...fbData, ...generateMockMartyrs()]; renderMartyrs(); updateStats(); updateTicker();
       });
       onSnapshot(query(collection(db, "wills"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allWills = fbData; renderWills(); updateStats();
+        allWills = fbData; renderWills(); updateStats(); updateTicker();
       });
       onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allPosts = fbData; renderPosts();
+        allPosts = fbData; renderPosts(); updateTicker();
       });
       onSnapshot(query(collection(db, "quotes"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allQuotes = [...fbData, ...defaultQuotes]; renderQuotes();
+        allQuotes = [...fbData, ...defaultQuotes]; renderQuotes(); updateTicker();
       });
       onSnapshot(query(collection(db, "lessons"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
         allLessons = fbData; renderLessons();
+      });
+      onSnapshot(query(collection(db, "duas"), orderBy("createdAt", "desc")), (snap) => {
+        const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
+        allDuas = [...fbData, ...defaultDuas]; 
       });
       onSnapshot(query(collection(db, "supervisors"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data() }));
@@ -730,19 +841,25 @@
       });
     }
 
-    function filterMartyrs(gov, btn) {
-      document.querySelectorAll('.gov-chip').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-      currentGov = gov; renderMartyrs();
+    function filterMartyrs(gov, btn, source) {
+      if(source === 'home') {
+        document.querySelectorAll('#govBarHome .gov-chip').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+        currentGovHome = gov;
+      } else {
+        document.querySelectorAll('#govBarAll .gov-chip').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+        currentGovAll = gov;
+      }
+      renderMartyrs();
     }
 
     function generateMockMartyrs() {
       const names = ["أحمد","محمد","علي","صالح","يوسف"];
       const data = [];
-      GOVERNORATES.forEach((gov, i) => {
+      GOVERNORATES.slice(1).forEach((gov, i) => {
         data.push({
           id: `mock-${i}`, name: `الشهيد ${names[i%5]}`, date: `2024-05-10`,
           gov: gov, address: `المركز`, image: `https://picsum.photos/seed/${gov}/400/300`,
-          bio: "قضى حياته مدافعاً عن الأرض والعرض، ولم يتردد لحظة في التضحية بكل ما يملك من أجل حرية وطنه وكرامة شعبه.", video: "", isMock: true
+          bio: "قضى حياته مدافعاً عن الأرض والعرض، ولم يتردد لحظة في التضحية.", video: "", isMock: true
         });
       });
       return data;
@@ -751,9 +868,11 @@
     function renderMartyrs() {
       const gridHome = document.getElementById('martyrsGridHome');
       const gridAll = document.getElementById('martyrsGridAll');
-      const filtered = currentGov === 'الكل' ? allMartyrs : allMartyrs.filter(m => m.gov === currentGov);
       
-      const html = filtered.map(m => `
+      const filteredHome = currentGovHome === 'الكل' ? allMartyrs : allMartyrs.filter(m => m.gov === currentGovHome);
+      const filteredAll = currentGovAll === 'الكل' ? allMartyrs : allMartyrs.filter(m => m.gov === currentGovAll);
+      
+      const createHtml = (filtered) => filtered.map(m => `
         <div class="beautiful-card">
           <div class="card-image-wrapper" onclick="openModal('${m.id}')">
             <img class="card-image" src="${m.image || 'https://picsum.photos/400/300'}" />
@@ -764,15 +883,15 @@
             <div class="card-meta"><i class="fas fa-calendar-alt"></i> ${m.date || 'غير محدد'}</div>
             <p class="card-bio">${m.bio}</p>
             <div class="card-actions">
-              <button class="btn btn-outline" style="flex:1; font-size:0.8rem; padding:8px;" onclick="openModal('${m.id}')">السيرة والوصية</button>
+              <button class="btn btn-outline" style="flex:1; font-size:0.8rem; padding:6px;" onclick="openModal('${m.id}')">السيرة</button>
               ${(!m.isMock && currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && currentUserGov === m.gov))) ? `<button class="btn-delete-card" onclick="deleteM('${m.id}')"><i class="fas fa-trash"></i></button>` : ''}
             </div>
           </div>
         </div>
       `).join('');
       
-      if(gridHome) gridHome.innerHTML = html;
-      if(gridAll) gridAll.innerHTML = html;
+      if(gridHome) gridHome.innerHTML = createHtml(filteredHome);
+      if(gridAll) gridAll.innerHTML = createHtml(filteredAll);
     }
 
     function renderQuotes() {
@@ -784,7 +903,7 @@
             <h3><i class="fas fa-quote-right"></i> ${q.title}</h3>
             <p class="quote-text">"${q.text}"</p>
           </div>
-          ${(!q.isMock && currentUser && currentUserRole === 'admin') ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c;" onclick="deleteQ('${q.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
+          ${(!q.isMock && currentUser && currentUserRole === 'admin') ? `<button class="btn btn-outline" style="margin-top:10px; border-color:#e74c3c; color:#e74c3c; font-size:0.75rem; padding:4px 8px;" onclick="deleteQ('${q.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
         </div>
       `).join('');
     }
@@ -796,10 +915,10 @@
         <div class="beautiful-card text-card">
           <div>
             <h3><i class="fas fa-feather-alt"></i> ${w.name}</h3>
-            <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">${w.date || ''}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">${w.date || ''}</div>
             <p class="quote-text">"${w.text}"</p>
           </div>
-          ${(currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && currentUserGov === w.gov))) ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c;" onclick="deleteW('${w.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
+          ${(currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && currentUserGov === w.gov))) ? `<button class="btn btn-outline" style="margin-top:10px; border-color:#e74c3c; color:#e74c3c; font-size:0.75rem; padding:4px 8px;" onclick="deleteW('${w.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
         </div>
       `).join('');
     }
@@ -812,24 +931,24 @@
           <div>
             <h3>${p.title}</h3>
             <p style="margin-bottom:10px;">${p.text}</p>
-            ${p.image ? `<img src="${p.image}" style="width:100%; border-radius:8px; max-height:150px; object-fit:cover;" />` : ''}
+            ${p.image ? `<img src="${p.image}" style="width:100%; border-radius:8px; max-height:120px; object-fit:cover;" />` : ''}
           </div>
-          ${currentUser ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c;" onclick="deleteP('${p.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
+          ${currentUser ? `<button class="btn btn-outline" style="margin-top:10px; border-color:#e74c3c; color:#e74c3c; font-size:0.75rem; padding:4px 8px;" onclick="deleteP('${p.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
         </div>
       `).join('');
     }
 
     function renderLessons() {
       const grid = document.getElementById('lessonsGrid');
-      if(allLessons.length === 0) { grid.innerHTML = '<p style="padding:20px;">لم يتم إضافة دروس بعد. انتظر تحديث الإدارة.</p>'; return; }
+      if(allLessons.length === 0) { grid.innerHTML = '<p style="padding:20px;">لم يتم إضافة دروس بعد.</p>'; return; }
       grid.innerHTML = allLessons.map(l => `
         <div class="beautiful-card lesson-card">
           <div class="lesson-day">${l.day}</div>
           <div class="lesson-name">${l.name}</div>
-          <div class="lesson-attachment">
-            ${l.fileUrl ? `<a href="${l.fileUrl}" target="_blank" class="btn btn-green" style="width:100%;"><i class="fas fa-file-pdf"></i> قراءة الملزمة</a>` : `<span style="font-size:0.85rem; color:var(--text-muted);">لا يوجد مرفق</span>`}
+          <div style="margin-top:10px;">
+            ${l.fileUrl ? `<a href="${l.fileUrl}" target="_blank" class="btn btn-green" style="width:100%; font-size:0.8rem;"><i class="fas fa-file-pdf"></i> قراءة</a>` : `<span style="font-size:0.8rem; color:var(--text-muted);">لا يوجد مرفق</span>`}
           </div>
-          ${(currentUser && currentUserRole === 'admin') ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c; width:100%;" onclick="deleteL('${l.id}')"><i class="fas fa-trash"></i> حذف الدرس</button>` : ''}
+          ${(currentUser && currentUserRole === 'admin') ? `<button class="btn btn-outline" style="margin-top:10px; border-color:#e74c3c; color:#e74c3c; width:100%; font-size:0.75rem;" onclick="deleteL('${l.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
         </div>
       `).join('');
     }
@@ -838,12 +957,12 @@
       const list = document.getElementById('supervisorsList');
       if(sups.length === 0) { list.innerHTML = '<p>لا يوجد مشرفين مسجلين.</p>'; return; }
       list.innerHTML = sups.map(s => `
-        <div style="background:rgba(0,0,0,0.05); border:1px solid var(--border-color); padding:15px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div style="background:rgba(0,0,0,0.05); border:1px solid var(--border-color); padding:10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
           <div>
-            <strong style="color:var(--green-dark); font-size:1.1rem;">${s.name}</strong>
-            <div style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-map-marker-alt"></i> محافظة: ${s.gov} | <i class="fas fa-envelope"></i> ${s.email}</div>
+            <strong style="color:var(--green-dark); font-size:1rem;">${s.name}</strong>
+            <div style="font-size:0.75rem; color:var(--text-muted);"><i class="fas fa-map-marker-alt"></i> ${s.gov} | <i class="fas fa-envelope"></i> ${s.email}</div>
           </div>
-          <button class="btn btn-outline" style="border-color:#e74c3c; color:#e74c3c; padding:5px 10px; font-size:0.8rem;" onclick="deleteSupervisor('${s.id}')"><i class="fas fa-user-minus"></i> إلغاء</button>
+          <button class="btn btn-outline" style="border-color:#e74c3c; color:#e74c3c; padding:3px 8px; font-size:0.75rem;" onclick="deleteSupervisor('${s.id}')"><i class="fas fa-user-minus"></i> إلغاء</button>
         </div>
       `).join('');
     }
@@ -852,6 +971,43 @@
       document.getElementById('statMartyrs').textContent = allMartyrs.length;
       document.getElementById('statWills').textContent = allWills.length;
       document.getElementById('statGovs').textContent = new Set(allMartyrs.map(m => m.gov)).size || 22;
+    }
+
+    // شريط المهام
+    function updateTicker() {
+      const ticker = document.getElementById('tickerContent');
+      let items = [];
+      if(allMartyrs.length > 0 && !allMartyrs[0].isMock) items.push(`<div class="ticker-item"><i class="fas fa-star" style="color:gold;"></i> إضافة شهيد جديد: ${allMartyrs[0].name}</div>`);
+      if(allWills.length > 0) items.push(`<div class="ticker-item"><i class="fas fa-feather-alt" style="color:#a5d6a7;"></i> إضافة وصية جديدة للشهيد: ${allWills[0].name}</div>`);
+      if(allPosts.length > 0) items.push(`<div class="ticker-item"><i class="fas fa-comment-dots" style="color:#81c784;"></i> منشور جديد: ${allPosts[0].title}</div>`);
+      
+      if(items.length === 0) items.push(`<div class="ticker-item">مرحباً بكم في موقع شهداءنا العظماء</div>`);
+      
+      // تكرار العناصر لملء الشريط
+      ticker.innerHTML = items.join('') + items.join('');
+    }
+
+    // الأدعية كرسائل منبثقة
+    function startDuaToasts() {
+      setTimeout(() => {
+        showDuaToast();
+        setInterval(showDuaToast, 15 * 60 * 1000); // كل 15 دقيقة
+      }, 5000); // أول دعاء بعد 5 ثواني من فتح الموقع
+    }
+
+    function showDuaToast() {
+      if(allDuas.length === 0) return;
+      const randomDua = allDuas[Math.floor(Math.random() * allDuas.length)];
+      const toast = document.createElement('div');
+      toast.className = 'dua-toast';
+      toast.innerHTML = `<h4 style="color:var(--gold-light); font-size:0.85rem; margin-bottom:5px;"><i class="fas fa-hands"></i> من الأدعية المأثورة</h4><p>"${randomDua.text}"</p>`;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 800);
+      }, 12000); // تختفي بعد 12 ثانية
     }
 
     window.openModal = (id) => {
@@ -872,6 +1028,7 @@
     };
     window.closeModal = (e) => { if (e && e.target !== document.getElementById('martyrModal')) return; document.getElementById('martyrModal').classList.remove('open'); };
 
+    // ====== الإضافة ======
     window.addMartyr = async () => {
       const btn = document.getElementById('btnAddMartyr'); const originalText = btn.innerHTML;
       const name = document.getElementById('mName').value.trim();
@@ -953,6 +1110,18 @@
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ المقولة`; btn.disabled = false; }
     };
 
+    window.addDua = async () => {
+      const btn = document.getElementById('btnAddDua');
+      const text = document.getElementById('dText').value.trim();
+      if(!text) return showToast('أدخل نص الدعاء', true);
+      try {
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ...`; btn.disabled = true;
+        await addDoc(collection(db, "duas"), { text, createdAt: serverTimestamp() });
+        showToast('تمت إضافة الدعاء بنجاح');
+        document.getElementById('dText').value = '';
+      } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ الدعاء`; btn.disabled = false; }
+    };
+
     window.addLesson = async () => {
       const btn = document.getElementById('btnAddLesson');
       const day = document.getElementById('lDay').value;
@@ -979,20 +1148,12 @@
 
       try {
         btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...`; btn.disabled = true;
-        
-        // ملاحظة هامة: لإنشاء حساب بواسطة المدير دون أن يخرج المدير من حسابه في Firebase (v9)
-        // نستخدم تطبيق Firebase ثانوي (Secondary App)
         const secondaryApp = initializeApp(firebaseConfig, "Secondary");
         const secondaryAuth = getAuth(secondaryApp);
-        
         const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, pass);
         const uid = userCredential.user.uid;
-        await signOut(secondaryAuth); // تسجيل خروج المشرف الجديد من التطبيق الثانوي
-
-        await setDoc(doc(db, "supervisors", uid), {
-          name, gov, email, role: 'supervisor', createdAt: serverTimestamp()
-        });
-
+        await signOut(secondaryAuth); 
+        await setDoc(doc(db, "supervisors", uid), { name, gov, email, role: 'supervisor', createdAt: serverTimestamp() });
         showToast('تم إنشاء حساب المشرف بنجاح');
         ['sName','sEmail','sPass'].forEach(id => document.getElementById(id).value = '');
       } catch(e) {
@@ -1009,13 +1170,7 @@
     window.deleteP = async (id) => { if(confirm('حذف المنشور؟')) { await deleteDoc(doc(db, "posts", id)); showToast('تم الحذف'); } };
     window.deleteQ = async (id) => { if(confirm('حذف المقولة؟')) { await deleteDoc(doc(db, "quotes", id)); showToast('تم الحذف'); } };
     window.deleteL = async (id) => { if(confirm('حذف الدرس؟')) { await deleteDoc(doc(db, "lessons", id)); showToast('تم الحذف'); } };
-    
-    window.deleteSupervisor = async (id) => { 
-      if(confirm('هل أنت متأكد من إلغاء صلاحيات هذا المشرف؟ (ملاحظة: لن يتم حذف حسابه من Firebase Auth تلقائياً بل سيتم حذف بياناته من الموقع)')) { 
-        await deleteDoc(doc(db, "supervisors", id)); 
-        showToast('تم إلغاء صلاحيات المشرف من الموقع'); 
-      } 
-    };
+    window.deleteSupervisor = async (id) => { if(confirm('إلغاء صلاحيات المشرف؟')) { await deleteDoc(doc(db, "supervisors", id)); showToast('تم إلغاء الصلاحيات'); } };
 
     window.login = async () => {
       const email = document.getElementById('loginEmail').value.trim();
@@ -1041,7 +1196,6 @@
           currentUserRole = 'admin';
           currentUserGov = 'الكل';
           document.getElementById('welcomeMsg').innerHTML = `<i class="fas fa-crown" style="color:gold;"></i> المدير العام`;
-          document.getElementById('userRoleBadge').textContent = "المدير العام";
           document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
           document.getElementById('mGov').disabled = false; 
         } else {
@@ -1051,7 +1205,6 @@
             currentUserRole = 'supervisor';
             currentUserGov = docSnap.data().gov;
             document.getElementById('welcomeMsg').innerHTML = `<i class="fas fa-user-shield" style="color:green;"></i> مشرف محافظة ${currentUserGov}`;
-            document.getElementById('userRoleBadge').textContent = `مشرف ${currentUserGov}`;
             document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden')); 
             
             const mGovSelect = document.getElementById('mGov');
@@ -1068,7 +1221,6 @@
         document.getElementById('loginSection').classList.remove('hidden'); 
         document.getElementById('dashContent').classList.remove('active');
         document.getElementById('logoutBtn').classList.add('hidden');
-        document.getElementById('userRoleBadge').textContent = "";
         document.getElementById('welcomeMsg').textContent = "";
       }
       renderAll(); 
