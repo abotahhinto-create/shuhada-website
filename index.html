@@ -14,8 +14,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
+    /* ===================== الثيمات المتغيرة ===================== */
     :root {
-      /* الثيم الأساسي الفاتح */
       --bg-body: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 50%, #c5e1a5 100%);
       --card-bg: rgba(255, 255, 255, 0.95);
       --text-main: #1b5e20; 
@@ -26,41 +26,25 @@
       --gold-light: #b8860b;
       --green-dark: #1b5e20; 
       --green-mid: #4caf50;
-      --designer-color: #b8860b; /* لون المصمم: ذهبي داكن */
+      --designer-color: #b8860b; 
     }
 
     body.theme-white {
       --bg-body: linear-gradient(135deg, #ffffff 0%, #f1f8e9 100%);
       --card-bg: rgba(255, 255, 255, 1);
-      --text-main: #2e7d32; 
-      --text-muted: #66bb6a;
-      --navbar-bg: rgba(255, 255, 255, 1); 
-      --gold: #b8860b; 
-      --gold-light: #c9a227;
-      --designer-color: #1b5e20; 
+      --text-main: #2e7d32; --text-muted: #66bb6a; --navbar-bg: rgba(255, 255, 255, 1); 
+      --gold: #b8860b; --gold-light: #c9a227; --designer-color: #1b5e20; 
     }
-
     body.theme-emerald {
       --bg-body: linear-gradient(135deg, #e8f5e9 0%, #b9f6ca 100%);
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --text-main: #004d40; 
-      --text-muted: #00796b;
-      --navbar-bg: rgba(255, 255, 255, 0.95); 
-      --gold: #ffb300; 
-      --gold-light: #ffca28;
-      --designer-color: #004d40;
+      --card-bg: rgba(255, 255, 255, 0.9); --text-main: #004d40; --text-muted: #00796b;
+      --navbar-bg: rgba(255, 255, 255, 0.95); --gold: #ffb300; --gold-light: #ffca28; --designer-color: #004d40;
     }
-
     body.theme-dark {
       --bg-body: linear-gradient(135deg, #0a1f12 0%, #1a4a2e 100%);
-      --card-bg: rgba(13, 40, 24, 0.95);
-      --text-main: #f4f9f0; 
-      --text-muted: rgba(244, 249, 240, 0.7);
-      --navbar-bg: rgba(10, 31, 18, 0.98); 
-      --border-color: rgba(165, 214, 167, 0.3);
-      --gold: #e6c85a; 
-      --gold-light: #c9a227;
-      --designer-color: #e6c85a; 
+      --card-bg: rgba(13, 40, 24, 0.95); --text-main: #f4f9f0; --text-muted: rgba(244, 249, 240, 0.7);
+      --navbar-bg: rgba(10, 31, 18, 0.98); --border-color: rgba(165, 214, 167, 0.3);
+      --gold: #e6c85a; --gold-light: #c9a227; --designer-color: #e6c85a; 
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -77,7 +61,6 @@
     .tree-layer g { animation: sway 8s ease-in-out infinite; transform-origin: bottom center; }
     @keyframes sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
 
-    /* شريط التنقل */
     .navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center;
       justify-content: space-between; padding: 0 1.5rem; height: 65px; background: var(--navbar-bg);
@@ -87,7 +70,6 @@
     .navbar .logo i { font-size: 1.7rem; color: var(--green-mid); }
     .menu-toggle { background: none; border: none; color: var(--green-dark); font-size: 1.5rem; cursor: pointer; }
     
-    /* القائمة الجانبية */
     .sidebar {
       position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--navbar-bg);
       z-index: 2000; transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); border-left: 2px solid var(--border-color);
@@ -125,7 +107,6 @@
     .section-title h2 { font-size: 1.8rem; font-weight: 900; color: var(--gold-light); display: inline-block; position: relative; padding-bottom: 10px; text-shadow: 1px 1px 2px rgba(255,255,255,0.3); }
     .section-title h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 3px; background: var(--gold); border-radius: 3px; }
 
-    /* شريط المحافظات */
     .governorates-bar { display: flex; gap: 10px; overflow-x: auto; padding: 15px 0; scrollbar-width: none; }
     .governorates-bar::-webkit-scrollbar { display: none; }
     .gov-chip { flex-shrink: 0; padding: 8px 20px; border-radius: 50px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.9rem; cursor: pointer; transition: all 0.3s; font-weight: 700; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -133,13 +114,11 @@
     .gov-chip:hover, .gov-chip.active { background: var(--green-mid); border-color: var(--green-mid); color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); }
     .gov-chip.active i, .gov-chip:hover i { color: #fff; }
 
-    /* العرض الأفقي */
     .horizontal-wrapper { position: relative; width: 100%; padding: 10px 0 30px; }
     .horizontal-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
     .horizontal-scroll::-webkit-scrollbar { height: 6px; }
     .horizontal-scroll::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 10px; }
     
-    /* البطاقات المزينة */
     .beautiful-card {
       flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); 
       border: 2px solid var(--border-color); border-radius: 24px; overflow: hidden; 
@@ -164,45 +143,36 @@
     .btn-delete-card { background: rgba(231, 76, 60, 0.1); color: #e74c3c; border: 1px solid #e74c3c; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
     .btn-delete-card:hover { background: #e74c3c; color: #fff; }
 
-    /* بطاقات النصوص */
     .text-card { padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; }
     .text-card h3 { font-size: 1.15rem; color: var(--gold-light); margin-bottom: 10px; }
     .text-card p { font-size: 0.95rem; line-height: 1.8; color: var(--text-main); font-weight: 500; }
     .text-card .quote-text { font-style: italic; border-right: 3px solid var(--green-mid); padding-right: 15px; }
     
-    /* الدروس */
     .lesson-card { padding: 20px; text-align: center; }
     .lesson-day { background: var(--green-mid); color: #fff; display: inline-block; padding: 5px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; margin-bottom: 15px; }
     .lesson-name { font-size: 1.2rem; font-weight: bold; color: var(--gold-light); margin-bottom: 15px; }
     .lesson-attachment { margin-top: 15px; }
 
-    /* القرآن (التصميم الأفقي الجديد) */
     .quran-card-container { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .quran-surah-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
     .quran-surah-list::-webkit-scrollbar { height: 5px; }
     .quran-surah-list::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 5px; }
     
-    .surah-item { 
-      flex: 0 0 200px; scroll-snap-align: start; background: #fff; border: 2px solid var(--border-color); 
-      border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative;
-      transition: 0.3s;
-    }
+    .surah-item { flex: 0 0 200px; scroll-snap-align: start; background: #fff; border: 2px solid var(--border-color); border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; transition: 0.3s; }
     .surah-item:hover { border-color: var(--gold); transform: translateY(-3px); }
     .surah-item::before { content: '🌿'; position: absolute; top: 5px; left: 10px; font-size: 1.2rem; opacity: 0.6; }
     .surah-item::after { content: '🌳'; position: absolute; bottom: 5px; right: 10px; font-size: 1.2rem; opacity: 0.4; }
-    
     .surah-title { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); color: #fff; padding: 10px; text-align: center; font-weight: bold; font-size: 1.1rem; border-bottom: 2px solid var(--gold); }
     .surah-actions { display: flex; gap: 5px; padding: 10px; position: relative; z-index: 2; }
     .surah-actions button, .surah-actions a { flex: 1; padding: 8px 0; text-align: center; border: 1px solid var(--green-mid); border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: var(--green-dark); transition: 0.3s; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; }
     .surah-actions button:hover, .surah-actions a:hover { background: var(--green-mid); color: #fff; }
 
-    /* برنامج رجال الله (أزرار التبويب) */
     .program-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
     .program-tab-btn { padding: 10px 30px; border-radius: 30px; border: 2px solid var(--green-mid); background: transparent; color: var(--green-dark); font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; }
     .program-tab-btn.active { background: var(--green-mid); color: #fff; box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); }
     
     .program-horizontal { display: none; gap: 20px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory; }
-    .program-horizontal.active { display: flex; } /* يظهر فقط القسم المختار */
+    .program-horizontal.active { display: flex; }
     
     .program-card { flex: 0 0 320px; scroll-snap-align: start; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 25px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
     .program-card h4 { color: var(--gold-light); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px solid var(--green-mid); padding-bottom: 10px; display: inline-block; }
@@ -210,7 +180,6 @@
     .program-card li { padding: 12px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.95rem; line-height: 1.6; color: var(--text-main); }
     .program-card li b { color: var(--green-dark); }
 
-    /* لوحة التحكم */
     .dashboard { display: none; }
     .dashboard.active { display: block; }
     .login-box { max-width: 350px; margin: 40px auto; background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
@@ -226,13 +195,11 @@
     .dash-tab.active { background: var(--green-mid); color: #fff; border-color: var(--gold); }
     .dash-content { background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
-    /* المسبحة */
     .tasbih-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .tasbih-count { font-size: 4rem; font-weight: 900; color: var(--green-dark); margin: 10px 0; }
     .tasbih-btn { background: var(--green-mid); color: #fff; border: none; width: 120px; height: 120px; border-radius: 50%; font-size: 1.5rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4); transition: 0.1s; }
     .tasbih-btn:active { transform: scale(0.9); }
 
-    /* نافذة الشهيد */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
     .modal-content { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 24px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 15px 50px rgba(0,0,0,0.3); }
@@ -243,7 +210,6 @@
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
     .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-    /* مبدل الثيمات */
     .theme-switcher { position: fixed; bottom: 20px; left: 20px; z-index: 1500; display: flex; gap: 10px; background: var(--navbar-bg); padding: 10px 15px; border-radius: 50px; border: 1px solid var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
     .theme-dot { width: 25px; height: 25px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
     .theme-dot.active { border-color: #333; transform: scale(1.2); }
@@ -306,12 +272,12 @@
       <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا العظماء</span></div>
     </div>
     <div id="authBtns">
+      <span id="userRoleBadge" style="font-size:0.8rem; font-weight:bold; color:var(--gold-light); margin-left:10px;"></span>
       <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()" style="border-color:#e74c3c; color:#e74c3c;"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
   </nav>
 
   <main>
-    <!-- 1. الرئيسية -->
     <section id="home" class="section active">
       <div class="container">
         <div class="hero">
@@ -337,7 +303,6 @@
       </div>
     </section>
 
-    <!-- 2. عرض الشهداء -->
     <section id="martyrs" class="section">
       <div class="container">
         <div class="section-title"><h2>سجل الشهداء الكامل</h2></div>
@@ -347,7 +312,6 @@
       </div>
     </section>
 
-    <!-- 3. الوصايا -->
     <section id="wills" class="section">
       <div class="container">
         <div class="section-title"><h2>وصايا الشهداء</h2></div>
@@ -357,7 +321,6 @@
       </div>
     </section>
 
-    <!-- 4. المنشورات -->
     <section id="posts" class="section">
       <div class="container">
         <div class="section-title"><h2>كلمات في الشهداء</h2></div>
@@ -367,7 +330,6 @@
       </div>
     </section>
 
-    <!-- 5. دروس من هدي القرآن -->
     <section id="quran_plan" class="section">
       <div class="container">
         <div class="section-title"><h2>دروس من هدي القرآن</h2></div>
@@ -377,19 +339,15 @@
       </div>
     </section>
 
-    <!-- 6. برنامج رجال الله -->
     <section id="program" class="section">
       <div class="container">
         <div class="section-title"><h2>برنامج رجال الله</h2></div>
-        
-        <!-- أزرار التبويب -->
         <div class="program-tabs">
           <button class="program-tab-btn active" onclick="switchProgTab('daily', this)">البرنامج اليومي</button>
           <button class="program-tab-btn" onclick="switchProgTab('weekly', this)">البرنامج الأسبوعي</button>
           <button class="program-tab-btn" onclick="switchProgTab('monthly', this)">البرنامج الشهري</button>
         </div>
 
-        <!-- محتوى يومي -->
         <div id="prog-daily" class="program-horizontal active">
           <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
             <h4><i class="fas fa-sun"></i> البرنامج اليومي</h4>
@@ -403,7 +361,6 @@
           </div>
         </div>
 
-        <!-- محتوى أسبوعي -->
         <div id="prog-weekly" class="program-horizontal">
           <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
             <h4><i class="fas fa-calendar-week"></i> البرنامج الأسبوعي</h4>
@@ -414,7 +371,6 @@
           </div>
         </div>
 
-        <!-- محتوى شهري -->
         <div id="prog-monthly" class="program-horizontal">
           <div class="program-card beautiful-card" style="flex: 0 0 100%; max-width: 100%; cursor: default;">
             <h4><i class="fas fa-calendar-alt"></i> البرنامج الشهري</h4>
@@ -425,11 +381,9 @@
             </ul>
           </div>
         </div>
-        
       </div>
     </section>
 
-    <!-- 7. المسبحة -->
     <section id="tasbih" class="section">
       <div class="container">
         <div class="section-title"><h2>المسبحة الإلكترونية</h2></div>
@@ -442,7 +396,6 @@
       </div>
     </section>
 
-    <!-- 8. القرآن -->
     <section id="quran" class="section">
       <div class="container">
         <div class="section-title"><h2>استماع وقراءة جزء عمّ (المنشاوي)</h2></div>
@@ -453,7 +406,7 @@
       </div>
     </section>
 
-    <!-- 9. لوحة التحكم -->
+    <!-- لوحة التحكم -->
     <section id="dashboard" class="section dashboard">
       <div class="container">
         <div id="loginSection">
@@ -467,17 +420,18 @@
         </div>
 
         <div id="dashContent" class="dash-panel">
-          <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
             <h2 style="color:var(--gold-light); font-size:1.3rem;"><i class="fas fa-cogs"></i> لوحة التحكم</h2>
-            <span style="color:var(--text-muted); font-size:0.85rem;" id="userEmail"></span>
+            <span style="color:var(--green-dark); font-weight:bold; background:var(--card-bg); padding:5px 15px; border-radius:20px; font-size:0.85rem;" id="welcomeMsg"></span>
           </div>
           
-          <div class="dash-tabs">
+          <div class="dash-tabs" id="adminTabs">
             <button class="dash-tab active" onclick="switchDashTab('addMartyr', this)">إضافة شهيد</button>
             <button class="dash-tab" onclick="switchDashTab('addWill', this)">إضافة وصية</button>
             <button class="dash-tab" onclick="switchDashTab('addPost', this)">إضافة منشور</button>
-            <button class="dash-tab" onclick="switchDashTab('addQuote', this)">إضافة مقولة</button>
-            <button class="dash-tab" onclick="switchDashTab('addLesson', this)">إضافة درس</button>
+            <button class="dash-tab admin-only" onclick="switchDashTab('addQuote', this)">إضافة مقولة</button>
+            <button class="dash-tab admin-only" onclick="switchDashTab('addLesson', this)">إضافة درس</button>
+            <button class="dash-tab admin-only" onclick="switchDashTab('manageSupervisors', this)">إدارة المشرفين</button>
           </div>
 
           <div id="tab-addMartyr" class="dash-content">
@@ -519,7 +473,7 @@
           </div>
 
           <div id="tab-addQuote" class="dash-content hidden">
-            <div class="form-group"><label>عنوان المقولة (مثال: مكانة الشهداء) *</label><input type="text" id="qTitle" /></div>
+            <div class="form-group"><label>عنوان المقولة *</label><input type="text" id="qTitle" /></div>
             <div class="form-group"><label>نص المقولة *</label><textarea id="qText" rows="4"></textarea></div>
             <button class="btn btn-green" style="width:100%;" id="btnAddQuote" onclick="addQuote()"><i class="fas fa-plus"></i> حفظ المقولة</button>
           </div>
@@ -540,11 +494,23 @@
               </div>
               <div class="form-group"><label>اسم الملزمة / الدرس *</label><input type="text" id="lName" /></div>
             </div>
-            <div class="form-group">
-              <label>مرفق (ملف PDF للقراءة أونلاين - اختياري)</label>
-              <input type="file" id="lFile" accept="application/pdf" />
-            </div>
             <button class="btn btn-green" style="width:100%;" id="btnAddLesson" onclick="addLesson()"><i class="fas fa-plus"></i> حفظ الدرس</button>
+          </div>
+
+          <div id="tab-manageSupervisors" class="dash-content hidden">
+            <h3 style="color:var(--gold-light); margin-bottom:15px;"><i class="fas fa-user-shield"></i> إضافة مشرف جديد</h3>
+            <div class="form-row">
+              <div class="form-group"><label>اسم المشرف *</label><input type="text" id="sName" /></div>
+              <div class="form-group"><label>المحافظة *</label><select id="sGov"></select></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>البريد الإلكتروني *</label><input type="email" id="sEmail" /></div>
+              <div class="form-group"><label>كلمة المرور *</label><input type="password" id="sPass" /></div>
+            </div>
+            <button class="btn btn-gold" style="width:100%; margin-bottom:20px;" id="btnAddSupervisor" onclick="addSupervisor()"><i class="fas fa-user-plus"></i> إنشاء حساب المشرف</button>
+            
+            <h3 style="color:var(--gold-light); margin-bottom:15px; border-top:1px solid var(--border-color); padding-top:20px;"><i class="fas fa-list"></i> قائمة المشرفين الحاليين</h3>
+            <div id="supervisorsList" style="display:flex; flex-direction:column; gap:10px;"></div>
           </div>
 
         </div>
@@ -552,7 +518,6 @@
     </section>
   </main>
 
-  <!-- نافذة الشهيد -->
   <div class="modal-overlay" id="martyrModal" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
@@ -578,8 +543,8 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, getDoc, setDoc, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDIs8p-7FBeUqZPQDhbOlzm0kgkmwNfRtM",
@@ -595,10 +560,16 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const GOVERNORATES = ["الكل", "أمانة العاصمة","صنعاء","عدن","تعز","حضرموت","الحديدة","مأرب","أبين","إب","البيضاء","حجة","صعدة","ذمار","لحج","المحويت","المهرة","شبوة","الجوف","الضالع","عمران","ريمة","سقطرى"];
+    // تم وضع إيميلك هنا كمدير عام
+    const ADMIN_EMAIL = "sgeanashwan@gmail.com"; 
+
+    const GOVERNORATES = ["أمانة العاصمة","صنعاء","عدن","تعز","حضرموت","الحديدة","مأرب","أبين","إب","البيضاء","حجة","صعدة","ذمار","لحج","المحويت","المهرة","شبوة","الجوف","الضالع","عمران","ريمة","سقطرى"];
 
     let allMartyrs = []; let allWills = []; let allPosts = []; let allQuotes = []; let allLessons = [];
-    let currentGov = 'الكل'; let currentUser = null;
+    let currentGov = 'الكل'; 
+    let currentUser = null;
+    let currentUserRole = 'guest';
+    let currentUserGov = '';
 
     const defaultQuotes = [
       { id: 'q1', title: 'تحية أسر الشهداء', text: 'تحية الإعزاز والتبجيل والتقدير لكل أسر الشهداء الصابرة المحتسبة.', isMock: true },
@@ -692,7 +663,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if(document.getElementById('sidebar').classList.contains('open')) toggleSidebar();
       
-      // تحديث الزر النشط في القائمة
       if (element) {
         document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
         element.classList.add('active');
@@ -716,6 +686,7 @@
     function init() {
       const govBar = document.getElementById('govBar');
       const mGovSelect = document.getElementById('mGov');
+      const sGovSelect = document.getElementById('sGov');
       
       GOVERNORATES.forEach(gov => {
         const btn = document.createElement('button');
@@ -725,9 +696,8 @@
         btn.onclick = () => filterMartyrs(gov, btn);
         govBar.appendChild(btn);
         
-        if(gov !== 'الكل') {
-          const opt = document.createElement('option'); opt.value = gov; opt.textContent = gov; mGovSelect.appendChild(opt);
-        }
+        const opt = document.createElement('option'); opt.value = gov; opt.textContent = gov; mGovSelect.appendChild(opt);
+        const opt2 = document.createElement('option'); opt2.value = gov; opt2.textContent = gov; sGovSelect.appendChild(opt2);
       });
 
       allMartyrs = generateMockMartyrs();
@@ -754,6 +724,10 @@
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
         allLessons = fbData; renderLessons();
       });
+      onSnapshot(query(collection(db, "supervisors"), orderBy("createdAt", "desc")), (snap) => {
+        const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data() }));
+        renderSupervisors(fbData);
+      });
     }
 
     function filterMartyrs(gov, btn) {
@@ -764,7 +738,7 @@
     function generateMockMartyrs() {
       const names = ["أحمد","محمد","علي","صالح","يوسف"];
       const data = [];
-      GOVERNORATES.slice(1).forEach((gov, i) => {
+      GOVERNORATES.forEach((gov, i) => {
         data.push({
           id: `mock-${i}`, name: `الشهيد ${names[i%5]}`, date: `2024-05-10`,
           gov: gov, address: `المركز`, image: `https://picsum.photos/seed/${gov}/400/300`,
@@ -791,7 +765,7 @@
             <p class="card-bio">${m.bio}</p>
             <div class="card-actions">
               <button class="btn btn-outline" style="flex:1; font-size:0.8rem; padding:8px;" onclick="openModal('${m.id}')">السيرة والوصية</button>
-              ${(!m.isMock && currentUser) ? `<button class="btn-delete-card" onclick="deleteM('${m.id}')"><i class="fas fa-trash"></i></button>` : ''}
+              ${(!m.isMock && currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && currentUserGov === m.gov))) ? `<button class="btn-delete-card" onclick="deleteM('${m.id}')"><i class="fas fa-trash"></i></button>` : ''}
             </div>
           </div>
         </div>
@@ -810,7 +784,7 @@
             <h3><i class="fas fa-quote-right"></i> ${q.title}</h3>
             <p class="quote-text">"${q.text}"</p>
           </div>
-          ${(!q.isMock && currentUser) ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c;" onclick="deleteQ('${q.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
+          ${(!q.isMock && currentUser && currentUserRole === 'admin') ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c;" onclick="deleteQ('${q.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
         </div>
       `).join('');
     }
@@ -825,7 +799,7 @@
             <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">${w.date || ''}</div>
             <p class="quote-text">"${w.text}"</p>
           </div>
-          ${currentUser ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c;" onclick="deleteW('${w.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
+          ${(currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && currentUserGov === w.gov))) ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c;" onclick="deleteW('${w.id}')"><i class="fas fa-trash"></i> حذف</button>` : ''}
         </div>
       `).join('');
     }
@@ -855,7 +829,21 @@
           <div class="lesson-attachment">
             ${l.fileUrl ? `<a href="${l.fileUrl}" target="_blank" class="btn btn-green" style="width:100%;"><i class="fas fa-file-pdf"></i> قراءة الملزمة</a>` : `<span style="font-size:0.85rem; color:var(--text-muted);">لا يوجد مرفق</span>`}
           </div>
-          ${currentUser ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c; width:100%;" onclick="deleteL('${l.id}')"><i class="fas fa-trash"></i> حذف الدرس</button>` : ''}
+          ${(currentUser && currentUserRole === 'admin') ? `<button class="btn btn-outline" style="margin-top:15px; border-color:#e74c3c; color:#e74c3c; width:100%;" onclick="deleteL('${l.id}')"><i class="fas fa-trash"></i> حذف الدرس</button>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderSupervisors(sups) {
+      const list = document.getElementById('supervisorsList');
+      if(sups.length === 0) { list.innerHTML = '<p>لا يوجد مشرفين مسجلين.</p>'; return; }
+      list.innerHTML = sups.map(s => `
+        <div style="background:rgba(0,0,0,0.05); border:1px solid var(--border-color); padding:15px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <strong style="color:var(--green-dark); font-size:1.1rem;">${s.name}</strong>
+            <div style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-map-marker-alt"></i> محافظة: ${s.gov} | <i class="fas fa-envelope"></i> ${s.email}</div>
+          </div>
+          <button class="btn btn-outline" style="border-color:#e74c3c; color:#e74c3c; padding:5px 10px; font-size:0.8rem;" onclick="deleteSupervisor('${s.id}')"><i class="fas fa-user-minus"></i> إلغاء</button>
         </div>
       `).join('');
     }
@@ -894,17 +882,21 @@
       const videoUrl = document.getElementById('mVideoUrl').value.trim();
 
       if(!name || !date || !bio) { showToast('يرجى ملء الحقول الأساسية', true); return; }
+      if(currentUserRole === 'supervisor' && gov !== currentUserGov) {
+        showToast('عذراً، لا يمكنك إضافة شهيد خارج محافظتك (' + currentUserGov + ')', true); return;
+      }
       
       try {
         btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري المعالجة...`; btn.disabled = true;
         let imageBase64 = "";
         if (imageFile) {
-          if (imageFile.size > 800 * 1024) { showToast('حجم الصورة كبير جداً (أقصى حد 800KB)', true); btn.innerHTML = originalText; btn.disabled = false; return; }
+          if (imageFile.size > 800 * 1024) { showToast('حجم الصورة كبير جداً', true); btn.innerHTML = originalText; btn.disabled = false; return; }
           imageBase64 = await getBase64(imageFile);
         }
         await addDoc(collection(db, "martyrs"), {
           name, date, gov, bio, image: imageBase64, video: videoUrl,
-          address: document.getElementById('mAddress').value.trim(), createdAt: serverTimestamp()
+          address: document.getElementById('mAddress').value.trim(), createdAt: serverTimestamp(),
+          addedBy: currentUser.email
         });
         showToast('تمت إضافة الشهيد بنجاح');
         ['mName','mDate','mAddress','mBio','mVideoUrl'].forEach(id => document.getElementById(id).value = '');
@@ -917,9 +909,12 @@
       const name = document.getElementById('wName').value.trim();
       const text = document.getElementById('wText').value.trim();
       if(!name || !text) return showToast('املأ البيانات', true);
+      
+      const govValue = currentUserRole === 'supervisor' ? currentUserGov : "غير محدد";
+      
       try {
         btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ...`; btn.disabled = true;
-        await addDoc(collection(db, "wills"), { name, date: document.getElementById('wDate').value, text, createdAt: serverTimestamp() });
+        await addDoc(collection(db, "wills"), { name, gov: govValue, date: document.getElementById('wDate').value, text, createdAt: serverTimestamp() });
         showToast('تمت إضافة الوصية');
         ['wName','wDate','wText'].forEach(id => document.getElementById(id).value = '');
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ الوصية`; btn.disabled = false; }
@@ -962,9 +957,7 @@
       const btn = document.getElementById('btnAddLesson');
       const day = document.getElementById('lDay').value;
       const name = document.getElementById('lName').value.trim();
-      
       if(!name) return showToast('أدخل اسم الدرس', true);
-      
       try {
         btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...`; btn.disabled = true;
         let fileUrl = ""; 
@@ -974,28 +967,109 @@
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ الدرس`; btn.disabled = false; }
     };
 
+    window.addSupervisor = async () => {
+      const btn = document.getElementById('btnAddSupervisor'); const originalText = btn.innerHTML;
+      const name = document.getElementById('sName').value.trim();
+      const gov = document.getElementById('sGov').value;
+      const email = document.getElementById('sEmail').value.trim();
+      const pass = document.getElementById('sPass').value;
+
+      if(!name || !email || !pass) return showToast('املأ جميع حقول المشرف', true);
+      if(pass.length < 6) return showToast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', true);
+
+      try {
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...`; btn.disabled = true;
+        
+        // ملاحظة هامة: لإنشاء حساب بواسطة المدير دون أن يخرج المدير من حسابه في Firebase (v9)
+        // نستخدم تطبيق Firebase ثانوي (Secondary App)
+        const secondaryApp = initializeApp(firebaseConfig, "Secondary");
+        const secondaryAuth = getAuth(secondaryApp);
+        
+        const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, pass);
+        const uid = userCredential.user.uid;
+        await signOut(secondaryAuth); // تسجيل خروج المشرف الجديد من التطبيق الثانوي
+
+        await setDoc(doc(db, "supervisors", uid), {
+          name, gov, email, role: 'supervisor', createdAt: serverTimestamp()
+        });
+
+        showToast('تم إنشاء حساب المشرف بنجاح');
+        ['sName','sEmail','sPass'].forEach(id => document.getElementById(id).value = '');
+      } catch(e) {
+        console.error(e);
+        if(e.code === 'auth/email-already-in-use') showToast('هذا البريد مسجل مسبقاً', true);
+        else showToast('حدث خطأ أثناء إنشاء الحساب', true);
+      } finally {
+        btn.innerHTML = originalText; btn.disabled = false;
+      }
+    };
+
     window.deleteM = async (id) => { if(confirm('حذف الشهيد؟')) { await deleteDoc(doc(db, "martyrs", id)); showToast('تم الحذف'); } };
     window.deleteW = async (id) => { if(confirm('حذف الوصية؟')) { await deleteDoc(doc(db, "wills", id)); showToast('تم الحذف'); } };
     window.deleteP = async (id) => { if(confirm('حذف المنشور؟')) { await deleteDoc(doc(db, "posts", id)); showToast('تم الحذف'); } };
     window.deleteQ = async (id) => { if(confirm('حذف المقولة؟')) { await deleteDoc(doc(db, "quotes", id)); showToast('تم الحذف'); } };
     window.deleteL = async (id) => { if(confirm('حذف الدرس؟')) { await deleteDoc(doc(db, "lessons", id)); showToast('تم الحذف'); } };
+    
+    window.deleteSupervisor = async (id) => { 
+      if(confirm('هل أنت متأكد من إلغاء صلاحيات هذا المشرف؟ (ملاحظة: لن يتم حذف حسابه من Firebase Auth تلقائياً بل سيتم حذف بياناته من الموقع)')) { 
+        await deleteDoc(doc(db, "supervisors", id)); 
+        showToast('تم إلغاء صلاحيات المشرف من الموقع'); 
+      } 
+    };
 
     window.login = async () => {
-      try { await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPassword').value); showToast('تم الدخول'); document.getElementById('loginError').textContent = ''; }
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPassword').value;
+      try { 
+        await signInWithEmailAndPassword(auth, email, pass); 
+        showToast('تم الدخول بنجاح'); 
+        document.getElementById('loginError').textContent = ''; 
+      }
       catch(e) { document.getElementById('loginError').textContent = 'بيانات الدخول خاطئة'; }
     };
     window.logout = () => signOut(auth);
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       currentUser = user;
+      
       if (user) {
-        document.getElementById('loginSection').classList.add('hidden'); document.getElementById('dashContent').classList.add('active');
+        document.getElementById('loginSection').classList.add('hidden'); 
+        document.getElementById('dashContent').classList.add('active');
         document.getElementById('logoutBtn').classList.remove('hidden');
-        document.getElementById('userEmail').textContent = user.email; showSection('dashboard', null);
+        
+        if (user.email === ADMIN_EMAIL) {
+          currentUserRole = 'admin';
+          currentUserGov = 'الكل';
+          document.getElementById('welcomeMsg').innerHTML = `<i class="fas fa-crown" style="color:gold;"></i> المدير العام`;
+          document.getElementById('userRoleBadge').textContent = "المدير العام";
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+          document.getElementById('mGov').disabled = false; 
+        } else {
+          const docRef = doc(db, "supervisors", user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            currentUserRole = 'supervisor';
+            currentUserGov = docSnap.data().gov;
+            document.getElementById('welcomeMsg').innerHTML = `<i class="fas fa-user-shield" style="color:green;"></i> مشرف محافظة ${currentUserGov}`;
+            document.getElementById('userRoleBadge').textContent = `مشرف ${currentUserGov}`;
+            document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden')); 
+            
+            const mGovSelect = document.getElementById('mGov');
+            mGovSelect.value = currentUserGov;
+            mGovSelect.disabled = true; 
+          } else {
+            showToast('هذا الحساب غير مصرح له بالدخول', true);
+            logout();
+          }
+        }
+        showSection('dashboard', null);
       } else {
-        document.getElementById('loginSection').classList.remove('hidden'); document.getElementById('dashContent').classList.remove('active');
+        currentUserRole = 'guest';
+        document.getElementById('loginSection').classList.remove('hidden'); 
+        document.getElementById('dashContent').classList.remove('active');
         document.getElementById('logoutBtn').classList.add('hidden');
-        document.getElementById('userEmail').textContent = '';
+        document.getElementById('userRoleBadge').textContent = "";
+        document.getElementById('welcomeMsg').textContent = "";
       }
       renderAll(); 
     });
