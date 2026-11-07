@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>شهداءنا العظماء | انصار الله اليمن </title>
-  
+  <title>شهداءنا العظماء | انصارالله اليمن
   <link rel="manifest" href='data:application/manifest+json,{"name":"شهداءنا العظماء","short_name":"شهداءنا","start_url":"./","display":"standalone","background_color":"#ffffff","theme_color":"#1b5e20","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/933/933310.png","sizes":"512x512","type":"image/png"}]}'>
   <meta name="theme-color" content="#1b5e20">
 
@@ -70,7 +69,12 @@
     .navbar .logo { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 900; color: var(--gold); }
     .navbar .logo i { font-size: 1.5rem; color: var(--green-mid); }
     .nav-icons { display: flex; align-items: center; gap: 15px; }
-    .icon-btn { background: none; border: none; color: var(--green-dark); font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
+    
+    /* تم إصلاح أيقونة البحث لتكون واضحة */
+    .icon-btn { 
+      background: transparent; border: none; color: var(--green-dark); 
+      font-size: 1.4rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;
+    }
     .icon-btn:hover { color: var(--gold); transform: scale(1.1); }
 
     /* شريط المهام (Ticker) */
@@ -224,6 +228,10 @@
     .modal-close { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.5); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; z-index: 10; }
     .modal-hero { width: 100%; height: 250px; object-fit: cover; border-radius: 18px 18px 0 0; }
     .modal-body { padding: 20px; }
+    
+    /* تم إصلاح عرض النص الطويل */
+    .modal-bio { font-size: 1rem; line-height: 1.8; white-space: pre-wrap; color: var(--text-main); margin-bottom: 20px; }
+    
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 10px; overflow: hidden; }
     .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 
@@ -317,7 +325,8 @@
       <div class="logo"><i class="fas fa-tree"></i><span>شهداءنا</span></div>
     </div>
     <div class="nav-icons">
-      <button class="icon-btn" onclick="openSearch()"><i class="fas fa-search"></i></button>
+      <!-- أيقونة البحث تم التأكد منها -->
+      <button class="icon-btn" onclick="openSearch()" title="بحث عن شهيد"><i class="fas fa-search"></i></button>
       <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()" style="border-color:#e74c3c; color:#e74c3c; padding:5px 10px; font-size:0.75rem;"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
   </nav>
@@ -602,7 +611,8 @@
           <span><i class="fas fa-map-marker-alt"></i> <span id="modalGov"></span></span>
           <span><i class="fas fa-home"></i> <span id="modalAddress"></span></span>
         </div>
-        <div class="modal-bio" id="modalBio" style="font-size:1rem; line-height:1.8; white-space: pre-wrap;"></div>
+        <!-- هنا يتم عرض النص كاملاً -->
+        <div class="modal-bio" id="modalBio"></div>
         <div id="modalVideoContainer"></div>
       </div>
     </div>
@@ -1029,7 +1039,7 @@
       document.getElementById('modalGov').textContent = m.gov;
       document.getElementById('modalAddress').textContent = m.address || '—';
       
-      // تم استخدام innerHTML لدعم النصوص الطويلة مع الأسطر الجديدة
+      // دعم النص الطويل
       document.getElementById('modalBio').innerHTML = m.bio.replace(/\n/g, '<br>');
       
       const vc = document.getElementById('modalVideoContainer');
@@ -1140,7 +1150,7 @@
     };
 
     // ====== باقي الإضافات ======
-    window.addWill = async () => { /* نفس الكود السابق */ 
+    window.addWill = async () => { 
       const btn = document.getElementById('btnAddWill');
       const name = document.getElementById('wName').value.trim();
       const text = document.getElementById('wText').value.trim();
@@ -1154,7 +1164,7 @@
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ الوصية`; btn.disabled = false; }
     };
 
-    window.addPost = async () => { /* نفس الكود السابق */ 
+    window.addPost = async () => { 
       const btn = document.getElementById('btnAddPost');
       const title = document.getElementById('pTitle').value.trim();
       const text = document.getElementById('pText').value.trim();
@@ -1174,7 +1184,7 @@
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ المنشور`; btn.disabled = false; }
     };
 
-    window.addQuote = async () => { /* نفس الكود السابق */ 
+    window.addQuote = async () => { 
       const btn = document.getElementById('btnAddQuote');
       const title = document.getElementById('qTitle').value.trim();
       const text = document.getElementById('qText').value.trim();
@@ -1187,7 +1197,7 @@
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ المقولة`; btn.disabled = false; }
     };
 
-    window.addDua = async () => { /* نفس الكود السابق */ 
+    window.addDua = async () => { 
       const btn = document.getElementById('btnAddDua');
       const text = document.getElementById('dText').value.trim();
       if(!text) return showToast('أدخل نص الدعاء', true);
@@ -1199,7 +1209,7 @@
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ الدعاء`; btn.disabled = false; }
     };
 
-    window.addLesson = async () => { /* نفس الكود السابق */ 
+    window.addLesson = async () => { 
       const btn = document.getElementById('btnAddLesson');
       const day = document.getElementById('lDay').value;
       const name = document.getElementById('lName').value.trim();
@@ -1213,7 +1223,7 @@
       } catch(e) { showToast('خطأ', true); } finally { btn.innerHTML = `<i class="fas fa-plus"></i> حفظ الدرس`; btn.disabled = false; }
     };
 
-    window.addSupervisor = async () => { /* نفس الكود السابق */ 
+    window.addSupervisor = async () => { 
       const btn = document.getElementById('btnAddSupervisor'); const originalText = btn.innerHTML;
       const name = document.getElementById('sName').value.trim();
       const gov = document.getElementById('sGov').value;
