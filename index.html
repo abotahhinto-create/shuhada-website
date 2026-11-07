@@ -800,7 +800,7 @@
       
       resultsDiv.innerHTML = filtered.map(m => `
         <div class="search-result-item" onclick="openModal('${m.id}'); document.getElementById('searchModal').classList.remove('open');">
-          <img src="${m.image || 'https://picsum.photos/50'}" onerror="this.src='https://placehold.co/50x50/1b5e20/a5d6a7?text=شهيد'" />
+          <img src="${m.image || 'https://placehold.co/50x50/1b5e20/a5d6a7?text=شهيد'}" onerror="this.src='https://placehold.co/50x50/1b5e20/a5d6a7?text=شهيد'" />
           <div class="search-result-info">
             <h4>${m.name}</h4>
             <p><i class="fas fa-map-marker-alt"></i> ${m.gov} | <i class="fas fa-calendar-alt"></i> ${m.date}</p>
@@ -872,15 +872,17 @@
         }
       });
 
-      allMartyrs = generateMockMartyrs();
+      // تم إزالة البيانات التجريبية، سيبدأ الموقع فارغاً حتى تضيف أنت البيانات
+      allMartyrs = []; 
       allQuotes = [...defaultQuotes];
       allDuas = [...defaultDuas];
       renderAll();
       startDuaToasts();
 
       onSnapshot(query(collection(db, "martyrs"), orderBy("createdAt", "desc")), (snap) => {
-        const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
-        allMartyrs = [...fbData, ...generateMockMartyrs()]; renderMartyrs(); updateStats(); updateTicker();
+        const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data() }));
+        allMartyrs = fbData; // الآن الموقع سيعرض فقط البيانات الحقيقية
+        renderMartyrs(); updateStats(); updateTicker();
       });
       onSnapshot(query(collection(db, "wills"), orderBy("createdAt", "desc")), (snap) => {
         const fbData = []; snap.forEach(d => fbData.push({ id: d.id, ...d.data(), isMock: false }));
@@ -916,27 +918,19 @@
       renderMartyrs();
     }
 
-    // تم تقليل البيانات التجريبية لـ 3 فقط وبأسماء مختلفة لكي لا تكرر وتوسخ الموقع
-    function generateMockMartyrs() {
-      return [
-        {
-          id: 'mock-1', name: 'الشهيد أحمد (تجريبي)', date: '2024-05-10', gov: 'صنعاء', address: 'المركز', image: 'https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد+تجريبي', bio: 'هذا شهيد تجريبي لمعاينة التصميم، يمكنك حذفه من لوحة التحكم.', video: "", isMock: true
-        },
-        {
-          id: 'mock-2', name: 'الشهيد محمد (تجريبي)', date: '2024-06-15', gov: 'تعز', address: 'المركز', image: 'https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد+تجريبي', bio: 'هذا شهيد تجريبي لمعاينة التصميم.', video: "", isMock: true
-        },
-        {
-          id: 'mock-3', name: 'الشهيد خالد (تجريبي)', date: '2024-07-20', gov: 'عدن', address: 'المركز', image: 'https://placehold.co/400x300/1b5e20/a5d6a7?text=شهيد+تجريبي', bio: 'هذا شهيد تجريبي لمعاينة التصميم.', video: "", isMock: true
-        }
-      ];
-    }
-
     function renderMartyrs() {
       const gridHome = document.getElementById('martyrsGridHome');
       const gridAll = document.getElementById('martyrsGridAll');
       
       const filtered = currentGov === 'الكل' ? allMartyrs : allMartyrs.filter(m => (m.gov || '').trim() === currentGov.trim());
       
+      if (filtered.length === 0) {
+        const emptyMsg = '<p style="padding:20px; text-align:center; color:var(--text-muted);">لا توجد بيانات مسجلة حالياً لهذه المحافظة.</p>';
+        if(gridHome) gridHome.innerHTML = emptyMsg;
+        if(gridAll) gridAll.innerHTML = emptyMsg;
+        return;
+      }
+
       const createHtml = (list) => list.map(m => `
         <div class="beautiful-card">
           <div class="card-image-wrapper" onclick="openModal('${m.id}')">
@@ -949,7 +943,7 @@
             <p class="card-bio">${m.bio}</p>
             <div class="card-actions">
               <button class="btn btn-outline" style="flex:1; font-size:0.8rem; padding:6px;" onclick="openModal('${m.id}')">السيرة</button>
-              ${(!m.isMock && currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && (currentUserGov || '').trim() === (m.gov || '').trim()))) ? `<button class="btn-delete-card" onclick="deleteM('${m.id}')" title="حذف"><i class="fas fa-trash"></i></button>` : ''}
+              ${(currentUser && (currentUserRole === 'admin' || (currentUserRole === 'supervisor' && (currentUserGov || '').trim() === (m.gov || '').trim()))) ? `<button class="btn-delete-card" onclick="deleteM('${m.id}')" title="حذف"><i class="fas fa-trash"></i></button>` : ''}
             </div>
           </div>
         </div>
@@ -1041,7 +1035,7 @@
     function updateTicker() {
       const ticker = document.getElementById('tickerContent');
       let items = [];
-      if(allMartyrs.length > 0 && !allMartyrs[0].isMock) items.push(`<div class="ticker-item"><i class="fas fa-star" style="color:gold;"></i> إضافة شهيد جديد: ${allMartyrs[0].name}</div>`);
+      if(allMartyrs.length > 0) items.push(`<div class="ticker-item"><i class="fas fa-star" style="color:gold;"></i> إضافة شهيد جديد: ${allMartyrs[0].name}</div>`);
       if(allWills.length > 0) items.push(`<div class="ticker-item"><i class="fas fa-feather-alt" style="color:#a5d6a7;"></i> إضافة وصية جديدة للشهيد: ${allWills[0].name}</div>`);
       if(allPosts.length > 0) items.push(`<div class="ticker-item"><i class="fas fa-comment-dots" style="color:#81c784;"></i> منشور جديد: ${allPosts[0].title}</div>`);
       if(items.length === 0) items.push(`<div class="ticker-item">مرحباً بكم في موقع شهداءنا عظماءنا</div>`);
@@ -1090,10 +1084,10 @@
       const resultsDiv = document.getElementById('dashSearchResults');
       if(!query) { resultsDiv.style.display = 'none'; resultsDiv.innerHTML = ''; return; }
       
-      const filtered = allMartyrs.filter(m => m.name.toLowerCase().includes(query) && !m.isMock);
+      const filtered = allMartyrs.filter(m => m.name.toLowerCase().includes(query));
       if(filtered.length === 0) {
         resultsDiv.style.display = 'flex';
-        resultsDiv.innerHTML = '<p style="font-size:0.8rem; color:#e74c3c;">لا توجد نتائج (أو أن الشهيد تجريبي).</p>';
+        resultsDiv.innerHTML = '<p style="font-size:0.8rem; color:#e74c3c;">لا توجد نتائج مطابقة.</p>';
         return;
       }
       
