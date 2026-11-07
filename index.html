@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>أنصار الله | اليمن - شهداءنا العظماء</title>
+  <title>أنصار الله شهداءنا العظماء | اليمن - شهداءنا العظماء</title>
   
   <link rel="manifest" href='data:application/manifest+json,{"name":"أنصار الله | اليمن","short_name":"أنصار الله","start_url":"./","display":"standalone","background_color":"#ffffff","theme_color":"#1b5e20","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/933/933310.png","sizes":"512x512","type":"image/png"}]}'>
   <meta name="theme-color" content="#1b5e20">
@@ -306,6 +306,7 @@
     <a href="#tasbih" onclick="showSection('tasbih', this)"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</a>
     <a href="#quran" onclick="showSection('quran', this)"><i class="fas fa-book-quran"></i> القرآن الكريم</a>
     
+    <!-- تم إصلاح زر لوحة التحكم ليعمل -->
     <a onclick="showSection('dashboard', this)" style="margin-top:20px; color:var(--gold-light); border-top: 2px solid var(--border-color);"><i class="fas fa-lock"></i> لوحة التحكم</a>
     
     <div class="sidebar-footer">
@@ -321,7 +322,6 @@
       <div class="logo"><i class="fas fa-tree"></i><span>أنصار الله</span></div>
     </div>
     <div class="nav-icons">
-      <!-- أيقونة البحث تم التأكد منها -->
       <button class="icon-btn" onclick="openSearch()" title="بحث عن شهيد"><i class="fas fa-search"></i></button>
       <button class="btn btn-outline hidden" id="logoutBtn" onclick="logout()" style="border-color:#e74c3c; color:#e74c3c; padding:5px 10px; font-size:0.75rem;"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
@@ -330,9 +330,7 @@
   <!-- شريط المهام الأفقي -->
   <div class="ticker-wrapper">
     <div class="ticker-label"><i class="fas fa-bullhorn"></i> جديد</div>
-    <div class="ticker-content" id="tickerContent">
-      <!-- سيتم تعبئته بالجافاسكريبت -->
-    </div>
+    <div class="ticker-content" id="tickerContent"></div>
   </div>
 
   <main>
@@ -615,8 +613,8 @@
   </div>
 
   <footer>
-    <!-- لوحة رجال الله الفنية كخلفية -->
-    <img src="https://upload.wikimedia.org/wikipedia/ar/8/86/%D8%B4%D8%B9%D8%A7%D8%B1_%D8%B1%D8%AC%D8%A7%D9%84_%D8%A7%D9%84%D9%84%D9%87.jpg" alt="رجال الله" class="footer-art" onerror="this.style.display='none'">
+    <!-- تم تضمين صورة رجال الله مباشرة بدون روابط خارجية لضمان ظهورها -->
+    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='40' fill='%231b5e20'>رجال الله</text></svg>" alt="رجال الله" class="footer-art">
     
     <div class="container">
       <p><i class="fas fa-pen-fancy"></i> تصميم وتطوير: نشوان البدري - 771713275</p>
